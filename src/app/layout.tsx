@@ -1,6 +1,8 @@
+"use client";
 import Link from "next/link";
 import "./globals.css";
 import { Inter } from "next/font/google";
+import { useRouter } from "next/navigation";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -14,17 +16,21 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const router = useRouter();
   return (
     <html lang="en">
       <body className={inter.className}>
         <nav className="border-b border-b-slate-900 py-5 flex justify-center items-center gap-5">
-          <Link href="/" className="text-xl">
+          <Link href="/" className="text-lg">
             Beranda
           </Link>
-          <Link href="/about" className="text-xl">
+          <button
+            className="text-lg bg-gray-950 text-white p-2 px-3 rounded-md"
+            onClick={() => router.push("/")}
+          >
             About
-          </Link>
-          <Link href="/dashboard/settings" className="text-xl">
+          </button>
+          <Link href="/dashboard/settings" className="text-lg">
             Settings
           </Link>
         </nav>
