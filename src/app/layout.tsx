@@ -26,7 +26,7 @@ export default function RootLayout({
           </Link>
           <button
             className="text-lg bg-gray-950 text-white p-2 px-3 rounded-md"
-            onClick={() => router.push("/")}
+            onClick={() => router.push("/dashboard")}
           >
             About
           </button>
