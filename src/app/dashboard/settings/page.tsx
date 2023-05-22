@@ -4,7 +4,7 @@ const Settings = () => {
   return (
     <div className="min-h-screen">
       <h1 className="text-3xl">Settings Page</h1>
-      <Link href="/dashboard">Back To dashboard</Link>
+      <Link href="/">Back To dashboard</Link>
     </div>
   );
 };
