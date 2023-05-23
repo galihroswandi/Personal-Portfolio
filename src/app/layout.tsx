@@ -33,6 +33,12 @@ export default function RootLayout({
           <Link href="/dashboard/settings" className="text-lg">
             Settings
           </Link>
+          <Link href="/blog" className="text-lg">
+            Blog
+          </Link>
+          <Link href="/calculator" className="text-lg">
+            Calculator
+          </Link>
         </nav>
         {children}
       </body>
