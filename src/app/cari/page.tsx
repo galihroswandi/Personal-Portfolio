@@ -15,6 +15,7 @@ const Cari = () => {
         <input
           type="text"
           placeholder="Cari user github"
+          autoFocus
           className="ring ring-indigo-500 rounded-md px-5 py-2"
         />
         <button

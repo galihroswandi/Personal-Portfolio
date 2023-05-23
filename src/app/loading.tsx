@@ -1,5 +1,3 @@
-const Loading = () => {
-  return <h1>Loading...</h1>;
-};
-
-export default Loading;
+export default function Loading() {
+  return <div className="min-h-screen">Tunggu Sebentar...</div>;
+}
