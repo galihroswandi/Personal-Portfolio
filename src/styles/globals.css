@@ -1,0 +1,40 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+    font-family: 'Sharp-Grotesk-Bold-10';
+    src: url('../assets/fonts/sharpGrotesk/SharpGroteskBold10.ttf');
+}
+
+@font-face {
+    font-family: 'Schabo-Condensed';
+    src: url('../assets/fonts/schaboCondensed/SCHABO-Condensed.otf');
+}
+
+@font-face {
+    font-family: 'Neue-Montreal-Light';
+    src: url('../assets/fonts/neueMontrel/NeueMontreal-Light.otf');
+}
+
+@font-face {
+    font-family: 'Neue-Montreal-Regular';
+    src: url('../assets/fonts/neueMontrel/NeueMontreal-Regular.otf');
+}
+
+@font-face {
+    font-family: 'Neue-Montreal-Medium';
+    src: url('../assets/fonts/neueMontrel/NeueMontreal-Medium.otf');
+}
+
+@font-face {
+    font-family: 'Neue-Montreal-Bold';
+    src: url('../assets/fonts/neueMontrel/NeueMontreal-Bold.otf');
+}
+
+#slide-target.active {
+    position: fixed;
+    left: 0;
+    opacity: 1;
+    transform: translateX(0);
+}
