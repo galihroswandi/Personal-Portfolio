@@ -7,16 +7,18 @@ const Calculator = () => {
 
   return (
     <div className="min-h-screen flex flex-col gap-2 w-52">
-      <input
-        type="number"
-        placeholder="Angka1"
-        onChange={(e) => setAngka1(Number(e.target.value))}
-      />
-      <input
-        type="number"
-        placeholder="Angka2"
-        onChange={(e) => setAngka2(Number(e.target.value))}
-      />
+      <form>
+        <input
+          type="number"
+          placeholder="Angka1"
+          onChange={(e) => setAngka1(Number(e.target.value))}
+        />
+        <input
+          type="number"
+          placeholder="Angka2"
+          onChange={(e) => setAngka2(Number(e.target.value))}
+        />
+      </form>
       <p>Hasil : {angka1 + angka2}</p>
     </div>
   );

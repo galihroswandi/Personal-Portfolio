@@ -39,6 +39,9 @@ export default function RootLayout({
           <Link href="/calculator" className="text-lg">
             Calculator
           </Link>
+          <Link href="/cari" className="text-lg">
+            Cari Orang
+          </Link>
         </nav>
         {children}
       </body>
