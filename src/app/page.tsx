@@ -1,7 +1,22 @@
+"use client";
+import About from "@/components/Fragments/About";
+import Navbar from "@/components/Fragments/Navbar";
+
 export default function Home() {
   return (
-    <div className="min-h-screen">
-      <h1>Home</h1>
+    <div className="min-h-screen pb-20 primary relative">
+      <Navbar>
+        <Navbar.Title
+          classimg="w-14 md:w-16 lg:w-20 xl:w-24 h-14 md:h-16 lg:h-20 xl:h-24"
+          classname=""
+        />
+        <Navbar.NavLink />
+      </Navbar>
+      <Navbar.NavbarSlide />
+      <About>
+        <About.NameTag />
+        <About.Content />
+      </About>
     </div>
   );
 }
