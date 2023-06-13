@@ -17,6 +17,11 @@
     src: url('/Fonts/Fraunces_144pt_Light.ttf') format('truetype');
 }
 
+@font-face {
+    font-family: 'fraunces-114pt-supersoft-light';
+    src: url('/Fonts/Fraunces_144pt_SuperSoft-Light.ttf')format('truetype');
+}
+
 body {
     font-family: 'future-mono', sans-serif !important;
     font-weight: 400 !important;

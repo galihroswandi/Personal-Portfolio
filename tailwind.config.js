@@ -11,6 +11,7 @@ module.exports = {
         'future-mono': ['future-mono', 'sans-serif'],
         'fraunces-regular': ['fraunces-114pt-regular', 'sans-serif'],
         'fraunces-light': ['fraunces-114pt-light', 'sans-serif'],
+        'fraunces-supersoft-light': ['fraunces-114pt-supersoft-light', 'sans-serif']
       }
     }
   },

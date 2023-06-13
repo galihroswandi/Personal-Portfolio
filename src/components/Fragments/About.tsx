@@ -1,9 +1,10 @@
-import Image from "next/image";
 import React from "react";
+import AboutFoto from "../Elements/Sections/AboutFoto";
+import AboutDescription from "../Elements/Sections/AboutDescription";
 
 export default function About({ children }: { children: React.ReactNode }) {
   return (
-    <div className="px-5 md:px-0 md:mx-auto md:w-[95%] pt-10">{children}</div>
+    <div className="px-7 md:px-0 md:mx-auto md:w-[95%] pt-10">{children}</div>
   );
 }
 
@@ -22,16 +23,9 @@ const NameTag = () => {
 
 const AboutContent = () => {
   return (
-    <section className="mt-10">
-      <section>
-        <Image
-          src="/img/foto.png"
-          alt="Pas Foto Galih Roswandi"
-          width={500}
-          height={500}
-          className="border border-slate-800 rounded-3xl"
-        />
-      </section>
+    <section className="mt-10 min-[550px]:flex min-[550px]:justify-start min-[550px]:gap-x-5">
+      <AboutFoto />
+      <AboutDescription />
     </section>
   );
 };

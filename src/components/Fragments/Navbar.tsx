@@ -58,7 +58,7 @@ const NavbarSlide = () => {
 
   return (
     <div
-      className="bg-[#F9ECCD] absolute z-50 top-full opacity-0 min-h-screen w-full transition-all duration-500 hidden"
+      className="bg-[#F9ECCD] fixed z-50 top-full opacity-0 min-h-screen w-full transition-all duration-500 hidden"
       id="navbar-slide"
     >
       <NavbarCloseButton />
