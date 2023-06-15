@@ -3,8 +3,8 @@
 @tailwind utilities;
 
 @font-face {
-    font-family: 'future-mono';
-    src: url('/Fonts/frutitype-aa-actual-mono-light.otf') format('truetype');
+    font-family: 'roboto-slab';
+    src: url('/Fonts/RobotoSlab-Light.ttf') format('truetype');
 }
 
 @font-face {
@@ -23,7 +23,7 @@
 }
 
 body {
-    font-family: 'future-mono', sans-serif !important;
+    font-family: 'roboto-slab', sans-serif !important;
     font-weight: 400 !important;
 }
 
@@ -47,7 +47,7 @@ body {
     width: 0;
     height: 2px;
     background-color: #1e293b;
-    transition: width 0.3s ease-in-out;
+    transition: width 0.4s ease-in-out;
 }
 
 .button:hover::after {

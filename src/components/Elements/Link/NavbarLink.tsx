@@ -14,7 +14,7 @@ export default function NavbarLink({
   return (
     <button
       onMouseEnter={handleMouseEnter}
-      className={`text-slate-800 ${classLink}`}
+      className={`text-slate-900 font-roboto-slab tracking-wide font-medium ${classLink}`}
     >
       {text}
     </button>
