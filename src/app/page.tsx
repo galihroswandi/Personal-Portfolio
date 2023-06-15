@@ -1,6 +1,7 @@
 "use client";
 import About from "@/components/Fragments/About";
 import Navbar from "@/components/Fragments/Navbar";
+import Skills from "@/components/Fragments/Skills";
 
 export default function Home() {
   return (
@@ -17,6 +18,10 @@ export default function Home() {
         <About.NameTag />
         <About.Content />
       </About>
+      <Skills>
+        <Skills.Header />
+        <Skills.Main />
+      </Skills>
     </div>
   );
 }

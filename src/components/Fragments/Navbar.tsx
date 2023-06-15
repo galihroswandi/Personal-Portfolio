@@ -6,7 +6,7 @@ import ButtonTriggerNavbar from "../Elements/Button/ButtonTriggerNavbar";
 
 export default function Navbar({ children }: { children: ReactNode }) {
   return (
-    <nav className="px-5 md:px-2 lg:px-10 md:mx-auto pl-3 py-[.1rem] flex justify-between items-center fixed md:static bottom-0 min-w-full md:min-w-0 md:w-[95%] primary border-b. border-b-slate-800. shadow-[0_35px_45px_#1e293b] md:shadow-none">
+    <nav className="px-5 md:px-2 lg:px-10 md:mx-auto pl-3 py-[.1rem] flex justify-between items-center fixed md:static bottom-0 w-full overflow-hidden md:min-w-0 md:w-[95%] max-w-full primary border-b. border-b-slate-800. shadow-[0_35px_45px_#1e293b] md:shadow-none z-50">
       {children}
       <ButtonTriggerNavbar />
     </nav>

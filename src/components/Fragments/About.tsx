@@ -1,6 +1,7 @@
 import React from "react";
 import AboutFoto from "../Elements/Sections/AboutFoto";
 import AboutDescription from "../Elements/Sections/AboutDescription";
+import NumberSection from "../Elements/Sections/NumberSection";
 
 export default function About({ children }: { children: React.ReactNode }) {
   return (
@@ -14,9 +15,9 @@ const NameTag = () => {
   return (
     <>
       <section className="lg:mt-10 xl:mt-[10vh] text-end">
-        <h1 className="text-2xl font-fraunces-light">01.</h1>
+        <NumberSection number={1} />
       </section>
-      <h1 className="font-fraunces-light text-left text-8xl md:text-9xl xl:text-[9.4rem] lg:text-left xl:text-center text-slate-800 -mt-2 font-medium">
+      <h1 className="font-fraunces-light text-left text-7xl min-[390px]:text-8xl md:text-9xl xl:text-[9.4rem] lg:text-left xl:text-center text-slate-800 -mt-2 font-medium">
         Hi{`,`} I{`’`}m <br className="lg:hidden" /> Galih Roswandi.
       </h1>
     </>

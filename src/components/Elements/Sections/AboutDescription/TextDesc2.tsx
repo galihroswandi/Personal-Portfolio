@@ -11,7 +11,7 @@ export default function TextDesc2() {
           {
             <TextProfesi.Text
               text="ReactJS"
-              classname="text-base py-1 md:py-0 md:text-lg lg:text-xl tracking-wider"
+              classname="text-base py-0.5 md:py-0 md:text-lg lg:text-xl tracking-wider"
             />
           }
         </TextProfesi>
@@ -22,7 +22,7 @@ export default function TextDesc2() {
           {
             <TextProfesi.Text
               text="Tailwindcss"
-              classname="text-base py-1 md:py-0 px-3 md:text-lg lg:text-xl tracking-wider"
+              classname="text-base py-0.5 md:py-0 px-3 md:text-lg lg:text-xl tracking-wider"
             />
           }
         </TextProfesi>
@@ -33,16 +33,16 @@ export default function TextDesc2() {
           {
             <TextProfesi.Text
               text="PHP"
-              classname="text-base py-1 md:py-0 px-4 md:text-lg lg:text-xl tracking-wider"
+              classname="text-base py-0.5 md:py-0 px-4 md:text-lg lg:text-xl tracking-wider"
             />
           }
         </TextProfesi>
       }
       {". "}
       {
-        <Link href="#" className="underline">
+        <a href="#technologies-skill" className="underline">
           (see all the technology used)
-        </Link>
+        </a>
       }
     </p>
   );
