@@ -5,7 +5,7 @@ import ContentHover from "./ContentHover";
 
 export default function GalleryCarousel() {
   return (
-    <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 2xl:grid-cols-4 gap-5">
+    <div className="mt-10 mb-5 lg:mb-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 2xl:grid-cols-4 gap-5">
       {slideData.map((slide, index) => (
         <div className="group" key={index}>
           <figure

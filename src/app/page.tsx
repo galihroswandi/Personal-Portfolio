@@ -1,6 +1,7 @@
 import About from "@/components/Fragments/About";
 import GallerySerticate from "@/components/Fragments/GallerySerticate";
 import Navbar from "@/components/Fragments/Navbar";
+import Projects from "@/components/Fragments/Projects";
 import Skills from "@/components/Fragments/Skills";
 
 export default function Home() {
@@ -26,6 +27,10 @@ export default function Home() {
         <GallerySerticate.Header />
         <GallerySerticate.MainGallery />
       </GallerySerticate>
+      <Projects>
+        <Projects.Header />
+        <Projects.MainProjects />
+      </Projects>
     </div>
   );
 }
