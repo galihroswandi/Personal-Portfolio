@@ -1,6 +1,5 @@
 import React from "react";
 import TextProfesi from "./TextProfesi";
-import Link from "next/link";
 
 export default function TextDesc2() {
   return (

@@ -1,18 +1,12 @@
-import React, { ReactNode, useEffect } from "react";
-import NumberSection from "../Elements/Sections/NumberSection";
+import React, { ReactNode } from "react";
 import SkillSection from "../Elements/Sections/SkilSection";
-import { progresBar } from "@/utils/progresBar";
-import { dataSkills } from "@/utils/dataSkills";
+import { dataSkills } from "@/utils/JSON/dataSkills";
+import HeaderSkills from "../Elements/Headers/HeaderSkills";
 
 export default function Skills({ children }: { children: ReactNode }) {
-  useEffect(() => {
-    window.onscroll = () => {
-      progresBar();
-    };
-  });
   return (
     <section
-      className="px-7 py-1.5 pb-10 md:px-5 lg:px-10 mt-14 w-full secondary"
+      className="px-7 py-1.5 lg:py-5 pb-10 md:px-5 lg:px-10 mt-14 w-full secondary"
       id="technologies-skill"
     >
       {children}
@@ -21,12 +15,7 @@ export default function Skills({ children }: { children: ReactNode }) {
 }
 
 const Header = () => {
-  return (
-    <header className="heading flex justify-between items-center">
-      <h1 className="text-xl relative py-3 font-medium">Skills</h1>
-      <NumberSection number={2} />
-    </header>
-  );
+  return <HeaderSkills text="Skills" numberSection={2} />;
 };
 
 const MainSkill = () => {
@@ -52,7 +41,7 @@ const MainSkill = () => {
 
 const Main = () => {
   return (
-    <main className="xl:flex items-center gap-x-10">
+    <main className="xl:flex items-center gap-x-10 lg:mb-20">
       <h1 className="text-2xl lg:text-3xl text-center mt-5 font-medium tracking-wide text-slate-800">
         Tecnologies Skills
       </h1>

@@ -1,5 +1,5 @@
-"use client";
 import About from "@/components/Fragments/About";
+import GallerySerticate from "@/components/Fragments/GallerySerticate";
 import Navbar from "@/components/Fragments/Navbar";
 import Skills from "@/components/Fragments/Skills";
 
@@ -22,6 +22,10 @@ export default function Home() {
         <Skills.Header />
         <Skills.Main />
       </Skills>
+      <GallerySerticate>
+        <GallerySerticate.Header />
+        <GallerySerticate.MainGallery />
+      </GallerySerticate>
     </div>
   );
 }
