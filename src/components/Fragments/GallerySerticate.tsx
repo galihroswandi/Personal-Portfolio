@@ -8,7 +8,10 @@ export default function GallerySerticate({
   children: ReactNode;
 }) {
   return (
-    <section className="px-7 py-1.5 lg:py-5 pb-10 md:px-5 lg:px-10 w-full primary section -mt-4">
+    <section
+      className="px-7 py-1.5 lg:py-5 pb-10 md:px-5 lg:px-10 w-full primary section -mt-4"
+      id="Certificate"
+    >
       {children}
     </section>
   );

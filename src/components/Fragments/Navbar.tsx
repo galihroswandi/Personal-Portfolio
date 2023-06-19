@@ -41,11 +41,15 @@ const NavLink = () => {
   };
   return (
     <div className="hidden md:flex gap-x-5 lg:gap-x-8 xl:gap-x-10">
-      <NavbarLink text="About" classLink={classLink.class} />
-      <NavbarLink text="Skills" classLink={classLink.class} />
-      <NavbarLink text="Sertificate" classLink={classLink.class} />
-      <NavbarLink text="Projects" classLink={classLink.class} />
-      <NavbarLink text="Contact" classLink={classLink.class} />
+      <NavbarLink text="About" to="About" classLink={classLink.class} />
+      <NavbarLink text="Skills" to="Skills" classLink={classLink.class} />
+      <NavbarLink
+        text="Certificate"
+        to="Certificate"
+        classLink={classLink.class}
+      />
+      <NavbarLink text="Projects" to="Projects" classLink={classLink.class} />
+      <NavbarLink text="Contact" to="Contact" classLink={classLink.class} />
     </div>
   );
 };
@@ -67,11 +71,15 @@ const NavbarSlide = () => {
           classname="!font-fraunces-light !text-5xl !font-extralight flex flex-col shadow-md mb-5"
           classimg="w-32 h-32"
         />
-        <NavbarLink text="About" classLink={classLink.class} />
-        <NavbarLink text="Skills" classLink={classLink.class} />
-        <NavbarLink text="Sertificate" classLink={classLink.class} />
-        <NavbarLink text="Projects" classLink={classLink.class} />
-        <NavbarLink text="Contact" classLink={classLink.class} />
+        <NavbarLink text="About" to="About" classLink={classLink.class} />
+        <NavbarLink text="Skills" to="Skills" classLink={classLink.class} />
+        <NavbarLink
+          text="Certificate"
+          to="Certificate"
+          classLink={classLink.class}
+        />
+        <NavbarLink text="Projects" to="Projects" classLink={classLink.class} />
+        <NavbarLink text="Contact" to="Contact" classLink={classLink.class} />
       </section>
     </div>
   );

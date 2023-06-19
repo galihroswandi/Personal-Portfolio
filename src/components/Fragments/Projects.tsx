@@ -5,7 +5,10 @@ import { projectsData } from "@/utils/JSON/projectsData";
 
 export default function Projects({ children }: { children: React.ReactNode }) {
   return (
-    <section className="px-7 min-h-screen py-1.5 lg:py-5 pb-16 md:px-5 lg:px-10 w-full secondary section -mt-4">
+    <section
+      className="px-7 min-h-screen py-1.5 lg:py-5 pb-16 md:px-5 lg:px-10 w-full secondary section -mt-4"
+      id="Projects"
+    >
       {children}
     </section>
   );

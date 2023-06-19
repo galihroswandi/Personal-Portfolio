@@ -9,7 +9,7 @@ import Skills from "@/components/Fragments/Skills";
 
 export default function Home() {
   return (
-    <div className="min-h-screen primary relative">
+    <div className="min-h-screen primary relative" id="wrapper">
       <Navbar>
         <Navbar.Title
           classimg="w-14 md:w-16 lg:w-20 xl:w-24 h-14 md:h-16 lg:h-20 xl:h-24"

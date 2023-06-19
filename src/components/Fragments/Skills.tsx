@@ -7,7 +7,7 @@ export default function Skills({ children }: { children: ReactNode }) {
   return (
     <section
       className="px-7 py-1.5 lg:py-5 pb-10 md:px-5 lg:px-10 mt-14 w-full secondary"
-      id="technologies-skill"
+      id="Skills"
     >
       {children}
     </section>
