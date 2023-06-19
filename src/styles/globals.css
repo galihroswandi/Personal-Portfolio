@@ -8,6 +8,11 @@
 }
 
 @font-face {
+    font-family: 'Fraunces-72pt-regular';
+    src: url('/Fonts/Fraunces_72pt-regular.ttf') format('truetype');
+}
+
+@font-face {
     font-family: 'fraunces-114pt-regular';
     src: url('/Fonts/Fraunces_114pt_Regular.ttf') format('truetype');
 }

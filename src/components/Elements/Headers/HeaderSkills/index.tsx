@@ -1,6 +1,6 @@
 "use client";
-import { progresBar } from "@/utils/progresBar";
-import React, { useEffect } from "react";
+// import { progresBar } from "@/utils/progresBar";
+import React from "react";
 import NumberSection from "../../Sections/NumberSection";
 
 export default function HeaderSkills({
