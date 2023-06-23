@@ -14,7 +14,12 @@ export default function NavbarLink({
   };
 
   const handleClick = () => {
-    const targetSlide = document.getElementById("target-trigger-slide");
+    const navbarSlide = document.getElementById("navbar-slide");
+    navbarSlide?.classList.replace("top-0", "top-full");
+    navbarSlide?.classList.replace("opacity-100", "opacity-0");
+    setTimeout(() => {
+      navbarSlide?.classList.add("hidden");
+    }, 200);
 
     const target = document.getElementById(to);
     target?.scrollIntoView({ behavior: "smooth" });
