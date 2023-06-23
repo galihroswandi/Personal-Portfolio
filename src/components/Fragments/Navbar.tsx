@@ -25,7 +25,7 @@ const Title = ({
       className={`text-slate-800 font-future-mono text-lg  rounded-full overflow-hidden ${classname}`}
     >
       <Image
-        src="/img/Logo3.png "
+        src="/img/Logo3.png"
         alt="Galih Roswandi"
         width={500}
         height={500}
