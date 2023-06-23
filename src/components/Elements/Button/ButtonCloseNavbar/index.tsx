@@ -19,7 +19,7 @@ export default function NavbarCloseButton() {
         className="p-2 border border-slate-800 text-3xl rounded-full"
       >
         <Image
-          src="/Icons/x.svg"
+          src="/icons/x.svg"
           alt="Close"
           title="Close"
           width={100}
