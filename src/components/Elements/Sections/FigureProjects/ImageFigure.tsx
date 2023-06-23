@@ -1,10 +1,10 @@
 import Image from "next/image";
 import React from "react";
 
-export default function ImageFigure() {
+export default function ImageFigure({image}:{image:string;}) {
   return (
     <Image
-      src="/img/Projects/project 1.png"
+      src={image}
       alt="Project 1"
       width={1000}
       height={1000}

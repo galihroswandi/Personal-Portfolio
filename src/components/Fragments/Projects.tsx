@@ -24,6 +24,7 @@ const MainProjects = () => {
       {projectsData.map((el) => (
         <div key={el.id}>
           <FigureProjects
+            image={el.image}
             title={el.title}
             desc={el.description}
             linkDemo={el.linkDemo}
