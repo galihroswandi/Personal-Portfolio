@@ -5,26 +5,31 @@
 @font-face {
     font-family: 'roboto-slab';
     src: url('/Fonts/RobotoSlab-Light.ttf') format('truetype');
+    display: swap;
 }
 
 @font-face {
     font-family: 'Fraunces-72pt-regular';
     src: url('/Fonts/Fraunces_72pt-Regular.ttf') format('truetype');
+    display: swap;
 }
 
 @font-face {
     font-family: 'fraunces-114pt-regular';
     src: url('/Fonts/Fraunces_114pt_Regular.ttf') format('truetype');
+    display: swap;
 }
 
 @font-face {
     font-family: 'fraunces-114pt-light';
     src: url('/Fonts/Fraunces_144pt_Light.ttf') format('truetype');
+    display: swap;
 }
 
 @font-face {
     font-family: 'fraunces-114pt-supersoft-light';
     src: url('/Fonts/Fraunces_144pt_SuperSoft-Light.ttf')format('truetype');
+    display: swap;
 }
 
 body {
