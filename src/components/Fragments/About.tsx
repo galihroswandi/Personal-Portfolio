@@ -6,7 +6,7 @@ import NumberSection from "../Elements/Sections/NumberSection";
 export default function About({ children }: { children: React.ReactNode }) {
   return (
     <div
-      className="px-7 md:px-2 lg:px-10 md:mx-auto md:w-[95%] pt-10"
+      className="px-7 md:px-2 lg:px-10 md:mx-auto md:w-[95%] pt-10 overflow-x-auto"
       id="About"
     >
       {children}
