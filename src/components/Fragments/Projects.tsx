@@ -20,9 +20,9 @@ const Header = () => {
 
 const MainProjects = () => {
   return (
-    <section className="mt-5">
+    <section className="mt-5 mb-20">
       {projectsData.map((el) => (
-        <div key={el.id}>
+        <div key={el.id} className="mb-10">
           <FigureProjects
             image={el.image}
             title={el.title}
