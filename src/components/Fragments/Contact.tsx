@@ -5,7 +5,7 @@ import Input from "../Elements/Input";
 export default function Contact({ children }: { children: React.ReactNode }) {
   return (
     <section
-      className="px-7 py-1.5 lg:py-5 md:px-5 lg:px-10 w-full secondary section -mt-4. md:-mt-24 relative overflow-x-hidden"
+      className="px-7 py-1.5 lg:py-5 md:px-5 lg:px-10 w-full secondary section -mt-4 md:-mt-24 relative overflow-x-hidden"
       id="Contact"
     >
       {children}
