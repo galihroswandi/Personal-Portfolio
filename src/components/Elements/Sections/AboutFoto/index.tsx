@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
-import React, { ReactNode } from "react";
+import React, { ReactNode} from "react";
+import "lazysizes";
 
 export default function AboutFoto({ children }: { children: ReactNode }) {
   return (
@@ -15,10 +16,11 @@ const ImageAbout = () => {
     <figure>
       <div className="overflow-hidden border border-slate-800 rounded-3xl flex flex-col justify-between group hover:rounded-none transition-all duration-500">
         <Image
-          src="/img/-foto.png"
+          src="/img/-foto.webp"
           alt="Pas Foto Galih Roswandi"
-          width={500}
-          height={500}
+          width={300}
+          height={300}
+          loading="lazy"
           className="w-full hover:scale-110 group-hover:rounded-none transition-all duration-500 md:rounded-3xl"
         />
       </div>

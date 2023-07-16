@@ -3,74 +3,80 @@
 @tailwind utilities;
 
 @font-face {
-    font-family: 'roboto-slab';
-    src: url('/Fonts/RobotoSlab-Light.ttf') format('truetype');
-    display: swap;
+  font-family: "roboto-slab";
+  font-style: normal;
+  src: local("Roboto Slab"),
+    url("/Fonts/RobotoSlab-Light.ttf") format("truetype");
+  font-display: swap;
 }
 
 @font-face {
-    font-family: 'Fraunces-72pt-regular';
-    src: url('/Fonts/Fraunces_72pt-Regular.ttf') format('truetype');
-    display: swap;
+  font-family: "Fraunces-72pt-regular";
+  src: local("Fraunces"),
+    url("/Fonts/Fraunces_72pt-Regular.ttf") format("truetype");
+  font-display: swap;
 }
 
 @font-face {
-    font-family: 'fraunces-114pt-regular';
-    src: url('/Fonts/Fraunces_114pt_Regular.ttf') format('truetype');
-    display: swap;
+  font-family: "fraunces-114pt-regular";
+  src: local("Fraunces Regular"),
+    url("/Fonts/Fraunces_114pt_Regular.ttf") format("truetype");
+  font-display: swap;
 }
 
 @font-face {
-    font-family: 'fraunces-114pt-light';
-    src: url('/Fonts/Fraunces_144pt_Light.ttf') format('truetype');
-    display: swap;
+  font-family: "fraunces-114pt-light";
+  src: local("Fraunces Light"),
+    url("/Fonts/Fraunces_144pt_Light.ttf") format("truetype");
+  font-display: swap;
 }
 
 @font-face {
-    font-family: 'fraunces-114pt-supersoft-light';
-    src: url('/Fonts/Fraunces_144pt_SuperSoft-Light.ttf')format('truetype');
-    display: swap;
+  font-family: "fraunces-114pt-supersoft-light";
+  src: local("Fraunces Supersoft Light"),
+    url("/Fonts/Fraunces_144pt_SuperSoft-Light.ttf") format("truetype");
+  font-display: swap;
 }
 
 body {
-    font-family: 'roboto-slab', sans-serif !important;
-    font-weight: 400 !important;
+  font-family: "roboto-slab", sans-serif !important;
+  font-weight: 400 !important;
 }
 
 .hamburger-line {
-    @apply w-[15px] bg-slate-800 py-[.07rem] block rounded-full;
+  @apply w-[15px] bg-slate-800 py-[.07rem] block rounded-full;
 }
 
 .primary {
-    background: url('/img/bg/bg-noise-blue.svg');
+  background: url("/img/bg/bg-noise-blue.svg");
 }
 
 .primary.section {
-    border-radius: 1.5rem 1.5rem 0 0;
+  border-radius: 1.5rem 1.5rem 0 0;
 }
 
 .secondary {
-    background: url('/img/bg/bg-noise-secondary.svg');
-    background-size: cover;
-    border-radius: 1.5rem 1.5rem 0 0;
+  background: url("/img/bg/bg-noise-secondary.svg");
+  background-size: cover;
+  border-radius: 1.5rem 1.5rem 0 0;
 }
 
 .button,
 .heading {
-    position: relative;
+  position: relative;
 }
 
 .button::after {
-    content: "";
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 0;
-    height: 2px;
-    background-color: #1e293b;
-    transition: width 0.4s ease-in-out;
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: #1e293b;
+  transition: width 0.4s ease-in-out;
 }
 
 .button:hover::after {
-    width: 100%;
+  width: 100%;
 }
