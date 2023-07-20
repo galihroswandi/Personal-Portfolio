@@ -31,6 +31,9 @@ export const dataSkills = [
       {
         text: "ExpressJS",
       },
+      {
+        text: "NextJS",
+      },
     ],
   },
   {

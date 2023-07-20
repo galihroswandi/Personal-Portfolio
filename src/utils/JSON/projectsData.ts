@@ -17,4 +17,13 @@ export const projectsData = [
     image: "/img/Projects/Project2.png",
     linkDemo: "https://baarshopid.vercel.app",
   },
+  {
+    id: 3,
+    title: "Web Design In Figma",
+    typeWebsite: "Product advertising website",
+    description:
+      "Welcome to 'Exclusive Honey' - a sweet journey through nature's wonders in every drop of honey. Find exclusive products with natural designs, the best quality and easy ordering via the 'Buy Now' button on WhatsApp. Enjoy natural delicacy and responsive browsing experience. Make us your exclusive destination for quality honey.",
+    image: "/img/Projects/Project3.png",
+    linkDemo: "/",
+  },
 ];
