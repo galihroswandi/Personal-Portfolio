@@ -1,25 +1,21 @@
-import "../styles/globals.css";
+import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
 
-export const metadata = {
-  title: "Personal Portfolio | Galih Roswandi",
-  description: "galihroswandi",
+export const metadata: Metadata = {
+  title: "Galih Roswandi - Personal Website",
+  description: "Personal Website of Galih Roswandi",
 };
 
 export default function RootLayout({
   children,
-}: {
+}: Readonly<{
   children: React.ReactNode;
-}) {
+}>) {
   return (
     <html lang="en">
-      <link
-        rel="shortcut icon"
-        href="./icons/favicon.ico"
-        type="image/x-icon"
-      />
       <body className={inter.className}>{children}</body>
     </html>
   );
