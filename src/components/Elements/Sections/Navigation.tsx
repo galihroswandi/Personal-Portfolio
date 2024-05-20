@@ -11,13 +11,13 @@ export default function Navigation(props: NavigationProps) {
     <section
       className={`flex ${
         useMobile ? "flex-row" : "flex-col"
-      } items-center gap-1.5 400:gap-4 sm:gap-7`}
+      } items-center lg:items-start gap-1.5 400:gap-4 sm:gap-7 lg:gap-2`}
     >
       <ButtonWithImage
         useButton={false}
         customParentClass={`nav-button active ${
           useMobile ? "mobile" : "desktop"
-        } text-${iconColor} p-1.5 rounded-full`}
+        } text-${iconColor} p-1.5 lg:px-3 lg:py-2 rounded-full lg:rounded lg:flex lg:items-center lg:gap-3 lg:w-full md:hover:bg-slate-100`}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -31,10 +31,11 @@ export default function Navigation(props: NavigationProps) {
             fill="currentColor"
           ></path>
         </svg>
+        <span className="hidden lg:block text-lg font-medium">Home</span>
       </ButtonWithImage>
       <ButtonWithImage
         useButton={false}
-        customParentClass={`nav-button text-${iconColor} p-1.5 rounded-full hover:bg-[#0299D0]`}
+        customParentClass={`nav-button text-${iconColor} p-1.5 lg:px-3 lg:py-2 rounded-full lg:rounded lg:flex lg:items-center lg:gap-3 lg:w-full md:hover:bg-slate-100 hover:bg-[#0299D0]`}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -48,10 +49,11 @@ export default function Navigation(props: NavigationProps) {
             fill="currentColor"
           ></path>
         </svg>
+        <span className="hidden lg:block text-lg font-medium">Projects</span>
       </ButtonWithImage>
       <ButtonWithImage
         useButton={false}
-        customParentClass={`nav-button text-${iconColor} p-1.5 rounded-full hover:bg-[#0299D0]`}
+        customParentClass={`nav-button text-${iconColor} p-1.5 lg:px-3 lg:py-2 rounded-full lg:rounded lg:flex lg:items-center lg:gap-3 lg:w-full md:hover:bg-slate-100 hover:bg-[#0299D0]`}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -71,10 +73,11 @@ export default function Navigation(props: NavigationProps) {
             <path d="M9 18c6.218 0 10.5-3.288 11-12V4h-4.014c-9 0-11.986 4-12 9c0 1 0 3 2 5h3z"></path>
           </g>
         </svg>
+        <span className="hidden lg:block text-lg font-medium">About Me</span>
       </ButtonWithImage>
       <ButtonWithImage
         useButton={false}
-        customParentClass={`nav-button text-${iconColor} p-1.5 rounded-full hover:bg-[#0299D0]`}
+        customParentClass={`nav-button text-${iconColor} p-1.5 lg:px-3 lg:py-2 rounded-full lg:rounded lg:flex lg:items-center lg:gap-3 lg:w-full md:hover:bg-slate-100 hover:bg-[#0299D0]`}
       >
         {" "}
         <svg
@@ -95,10 +98,11 @@ export default function Navigation(props: NavigationProps) {
             fill="currentColor"
           ></path>
         </svg>
+        <span className="hidden lg:block text-lg font-medium">Blog</span>
       </ButtonWithImage>
       <ButtonWithImage
         useButton={false}
-        customParentClass={`nav-button text-${iconColor} p-1.5 rounded-full hover:bg-[#0299D0]`}
+        customParentClass={`nav-button text-${iconColor} p-1.5 lg:px-3 lg:py-2 rounded-full lg:rounded lg:flex lg:items-center lg:gap-3 lg:w-full md:hover:bg-slate-100 hover:bg-[#0299D0]`}
       >
         {" "}
         <svg
@@ -119,6 +123,7 @@ L193.6,289.8L124.9,265l291-156.2L342.9,396.9z"
             fill="currentColor"
           ></path>
         </svg>
+        <span className="hidden lg:block text-lg font-medium">Contact Me</span>
       </ButtonWithImage>
     </section>
   );

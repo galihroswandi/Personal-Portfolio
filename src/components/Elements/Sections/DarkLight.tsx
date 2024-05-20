@@ -4,12 +4,13 @@ import ButtonWithImage from "../Buttons/ButtonWithImage";
 interface DarkLightProps {
   customParentClass: string;
   borderLeft?: boolean;
+  sectionClass?: string;
 }
 export default function DarkLight(props: DarkLightProps) {
-  const { customParentClass, borderLeft = true } = props;
+  const { customParentClass, borderLeft = true, sectionClass } = props;
   return (
     <section
-      className={`flex items-center ${
+      className={`${sectionClass ? sectionClass : "flex"} items-center ${
         borderLeft ? "border-l border-[#67B5D2]" : ""
       } p-2`}
     >

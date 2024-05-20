@@ -3,10 +3,10 @@ import ButtonWithImage from "../Buttons/ButtonWithImage";
 
 export default function SidebarSocialMedia() {
   return (
-    <section className="flex flex-col items-center gap-4 border-t border-slate-600 border-dashed py-5">
+    <section className="flex flex-col items-center gap-4 border-t border-slate-600 border-dashed py-5 lg:grid lg:grid-cols-2">
       <ButtonWithImage
         useButton={false}
-        customParentClass="text-white bg-black rounded flex-items-center justify-center p-2"
+        customParentClass="text-white bg-black rounded flex items-center justify-center p-2 lg:gap-2"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -20,10 +20,11 @@ export default function SidebarSocialMedia() {
             fill="currentColor"
           ></path>
         </svg>
+        <span className="hidden lg:block text-base font-medium">Github</span>
       </ButtonWithImage>
       <ButtonWithImage
         useButton={false}
-        customParentClass="text-white bg-[#0A66C2] rounded flex items-center justify-center p-2"
+        customParentClass="text-white bg-[#0A66C2] rounded flex items-center justify-center p-2 lg:gap-2"
       >
         {" "}
         <svg
@@ -38,10 +39,11 @@ export default function SidebarSocialMedia() {
             fill="currentColor"
           ></path>
         </svg>
+        <span className="hidden lg:block text-base font-medium">LinkedIn</span>
       </ButtonWithImage>
       <ButtonWithImage
         useButton={false}
-        customParentClass="bg-gradient-to-r from-[#FF9B01] via-[#FD02CE] to-[#9109F9] text-white rounded flex items-center justify-center p-2"
+        customParentClass="bg-gradient-to-r from-[#FF9B01] via-[#FD02CE] to-[#9109F9] text-white rounded flex items-center justify-center p-2 lg:gap-2"
       >
         {" "}
         <svg
@@ -56,6 +58,7 @@ export default function SidebarSocialMedia() {
             fill="currentColor"
           ></path>
         </svg>
+        <span className="hidden lg:block text-base font-medium">LinkedIn</span>
       </ButtonWithImage>
     </section>
   );
