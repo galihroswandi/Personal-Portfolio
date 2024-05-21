@@ -44,6 +44,24 @@ const Stack = () => {
           className="w-6"
         />
       </StackImage>
+      <StackImage titleTech="Tailwindcss">
+        <Image
+          src={"/icons/tailwindcss.svg"}
+          alt="tailwindcss logo"
+          width={50}
+          height={50}
+          className="w-6"
+        />
+      </StackImage>
+      <StackImage titleTech="Bootstrap">
+        <Image
+          src={"/icons/bootstrap.svg"}
+          alt="bootstrap logo"
+          width={50}
+          height={50}
+          className="w-6"
+        />
+      </StackImage>
       <StackImage titleTech="Javascript">
         <Image
           src={"/icons/javascript.svg"}
@@ -75,6 +93,15 @@ const Stack = () => {
         <Image
           src={"/icons/express.svg"}
           alt="express logo"
+          width={50}
+          height={50}
+          className="w-6"
+        />
+      </StackImage>
+      <StackImage titleTech="Firebase">
+        <Image
+          src={"/icons/firebase.svg"}
+          alt="firebase logo"
           width={50}
           height={50}
           className="w-6"
@@ -120,6 +147,15 @@ const Stack = () => {
         <Image
           src={"/icons/nextjs.svg"}
           alt="nextjs logo"
+          width={50}
+          height={50}
+          className="w-6"
+        />
+      </StackImage>
+      <StackImage titleTech="Figma">
+        <Image
+          src={"/icons/figma.svg"}
+          alt="figma logo"
           width={50}
           height={50}
           className="w-6"

@@ -11,7 +11,17 @@ export default function Home() {
       <Navbar />
       <Sidebar />
       <main className="w-full px-5 md:pl-20 lg:pl-72 lg:py-3 pb-20">
-        <HeaderMain />
+        <HeaderMain
+          title="Hi, I'm Galih Roswandi"
+          desc="Enthusiastic to continue working in the field of technology, especially
+        websites. Experienced in creating websites that focus on frontend
+        development."
+        >
+          <section className="profesional flex items-center gap-7 px-3 mb-3 md:mb-5">
+            <List textname="Software Engineer" />
+            <List textname="Based In Tasikmalaya" />
+          </section>
+        </HeaderMain>
         <CareerMain />
         <Services />
         <TechStack />
@@ -19,3 +29,11 @@ export default function Home() {
     </section>
   );
 }
+
+const List = (props: { textname: string }) => {
+  return (
+    <ul className="list-disc">
+      <li className="text-sm md:text-base text-slate-600">{props.textname}</li>
+    </ul>
+  );
+};
