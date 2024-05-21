@@ -11,7 +11,7 @@ export default function Sidebar() {
     <section className="fixed overflow-y-auto hidden md:flex md:flex-col md:gap-5 h-full w-14 lg:w-64 py-2 lg:py-6">
       <section className="flex flex-col items-center gap-3 border-b border-slate-600 border-dashed h-fit py-3">
         <ProfileAvatar />
-        <section className="flex flex-col items-center gap-2 lg:gap-0 lg:-mt-14">
+        <section className="flex flex-col items-center gap-2 lg:gap-0 lg:-mt-16">
           <Profile borderRight={false} />
           <TextName />
         </section>

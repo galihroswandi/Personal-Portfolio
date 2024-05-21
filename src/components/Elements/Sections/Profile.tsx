@@ -15,7 +15,7 @@ export default function Profile(props: ProfileProps) {
         alt="Profile Image"
         width={1000}
         height={1000}
-        className="w-10 lg:w-16"
+        className="w-10 lg:w-20"
       />
     </section>
   );
