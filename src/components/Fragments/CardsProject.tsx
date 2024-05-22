@@ -8,6 +8,7 @@ export default function CardsProject() {
         title="E-Comerce Garuda Store"
         desc="This simple e-commerce project uses ReactJS, Firebase, and Redux technologies. In this project, e-commerce applications are built using the ReactJS framework for a responsive user interface."
         imgProject="/img/project-1.png"
+        linkProject="https://github.com/galihroswandi/E-comerce"
       >
         <TechStackImage logoUrl="/icons/react.svg" alt="react logo" />
         <TechStackImage
@@ -24,6 +25,7 @@ export default function CardsProject() {
         title="Landing Page Baarshop"
         desc="The TikTok Seller Client Website is a website project using Next.js and Tailwind CSS. This project aims to give online presence to TikTok sellers and introduce their products to TikTok users. "
         imgProject="/img/project-2.png"
+        linkProject="https://baarshopid.vercel.app"
       >
         <TechStackImage logoUrl="/icons/nextjs.svg" alt="nextjs logo" />
         <TechStackImage

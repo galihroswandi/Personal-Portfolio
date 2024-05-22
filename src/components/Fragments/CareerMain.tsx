@@ -1,4 +1,4 @@
-import CardCareer from "../Elements/Sections/CardCareer";
+import CardCareer from "../Elements/Cards/CardCareer";
 import HeaderContent from "../Elements/Sections/HeaderContent";
 
 export default function CareerMain() {

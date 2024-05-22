@@ -8,10 +8,17 @@ interface ButtonWithImageProps {
   imgUrl?: string;
   customParentClass?: string;
   customImageClass?: string;
+  linkUrl?: string;
 }
 export default function ButtonWithImage(props: ButtonWithImageProps) {
-  const { useButton, children, imgUrl, customParentClass, customImageClass } =
-    props;
+  const {
+    useButton,
+    children,
+    imgUrl,
+    customParentClass,
+    customImageClass,
+    linkUrl,
+  } = props;
 
   if (useButton) {
     return (
@@ -31,7 +38,7 @@ export default function ButtonWithImage(props: ButtonWithImageProps) {
     );
   } else {
     return (
-      <Link href={"/"} className={customParentClass}>
+      <Link href={linkUrl || "/"} className={customParentClass}>
         {children ? (
           children
         ) : (

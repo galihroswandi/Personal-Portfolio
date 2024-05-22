@@ -1,5 +1,7 @@
+"use client";
 import React from "react";
 import ButtonWithImage from "../Buttons/ButtonWithImage";
+import { usePathname } from "next/navigation";
 
 interface NavigationProps {
   iconColor: string;
@@ -7,6 +9,9 @@ interface NavigationProps {
 }
 export default function Navigation(props: NavigationProps) {
   const { iconColor, useMobile } = props;
+
+  const pathname = usePathname();
+
   return (
     <section
       className={`flex ${
@@ -15,7 +20,8 @@ export default function Navigation(props: NavigationProps) {
     >
       <ButtonWithImage
         useButton={false}
-        customParentClass={`nav-button active ${
+        linkUrl="/"
+        customParentClass={`nav-button ${pathname === "/" ? "active" : ""} ${
           useMobile ? "mobile" : "desktop"
         } text-${iconColor} p-1.5 lg:px-3 lg:py-2 rounded-full lg:rounded lg:flex lg:items-center lg:gap-3 lg:w-full md:hover:bg-slate-100`}
       >
@@ -35,7 +41,12 @@ export default function Navigation(props: NavigationProps) {
       </ButtonWithImage>
       <ButtonWithImage
         useButton={false}
-        customParentClass={`nav-button text-${iconColor} p-1.5 lg:px-3 lg:py-2 rounded-full lg:rounded lg:flex lg:items-center lg:gap-3 lg:w-full md:hover:bg-slate-100 hover:bg-[#0299D0]`}
+        linkUrl="/showcase-project"
+        customParentClass={`nav-button ${
+          pathname === "/showcase-project" ? "active" : ""
+        } ${
+          useMobile ? "mobile" : "desktop"
+        } text-${iconColor} p-1.5 lg:px-3 lg:py-2 rounded-full lg:rounded lg:flex lg:items-center lg:gap-3 lg:w-full md:hover:bg-slate-100 hover:bg-[#0299D0]`}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -53,7 +64,12 @@ export default function Navigation(props: NavigationProps) {
       </ButtonWithImage>
       <ButtonWithImage
         useButton={false}
-        customParentClass={`nav-button text-${iconColor} p-1.5 lg:px-3 lg:py-2 rounded-full lg:rounded lg:flex lg:items-center lg:gap-3 lg:w-full md:hover:bg-slate-100 hover:bg-[#0299D0]`}
+        linkUrl="/about-me"
+        customParentClass={`nav-button ${
+          pathname === "/about-me" ? "active" : ""
+        } ${
+          useMobile ? "mobile" : "desktop"
+        } text-${iconColor} p-1.5 lg:px-3 lg:py-2 rounded-full lg:rounded lg:flex lg:items-center lg:gap-3 lg:w-full md:hover:bg-slate-100 hover:bg-[#0299D0]`}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -77,7 +93,12 @@ export default function Navigation(props: NavigationProps) {
       </ButtonWithImage>
       <ButtonWithImage
         useButton={false}
-        customParentClass={`nav-button text-${iconColor} p-1.5 lg:px-3 lg:py-2 rounded-full lg:rounded lg:flex lg:items-center lg:gap-3 lg:w-full md:hover:bg-slate-100 hover:bg-[#0299D0]`}
+        linkUrl="/blog"
+        customParentClass={`nav-button ${
+          pathname === "/blog" ? "active" : ""
+        } ${
+          useMobile ? "mobile" : "desktop"
+        } text-${iconColor} p-1.5 lg:px-3 lg:py-2 rounded-full lg:rounded lg:flex lg:items-center lg:gap-3 lg:w-full md:hover:bg-slate-100 hover:bg-[#0299D0]`}
       >
         {" "}
         <svg
@@ -102,7 +123,12 @@ export default function Navigation(props: NavigationProps) {
       </ButtonWithImage>
       <ButtonWithImage
         useButton={false}
-        customParentClass={`nav-button text-${iconColor} p-1.5 lg:px-3 lg:py-2 rounded-full lg:rounded lg:flex lg:items-center lg:gap-3 lg:w-full md:hover:bg-slate-100 hover:bg-[#0299D0]`}
+        linkUrl="/contacts"
+        customParentClass={`nav-button ${
+          pathname === "/contacts" ? "active" : ""
+        } ${
+          useMobile ? "mobile" : "desktop"
+        } text-${iconColor} p-1.5 lg:px-3 lg:py-2 rounded-full lg:rounded lg:flex lg:items-center lg:gap-3 lg:w-full md:hover:bg-slate-100 hover:bg-[#0299D0]`}
       >
         {" "}
         <svg

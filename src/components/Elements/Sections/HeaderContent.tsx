@@ -20,7 +20,8 @@ export default function HeaderContent() {
         </svg>
       </TextHeaderWithIcon>
       <ButtonWithImage
-        useButton={true}
+        useButton={false}
+        linkUrl="https://www.cakeresume.com/pdf/s--tBeLbuI1RntBOWKzRq21Gg--/7E8Nz.pdf"
         customParentClass={`flex items-center gap-2`}
       >
         <section className="border-b-2 border-slate-600 px-0.5">
