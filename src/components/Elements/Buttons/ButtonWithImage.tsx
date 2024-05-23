@@ -9,6 +9,7 @@ interface ButtonWithImageProps {
   customParentClass?: string;
   customImageClass?: string;
   linkUrl?: string;
+  blank?: string;
 }
 export default function ButtonWithImage(props: ButtonWithImageProps) {
   const {
@@ -18,6 +19,7 @@ export default function ButtonWithImage(props: ButtonWithImageProps) {
     customParentClass,
     customImageClass,
     linkUrl,
+    blank,
   } = props;
 
   if (useButton) {
@@ -38,7 +40,7 @@ export default function ButtonWithImage(props: ButtonWithImageProps) {
     );
   } else {
     return (
-      <Link href={linkUrl || "/"} className={customParentClass}>
+      <Link href={linkUrl || "/"} target={blank} className={customParentClass}>
         {children ? (
           children
         ) : (

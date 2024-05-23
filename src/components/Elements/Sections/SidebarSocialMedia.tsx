@@ -6,6 +6,8 @@ export default function SidebarSocialMedia() {
     <section className="flex flex-col items-center gap-4 border-t border-slate-600 border-dashed py-5 lg:grid lg:grid-cols-2">
       <ButtonWithImage
         useButton={false}
+        blank="_blank"
+        linkUrl="https://github.com/galihroswandi"
         customParentClass="text-white bg-black rounded flex items-center justify-center p-2 lg:gap-2"
       >
         <svg
@@ -24,6 +26,8 @@ export default function SidebarSocialMedia() {
       </ButtonWithImage>
       <ButtonWithImage
         useButton={false}
+        blank="_blank"
+        linkUrl="https://www.linkedin.com/in/galih-roswandi-55a8b5271/"
         customParentClass="text-white bg-[#0A66C2] rounded flex items-center justify-center p-2 lg:gap-2"
       >
         {" "}
@@ -43,6 +47,8 @@ export default function SidebarSocialMedia() {
       </ButtonWithImage>
       <ButtonWithImage
         useButton={false}
+        blank="_blank"
+        linkUrl="https://instagram.com/galih_roswandi/"
         customParentClass="bg-gradient-to-r from-[#FF9B01] via-[#FD02CE] to-[#9109F9] text-white rounded flex items-center justify-center p-2 lg:gap-2"
       >
         {" "}
@@ -58,7 +64,7 @@ export default function SidebarSocialMedia() {
             fill="currentColor"
           ></path>
         </svg>
-        <span className="hidden lg:block text-base font-medium">LinkedIn</span>
+        <span className="hidden lg:block text-base font-medium">Instagram</span>
       </ButtonWithImage>
     </section>
   );
