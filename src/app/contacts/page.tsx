@@ -1,4 +1,5 @@
 import HeaderMain from "@/components/Fragments/HeaderMain";
+import MainContact from "@/components/Fragments/MainContact";
 import Navbar from "@/components/Fragments/Navbar";
 import Sidebar from "@/components/Fragments/Sidebar";
 
@@ -9,6 +10,7 @@ export default function page() {
       <Sidebar />
       <main className="w-full px-5 md:pl-20 lg:pl-72 lg:py-3 pb-20">
         <HeaderMain title="Contact" desc="Let's Talk" />
+        <MainContact />
       </main>
     </section>
   );
