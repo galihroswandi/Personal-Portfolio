@@ -19,7 +19,7 @@ export default function CardProject({
     <Link
       href={linkProject}
       target="_blank"
-      className="card rounded bg-slate-100 inline-block group"
+      className="card rounded bg-slate-100 dark:bg-slate-900 inline-block group"
     >
       <Image
         src={imgProject}
@@ -29,7 +29,7 @@ export default function CardProject({
         className="w-full"
       />
       <section className="p-3">
-        <h2 className="flex items-center gap-3 text-lg text-slate-600 mb-2">
+        <h2 className="flex items-center gap-3 text-lg text-slate-600 dark:text-slate-200 mb-2">
           {title}{" "}
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -44,7 +44,7 @@ export default function CardProject({
             />
           </svg>
         </h2>
-        <p className="text-sm text-slate-500">{desc}</p>
+        <p className="text-sm text-slate-500 dark:text-slate-400">{desc}</p>
       </section>
       <section className="tech-stack flex flex-wrap items-center gap-3 px-3 pb-3">
         {children}

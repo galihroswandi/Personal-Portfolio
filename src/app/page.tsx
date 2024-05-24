@@ -33,7 +33,9 @@ export default function Home() {
 const List = (props: { textname: string }) => {
   return (
     <ul className="list-disc">
-      <li className="text-sm md:text-base text-slate-600">{props.textname}</li>
+      <li className="text-sm md:text-base text-slate-600 dark:text-slate-300">
+        {props.textname}
+      </li>
     </ul>
   );
 };

@@ -5,7 +5,9 @@ export default function MainContact() {
   return (
     <section>
       <section className="social-media mb-5">
-        <h2 className="mb-5 text-xl font-medium text-slate-600">Find me on</h2>
+        <h2 className="mb-5 text-xl font-medium text-slate-600 dark:text-slate-200">
+          Find me on
+        </h2>
         <section className="flex items-center gap-3 flex-wrap">
           <ButtonWithImage
             useButton={false}
@@ -71,7 +73,7 @@ export default function MainContact() {
           </ButtonWithImage>
         </section>
       </section>
-      <h2 className="mb-5 text-xl font-medium text-slate-600">
+      <h2 className="mb-5 text-xl font-medium text-slate-600 dark:text-slate-200">
         Or contact me via message
       </h2>
       <FormContact />
@@ -87,12 +89,14 @@ const FormContact = () => {
         <InputForm title="Email" type="email" placeholder="Enter your email" />
       </section>
       <label htmlFor="message" className="flex flex-col gap-1 mb-3">
-        <span className="text-slate-600 text-sm">Message</span>
+        <span className="text-slate-600 dark:text-slate-200 text-sm">
+          Message
+        </span>
         <textarea
           name="message"
           id="message"
           rows={4}
-          className="py-2.5 px-4 border border-slate-200 rounded outline-none text-slate-600"
+          className="py-2.5 px-4 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded outline-none text-slate-600 dark:text-slate-200"
           placeholder="Enter your message"
         ></textarea>
       </label>
@@ -133,13 +137,15 @@ const InputForm = ({
 }) => {
   return (
     <label htmlFor={title.toLowerCase()} className="flex flex-col gap-1 w-full">
-      <span className="text-slate-600 text-sm">{title}</span>
+      <span className="text-slate-600 dark:text-slate-200 text-sm">
+        {title}
+      </span>
       <input
         type={type}
         name={title.toLowerCase()}
         id={title.toLowerCase()}
         placeholder={placeholder}
-        className="w-full py-2.5 px-4 border border-slate-200 rounded outline-none text-slate-600"
+        className="w-full py-2.5 px-4 border dark:bg-slate-900 border-slate-200 dark:border-slate-800 rounded outline-none text-slate-600 dark:text-slate-200"
       />
     </label>
   );

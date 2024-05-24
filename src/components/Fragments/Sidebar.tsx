@@ -9,7 +9,7 @@ import TextName from "../Elements/Sections/TextName";
 export default function Sidebar() {
   return (
     <section className="fixed overflow-y-auto hidden md:flex md:flex-col md:gap-5 h-fit w-14 lg:w-64 py-2 lg:py-6">
-      <section className="flex flex-col items-center gap-3 border-b border-slate-600 border-dashed h-fit py-3">
+      <section className="flex flex-col items-center gap-3 border-b border-slate-600 dark:border-slate-200 border-dashed h-fit py-3">
         <ProfileAvatar />
         <section className="flex flex-col items-center gap-2 lg:gap-0 lg:-mt-16">
           <Profile borderRight={false} />
@@ -22,7 +22,10 @@ export default function Sidebar() {
         />
       </section>
       <section>
-        <Navigation iconColor="slate-600" useMobile={false} />
+        <Navigation
+          iconColor="slate-600 dark:text-slate-200"
+          useMobile={false}
+        />
       </section>
       <SidebarSocialMedia />
     </section>

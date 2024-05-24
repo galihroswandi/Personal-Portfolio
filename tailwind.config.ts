@@ -11,6 +11,7 @@ const config: Config = {
       colors: {
         "primary-blue": "#03A0D9",
         "primary-green": "#5FA04E",
+        "primary-dark": "#00080B",
       },
       boxShadow: {
         "inner-shadow":
@@ -26,6 +27,7 @@ const config: Config = {
       "2xl": "1536px",
     },
   },
+  darkMode: "selector",
   plugins: [],
 };
 export default config;

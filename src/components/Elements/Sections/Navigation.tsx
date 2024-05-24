@@ -23,7 +23,7 @@ export default function Navigation(props: NavigationProps) {
         linkUrl="/"
         customParentClass={`nav-button ${pathname === "/" ? "active" : ""} ${
           useMobile ? "mobile" : "desktop"
-        } text-${iconColor} p-1.5 lg:px-3 lg:py-2 rounded-full lg:rounded lg:flex lg:items-center lg:gap-3 lg:w-full md:hover:bg-slate-100`}
+        } text-${iconColor} p-1.5 lg:px-3 lg:py-2 rounded-full lg:rounded lg:flex lg:items-center lg:gap-3 lg:w-full md:hover:bg-slate-100 hover:bg-[#0299D0] dark:md:hover:bg-slate-900`}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -46,7 +46,7 @@ export default function Navigation(props: NavigationProps) {
           pathname === "/showcase-project" ? "active" : ""
         } ${
           useMobile ? "mobile" : "desktop"
-        } text-${iconColor} p-1.5 lg:px-3 lg:py-2 rounded-full lg:rounded lg:flex lg:items-center lg:gap-3 lg:w-full md:hover:bg-slate-100 hover:bg-[#0299D0]`}
+        } text-${iconColor} p-1.5 lg:px-3 lg:py-2 rounded-full lg:rounded lg:flex lg:items-center lg:gap-3 lg:w-full md:hover:bg-slate-100 hover:bg-[#0299D0] dark:md:hover:bg-slate-900`}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -69,7 +69,7 @@ export default function Navigation(props: NavigationProps) {
           pathname === "/about-me" ? "active" : ""
         } ${
           useMobile ? "mobile" : "desktop"
-        } text-${iconColor} p-1.5 lg:px-3 lg:py-2 rounded-full lg:rounded lg:flex lg:items-center lg:gap-3 lg:w-full md:hover:bg-slate-100 hover:bg-[#0299D0]`}
+        } text-${iconColor} p-1.5 lg:px-3 lg:py-2 rounded-full lg:rounded lg:flex lg:items-center lg:gap-3 lg:w-full md:hover:bg-slate-100 hover:bg-[#0299D0] dark:md:hover:bg-slate-900`}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -98,7 +98,7 @@ export default function Navigation(props: NavigationProps) {
           pathname === "/blog" ? "active" : ""
         } ${
           useMobile ? "mobile" : "desktop"
-        } text-${iconColor} p-1.5 lg:px-3 lg:py-2 rounded-full lg:rounded lg:flex lg:items-center lg:gap-3 lg:w-full md:hover:bg-slate-100 hover:bg-[#0299D0]`}
+        } text-${iconColor} p-1.5 lg:px-3 lg:py-2 rounded-full lg:rounded lg:flex lg:items-center lg:gap-3 lg:w-full md:hover:bg-slate-100 hover:bg-[#0299D0] dark:md:hover:bg-slate-900`}
       >
         {" "}
         <svg
@@ -128,7 +128,7 @@ export default function Navigation(props: NavigationProps) {
           pathname === "/contacts" ? "active" : ""
         } ${
           useMobile ? "mobile" : "desktop"
-        } text-${iconColor} p-1.5 lg:px-3 lg:py-2 rounded-full lg:rounded lg:flex lg:items-center lg:gap-3 lg:w-full md:hover:bg-slate-100 hover:bg-[#0299D0]`}
+        } text-${iconColor} p-1.5 lg:px-3 lg:py-2 rounded-full lg:rounded lg:flex lg:items-center lg:gap-3 lg:w-full md:hover:bg-slate-100 hover:bg-[#0299D0] dark:md:hover:bg-slate-900`}
       >
         {" "}
         <svg

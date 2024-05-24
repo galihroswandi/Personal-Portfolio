@@ -8,7 +8,9 @@ export default function Profile(props: ProfileProps) {
   const { borderRight } = props;
   return (
     <section
-      className={`${borderRight ? "border-r border-[#67B5D2]" : ""} p-2`}
+      className={`${
+        borderRight ? "border-r border-[#67B5D2] dark:border-slate-600" : ""
+      } p-2`}
     >
       <Image
         src={"/img/me.png"}

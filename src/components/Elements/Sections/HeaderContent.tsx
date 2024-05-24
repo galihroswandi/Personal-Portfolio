@@ -3,7 +3,7 @@ import ButtonWithImage from "../Buttons/ButtonWithImage";
 
 export default function HeaderContent() {
   return (
-    <section className="text-slate-600 flex justify-between items-center gap-2 mb-5">
+    <section className="text-slate-600 dark:text-slate-200 flex justify-between items-center gap-2 mb-5">
       <TextHeaderWithIcon title="Career" desc="My professional career journey">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -22,16 +22,22 @@ export default function HeaderContent() {
       <ButtonWithImage
         useButton={false}
         linkUrl="https://www.cakeresume.com/pdf/s--tBeLbuI1RntBOWKzRq21Gg--/7E8Nz.pdf"
-        customParentClass={`flex items-center gap-2`}
+        customParentClass={`flex items-center gap-3`}
       >
-        <section className="border-b-2 border-slate-600 px-0.5">
-          <Image
-            src={"/icons/arrow-bottom.svg"}
-            width={20}
-            height={20}
-            alt="download icon"
+        <section className="border-b-2 border-slate-600 text-slate-600 dark:text-slate-200 dark:border-slate-200 px-0.5">
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 10 11"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
             className="w-3.5 animate-bounce transition duration-500"
-          />
+          >
+            <path
+              d="M10 6L4.73684 11L0 6L3.15789 6L3.15789 0H6.84211V6H10Z"
+              fill="currentColor"
+            />
+          </svg>
         </section>
         <span className="text-base">Download CV</span>
       </ButtonWithImage>
@@ -51,10 +57,14 @@ export const TextHeaderWithIcon = ({
   customClassTitle?: string;
 }) => {
   return (
-    <section className="text-slate-600">
+    <section className="text-slate-600 dark:text-slate-200">
       <section className="flex items-center gap-2 mb-1">
         {children}
-        <h1 className={`${customClassTitle} text-slate-600`}>{title}</h1>
+        <h1
+          className={`${customClassTitle} text-slate-600 dark:text-slate-200`}
+        >
+          {title}
+        </h1>
       </section>
       <p className="text-sm md:text-base">{desc}</p>
     </section>

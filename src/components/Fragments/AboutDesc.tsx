@@ -1,6 +1,6 @@
 export default function AboutDesc() {
   return (
-    <section className="text-slate-600 flex flex-col gap-6 mb-6">
+    <section className="text-slate-600 dark:text-slate-200 flex flex-col gap-6 mb-6">
       <p>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque
         vel tellus nisi. Fusce et pellentesque magna. Duis est metus, pulvinar

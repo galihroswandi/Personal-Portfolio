@@ -11,7 +11,7 @@ export default function NotBlog() {
         height={1000}
         className="w-64 md:w-80 mx-auto"
       />
-      <h2 className="text-xl md:text-2xl text-slate-300">
+      <h2 className="text-xl md:text-2xl text-slate-300 dark:text-slate-800">
         There is no writing yet
       </h2>
     </section>

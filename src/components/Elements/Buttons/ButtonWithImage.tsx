@@ -10,6 +10,7 @@ interface ButtonWithImageProps {
   customImageClass?: string;
   linkUrl?: string;
   blank?: string;
+  onclick?: () => any;
 }
 export default function ButtonWithImage(props: ButtonWithImageProps) {
   const {
@@ -20,11 +21,12 @@ export default function ButtonWithImage(props: ButtonWithImageProps) {
     customImageClass,
     linkUrl,
     blank,
+    onclick,
   } = props;
 
   if (useButton) {
     return (
-      <button className={customParentClass}>
+      <button onClick={onclick} className={customParentClass}>
         {children ? (
           children
         ) : (

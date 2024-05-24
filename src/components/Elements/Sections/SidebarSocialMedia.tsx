@@ -3,7 +3,7 @@ import ButtonWithImage from "../Buttons/ButtonWithImage";
 
 export default function SidebarSocialMedia() {
   return (
-    <section className="flex flex-col items-center gap-4 border-t border-slate-600 border-dashed py-5 lg:grid lg:grid-cols-2">
+    <section className="flex flex-col items-center gap-4 border-t border-slate-600 dark:border-t-slate-200 border-dashed py-5 lg:grid lg:grid-cols-2">
       <ButtonWithImage
         useButton={false}
         blank="_blank"

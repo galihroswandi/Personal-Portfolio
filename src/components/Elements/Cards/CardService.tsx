@@ -10,7 +10,7 @@ export default function CardService({
   desc: string;
 }) {
   return (
-    <section className="bg-slate-100 w-fit p-4 sm:p-5 rounded">
+    <section className="bg-slate-100 dark:bg-slate-900 w-fit p-4 sm:p-5 rounded">
       <TextHeaderWithIcon
         title={title}
         desc=""
@@ -18,7 +18,7 @@ export default function CardService({
       >
         {children}
       </TextHeaderWithIcon>
-      <p className="text-sm text-slate-600 mt-2">{desc}</p>
+      <p className="text-sm text-slate-600 dark:text-slate-500 mt-2">{desc}</p>
     </section>
   );
 }
