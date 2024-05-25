@@ -92,7 +92,10 @@ const FormContact = () => {
   const [message, setMessage] = useState("");
   const [loadingContact, setLoadingContact] = useState(false);
 
-  const theme = window.sessionStorage.getItem("theme");
+  const theme =
+    typeof window !== "undefined"
+      ? window.sessionStorage.getItem("theme")
+      : null;
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
