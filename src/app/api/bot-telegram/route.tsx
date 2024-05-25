@@ -10,7 +10,7 @@ export async function POST(req: Request) {
   try {
     await bot.sendMessage(
       chat_id,
-      `Name: ${name}\nEmail: ${email}\nMessage: ${message}`
+      `Name: ${name}\nEmail/Telegram: ${email}\nMessage: ${message}`
     );
     return new Response(
       JSON.stringify({ success: true, data: { name, email, message } }),

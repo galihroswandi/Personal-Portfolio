@@ -108,21 +108,20 @@ const FormContact = () => {
     })
       .then((res: any) => {
         setLoadingContact(false);
+	toast.success("Message send successfully", {
+ 	  position: "bottom-left",
+	  autoClose: 5000
+	});
 
         const name = document.getElementById("name") as HTMLInputElement;
         const email = document.getElementById(
-          "Email/Telegram"
+          "email/telegram"
         ) as HTMLInputElement;
         const message = document.getElementById("message") as HTMLInputElement;
 
         name.value = "";
         email.value = "";
         message.value = "";
-
-        toast.success("Message sent successfully", {
-          position: "bottom-left",
-          autoClose: 5000,
-        });
       })
       .catch((err: any) => {
         setLoadingContact(false);
