@@ -110,7 +110,9 @@ const FormContact = () => {
         setLoadingContact(false);
 
         const name = document.getElementById("name") as HTMLInputElement;
-        const email = document.getElementById("email") as HTMLInputElement;
+        const email = document.getElementById(
+          "Email/Telegram"
+        ) as HTMLInputElement;
         const message = document.getElementById("message") as HTMLInputElement;
 
         name.value = "";
@@ -154,7 +156,7 @@ const FormContact = () => {
           onchange={(value) => setName(value)}
         />
         <InputForm
-          title="EmailOrTelegram"
+          title="Email/Telegram"
           type="text"
           placeholder="Enter your email or username telegram"
           onchange={(value) => setEmail(value)}
