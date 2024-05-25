@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ButtonWithImage from "../Elements/Buttons/ButtonWithImage";
 import sendbot from "@/services/sendbot";
 import { ToastContainer, toast } from "react-toastify";
@@ -91,7 +91,8 @@ const FormContact = () => {
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
   const [loadingContact, setLoadingContact] = useState(false);
-  const theme = sessionStorage.getItem("theme");
+
+  const theme = window.sessionStorage.getItem("theme");
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
