@@ -109,14 +109,18 @@ const FormContact = () => {
       .then((res: any) => {
         setLoadingContact(false);
 
+        const name = document.getElementById("name") as HTMLInputElement;
+        const email = document.getElementById("email") as HTMLInputElement;
+        const message = document.getElementById("message") as HTMLInputElement;
+
+        name.value = "";
+        email.value = "";
+        message.value = "";
+
         toast.success("Message sent successfully", {
           position: "bottom-left",
           autoClose: 5000,
         });
-
-        setName("");
-        setEmail("");
-        setMessage("");
       })
       .catch((err: any) => {
         setLoadingContact(false);
