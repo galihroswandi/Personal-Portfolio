@@ -154,7 +154,7 @@ const FormContact = () => {
           onchange={(value) => setName(value)}
         />
         <InputForm
-          title="Email/Telegram"
+          title="EmailOrTelegram"
           type="text"
           placeholder="Enter your email or username telegram"
           onchange={(value) => setEmail(value)}
