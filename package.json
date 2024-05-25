@@ -14,7 +14,8 @@
     "next": "14.2.3",
     "node-telegram-bot-api": "^0.66.0",
     "react": "^18",
-    "react-dom": "^18"
+    "react-dom": "^18",
+    "react-toastify": "^10.0.5"
   },
   "devDependencies": {
     "@types/node": "^20",

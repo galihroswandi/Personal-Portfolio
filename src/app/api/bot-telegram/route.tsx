@@ -19,10 +19,18 @@ export async function POST(req: Request) {
       }
     );
   } catch (err) {
+    bot.on("polling_error", (error: any) => {
+      console.log(`Polling error: ${error}`);
+      if (error.code == "EFATAL") {
+        bot.stopPolling();
+        console.log("Stopped polling due to fatal error.");
+      }
+    });
+
     return new Response(
       JSON.stringify({ success: false, data: [], errors: err }),
       {
-        status: 200,
+        status: 500,
       }
     );
   }

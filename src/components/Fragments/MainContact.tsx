@@ -2,6 +2,9 @@
 import React, { useState } from "react";
 import ButtonWithImage from "../Elements/Buttons/ButtonWithImage";
 import sendbot from "@/services/sendbot";
+import { ToastContainer, toast } from "react-toastify";
+
+import "react-toastify/dist/ReactToastify.css";
 
 export default function MainContact() {
   return (
@@ -87,9 +90,12 @@ const FormContact = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
+  const [loadingContact, setLoadingContact] = useState(false);
+  const theme = sessionStorage.getItem("theme");
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
+    setLoadingContact(true);
 
     sendbot({
       name,
@@ -97,19 +103,41 @@ const FormContact = () => {
       message,
     })
       .then((res: any) => {
-        if (res.success) {
-          alert("Message sent successfully");
-          setName("");
-          setEmail("");
-          setMessage("");
-        }
+        setLoadingContact(false);
+
+        toast.success("Message sent successfully", {
+          position: "bottom-left",
+          autoClose: 5000,
+        });
+
+        setName("");
+        setEmail("");
+        setMessage("");
       })
       .catch((err: any) => {
-        console.log(err);
+        setLoadingContact(false);
+
+        toast.error("Failed to send message", {
+          position: "bottom-left",
+          autoClose: 5000,
+        });
       });
   };
+
   return (
     <form className="flex flex-col gap-3" onSubmit={handleSubmit}>
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme={theme || "light"}
+      />
       <section className="flex flex-col sm:flex-row sm:items-center gap-3">
         <InputForm
           title="Name"
@@ -137,27 +165,51 @@ const FormContact = () => {
           placeholder="Enter your message"
         ></textarea>
       </label>
-      <button className="bg-primary-blue hover:bg-gradient-to-r transition-colors duration-500 from-primary-green to-primary-blue text-white py-2.5 px-4 rounded relative">
+      <button
+        className={`bg-primary-blue hover:bg-gradient-to-r transition-colors duration-500 from-primary-green to-primary-blue text-white py-2.5 px-4 rounded relative flex items-center justify-center ${
+          loadingContact ? "cursor-not-allowed" : ""
+        }`}
+        disabled={loadingContact}
+      >
         <span>Send Message</span>
-        <svg
-          version="1.1"
-          xmlns="http://www.w3.org/2000/svg"
-          xmlnsXlink="http://www.w3.org/1999/xlink"
-          x="0px"
-          y="0px"
-          viewBox="0 0 512 512"
-          enableBackground="new 0 0 512 512"
-          xmlSpace="preserve"
-          width={25}
-          height={25}
-          className="absolute right-2 top-2 bottom-2"
-        >
-          <path
-            d="M48,270.9l118.9,44.6L181.7,464L256,360l104,104L464,48L48,270.9z M342.9,396.9L260,313.4L374.9,152
+        {!loadingContact ? (
+          <>
+            <svg
+              version="1.1"
+              xmlns="http://www.w3.org/2000/svg"
+              xmlnsXlink="http://www.w3.org/1999/xlink"
+              x="0px"
+              y="0px"
+              viewBox="0 0 512 512"
+              enableBackground="new 0 0 512 512"
+              xmlSpace="preserve"
+              width={25}
+              height={25}
+              className="absolute right-2 top-2 bottom-2"
+            >
+              <path
+                d="M48,270.9l118.9,44.6L181.7,464L256,360l104,104L464,48L48,270.9z M342.9,396.9L260,313.4L374.9,152
 L193.6,289.8L124.9,265l291-156.2L342.9,396.9z"
-            fill="currentColor"
-          ></path>
-        </svg>
+                fill="currentColor"
+              ></path>
+            </svg>
+          </>
+        ) : (
+          <span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+              className="size-6 animate-spin absolute right-2 top-2 bottom-2"
+            >
+              <path
+                fillRule="evenodd"
+                d="M4.755 10.059a7.5 7.5 0 0 1 12.548-3.364l1.903 1.903h-3.183a.75.75 0 1 0 0 1.5h4.992a.75.75 0 0 0 .75-.75V4.356a.75.75 0 0 0-1.5 0v3.18l-1.9-1.9A9 9 0 0 0 3.306 9.67a.75.75 0 1 0 1.45.388Zm15.408 3.352a.75.75 0 0 0-.919.53 7.5 7.5 0 0 1-12.548 3.364l-1.902-1.903h3.183a.75.75 0 0 0 0-1.5H2.984a.75.75 0 0 0-.75.75v4.992a.75.75 0 0 0 1.5 0v-3.18l1.9 1.9a9 9 0 0 0 15.059-4.035.75.75 0 0 0-.53-.918Z"
+                clipRule="evenodd"
+              />
+            </svg>
+          </span>
+        )}
       </button>
     </form>
   );
