@@ -1,8 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import ButtonWithImage from "../Elements/Buttons/ButtonWithImage";
-import axios from "axios";
-import sendmail from "@/services/sendmail";
+import sendbot from "@/services/sendbot";
 
 export default function MainContact() {
   return (
@@ -92,7 +91,7 @@ const FormContact = () => {
   const handleSubmit = (e: any) => {
     e.preventDefault();
 
-    sendmail({
+    sendbot({
       name,
       email,
       message,

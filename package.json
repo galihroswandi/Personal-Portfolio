@@ -12,13 +12,13 @@
     "axios": "^1.7.2",
     "framer-motion": "^11.2.6",
     "next": "14.2.3",
-    "nodemailer": "^6.9.13",
+    "node-telegram-bot-api": "^0.66.0",
     "react": "^18",
     "react-dom": "^18"
   },
   "devDependencies": {
     "@types/node": "^20",
-    "@types/nodemailer": "^6.4.15",
+    "@types/node-telegram-bot-api": "^0.64.6",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "eslint": "^8",

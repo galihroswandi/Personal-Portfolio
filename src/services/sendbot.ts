@@ -1,14 +1,14 @@
 import axios from "axios";
 
-interface SendMailProps {
+interface SendBotProps {
   name: string;
   email: string;
   message: string;
 }
-const sendmail = (data: SendMailProps) => {
+const sendbot = (data: SendBotProps) => {
   return new Promise((resolve, reject) => {
     axios
-      .post("/api/contact", data)
+      .post("/api/bot-telegram", data)
       .then((res) => {
         resolve(res.data);
       })
@@ -18,4 +18,4 @@ const sendmail = (data: SendMailProps) => {
   });
 };
 
-export default sendmail;
+export default sendbot;
