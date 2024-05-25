@@ -6,7 +6,7 @@ export default function TextName() {
         <span className="hidden lg:block">Galih Roswandi</span>
       </h2>
       <p className="text-xs lg:text-sm text-slate-400 dark:text-slate-500 hidden lg:block">
-        Software Engineer
+        Software Developer
       </p>
     </section>
   );

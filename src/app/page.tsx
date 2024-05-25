@@ -18,8 +18,8 @@ export default function Home() {
         development."
         >
           <section className="profesional flex items-center gap-7 px-3 mb-3 md:mb-5">
-            <List textname="Software Engineer" />
-            <List textname="Based In Tasikmalaya" />
+            <List textname="Software Developer" />
+            <List textname="Based In Tasikmalaya 🇮🇩" />
           </section>
         </HeaderMain>
         <CareerMain />

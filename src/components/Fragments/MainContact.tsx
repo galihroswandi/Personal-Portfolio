@@ -1,5 +1,8 @@
-import React from "react";
+"use client";
+import React, { useState } from "react";
 import ButtonWithImage from "../Elements/Buttons/ButtonWithImage";
+import axios from "axios";
+import sendmail from "@/services/sendmail";
 
 export default function MainContact() {
   return (
@@ -82,11 +85,45 @@ export default function MainContact() {
 }
 
 const FormContact = () => {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [message, setMessage] = useState("");
+
+  const handleSubmit = (e: any) => {
+    e.preventDefault();
+
+    sendmail({
+      name,
+      email,
+      message,
+    })
+      .then((res: any) => {
+        if (res.success) {
+          alert("Message sent successfully");
+          setName("");
+          setEmail("");
+          setMessage("");
+        }
+      })
+      .catch((err: any) => {
+        console.log(err);
+      });
+  };
   return (
-    <form className="flex flex-col gap-3">
+    <form className="flex flex-col gap-3" onSubmit={handleSubmit}>
       <section className="flex flex-col sm:flex-row sm:items-center gap-3">
-        <InputForm title="Name" type="text" placeholder="Enter your name" />
-        <InputForm title="Email" type="email" placeholder="Enter your email" />
+        <InputForm
+          title="Name"
+          type="text"
+          placeholder="Enter your name"
+          onchange={(value) => setName(value)}
+        />
+        <InputForm
+          title="Email"
+          type="email"
+          placeholder="Enter your email"
+          onchange={(value) => setEmail(value)}
+        />
       </section>
       <label htmlFor="message" className="flex flex-col gap-1 mb-3">
         <span className="text-slate-600 dark:text-slate-200 text-sm">
@@ -96,6 +133,7 @@ const FormContact = () => {
           name="message"
           id="message"
           rows={4}
+          onChange={(e) => setMessage(e.target.value)}
           className="py-2.5 px-4 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded outline-none text-slate-600 dark:text-slate-200"
           placeholder="Enter your message"
         ></textarea>
@@ -130,10 +168,12 @@ const InputForm = ({
   title,
   type,
   placeholder,
+  onchange,
 }: {
   title: string;
   type: string;
   placeholder: string;
+  onchange: (value: string) => void;
 }) => {
   return (
     <label htmlFor={title.toLowerCase()} className="flex flex-col gap-1 w-full">
@@ -145,6 +185,8 @@ const InputForm = ({
         name={title.toLowerCase()}
         id={title.toLowerCase()}
         placeholder={placeholder}
+        autoComplete="off"
+        onChange={(e) => onchange(e.target.value)}
         className="w-full py-2.5 px-4 border dark:bg-slate-900 border-slate-200 dark:border-slate-800 rounded outline-none text-slate-600 dark:text-slate-200"
       />
     </label>
