@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "postbuild": "next-sitemap",
     "start": "next start",
     "lint": "next lint"
   },
@@ -12,10 +13,12 @@
     "axios": "^1.7.2",
     "framer-motion": "^11.2.6",
     "next": "14.2.3",
+    "next-sitemap": "^4.2.3",
     "node-telegram-bot-api": "^0.66.0",
     "react": "^18",
     "react-dom": "^18",
-    "react-toastify": "^10.0.5"
+    "react-toastify": "^10.0.5",
+    "sharp": "^0.33.4"
   },
   "devDependencies": {
     "@types/node": "^20",
