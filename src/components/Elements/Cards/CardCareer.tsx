@@ -11,9 +11,9 @@ export default function CardCareer() {
         className="w-24 sm:w-32"
       />
       <section className="flex flex-col gap-1.5">
-        <h3 className="text-base text-slate-600 dark:text-slate-300">
+        <h2 className="text-base text-slate-600 dark:text-slate-300">
           Frontend Developer
-        </h3>
+        </h2>
         <section className="flex items-center gap-6">
           <p className="text-sm text-slate-600 dark:text-slate-300">
             Solusi 247

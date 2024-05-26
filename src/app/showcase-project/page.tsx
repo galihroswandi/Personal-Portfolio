@@ -35,10 +35,6 @@ export const metadata: Metadata = {
     "Discover the diverse range of projects created by Galih Roswandi. From web development to software solutions, explore the portfolio here.",
   alternates: {
     canonical: `${process.env.NEXT_SITE_URL}/showcase-project`,
-    languages: {
-      "en-US": "/en-US/showcase-project",
-      "id-ID": "/id-ID/showcase-project",
-    },
   },
   openGraph: {
     countryName: "Indonesia",

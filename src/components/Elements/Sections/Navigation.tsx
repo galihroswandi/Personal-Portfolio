@@ -21,6 +21,7 @@ export default function Navigation(props: NavigationProps) {
       <ButtonWithImage
         useButton={false}
         linkUrl="/"
+        ariaLabel="Home"
         customParentClass={`nav-button ${pathname === "/" ? "active" : ""} ${
           useMobile ? "mobile" : "desktop"
         } text-${iconColor} p-1.5 lg:px-3 lg:py-2 rounded-full lg:rounded lg:flex lg:items-center lg:gap-3 lg:w-full md:hover:bg-slate-100 hover:bg-[#0299D0] dark:md:hover:bg-slate-900`}
@@ -42,6 +43,7 @@ export default function Navigation(props: NavigationProps) {
       <ButtonWithImage
         useButton={false}
         linkUrl="/showcase-project"
+        ariaLabel="Showcase Project"
         customParentClass={`nav-button ${
           pathname === "/showcase-project" ? "active" : ""
         } ${
@@ -65,6 +67,7 @@ export default function Navigation(props: NavigationProps) {
       <ButtonWithImage
         useButton={false}
         linkUrl="/about-me"
+        ariaLabel="About Me"
         customParentClass={`nav-button ${
           pathname === "/about-me" ? "active" : ""
         } ${
@@ -94,6 +97,7 @@ export default function Navigation(props: NavigationProps) {
       <ButtonWithImage
         useButton={false}
         linkUrl="/blog"
+        ariaLabel="Blog"
         customParentClass={`nav-button ${
           pathname === "/blog" ? "active" : ""
         } ${
@@ -124,6 +128,7 @@ export default function Navigation(props: NavigationProps) {
       <ButtonWithImage
         useButton={false}
         linkUrl="/contacts"
+        ariaLabel="Contact"
         customParentClass={`nav-button ${
           pathname === "/contacts" ? "active" : ""
         } ${

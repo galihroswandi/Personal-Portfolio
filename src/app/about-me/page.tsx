@@ -34,10 +34,6 @@ export const metadata: Metadata = {
     "Welcome to Galih Roswandi's About Me page. Gain insights into his experiences, expertise, and vision for the future.",
   alternates: {
     canonical: `${process.env.NEXT_SITE_URL}/about-me`,
-    languages: {
-      "en-US": "/en-US/about-me",
-      "id-ID": "/id-ID/about-me",
-    },
   },
   openGraph: {
     countryName: "Indonesia",

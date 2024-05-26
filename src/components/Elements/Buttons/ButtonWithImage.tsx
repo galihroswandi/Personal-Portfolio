@@ -10,6 +10,7 @@ interface ButtonWithImageProps {
   customImageClass?: string;
   linkUrl?: string;
   blank?: string;
+  ariaLabel?: string;
   onclick?: () => any;
 }
 export default function ButtonWithImage(props: ButtonWithImageProps) {
@@ -22,11 +23,16 @@ export default function ButtonWithImage(props: ButtonWithImageProps) {
     linkUrl,
     blank,
     onclick,
+    ariaLabel,
   } = props;
 
   if (useButton) {
     return (
-      <button onClick={onclick} className={customParentClass}>
+      <button
+        onClick={onclick}
+        className={customParentClass}
+        aria-label={ariaLabel}
+      >
         {children ? (
           children
         ) : (
@@ -42,7 +48,12 @@ export default function ButtonWithImage(props: ButtonWithImageProps) {
     );
   } else {
     return (
-      <Link href={linkUrl || "/"} target={blank} className={customParentClass}>
+      <Link
+        href={linkUrl || "/"}
+        target={blank}
+        className={customParentClass}
+        aria-label={`Navigate to ${ariaLabel}`}
+      >
         {children ? (
           children
         ) : (

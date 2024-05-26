@@ -23,10 +23,6 @@ export const metadata: Metadata = {
     "Contact Galih Roswandi effortlessly using the contact details provided on this page. Whether it's a professional inquiry or just to say hello, feel free to get in touch.",
   alternates: {
     canonical: `${process.env.NEXT_SITE_URL}/contacts`,
-    languages: {
-      "en-US": "/en-US/contacts",
-      "id-ID": "/id-ID/contacts",
-    },
   },
   openGraph: {
     countryName: "Indonesia",

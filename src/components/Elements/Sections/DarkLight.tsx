@@ -52,6 +52,7 @@ export default function DarkLight(props: DarkLightProps) {
       <ButtonWithImage
         useButton={true}
         onclick={handleDarkLight}
+        ariaLabel="Dark/Light Mode"
         customParentClass={`dark-light-button overflow-hidden ${customParentClass}`}
       >
         <svg

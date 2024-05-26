@@ -32,10 +32,6 @@ export const metadata: Metadata = {
     "Dive into Galih Roswandi's blog, where he shares insights, tips, and experiences in the world of software development, technology, and more.",
   alternates: {
     canonical: `${process.env.NEXT_SITE_URL}/blog`,
-    languages: {
-      "en-US": "/en-US/blog",
-      "id-ID": "/id-ID/blog",
-    },
   },
   openGraph: {
     countryName: "Indonesia",

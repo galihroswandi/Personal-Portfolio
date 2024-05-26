@@ -46,10 +46,6 @@ export const metadata: Metadata = {
     "Explore the portfolio of Galih Roswandi, a passionate software developer dedicated to creating innovative digital solutions.",
   alternates: {
     canonical: `${process.env.NEXT_SITE_URL}/`,
-    languages: {
-      "en-US": "/en-US",
-      "id-ID": "/id-ID/about-me",
-    },
   },
   openGraph: {
     countryName: "Indonesia",
