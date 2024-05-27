@@ -3,12 +3,19 @@ import React, { useState } from "react";
 import ButtonWithImage from "../Elements/Buttons/ButtonWithImage";
 import sendbot from "@/services/sendbot";
 import { ToastContainer, toast } from "react-toastify";
+import { motion } from "framer-motion";
 
 import "react-toastify/dist/ReactToastify.css";
+import { boxVariant } from "@/utils/landingAnimation.config";
 
 export default function MainContact() {
   return (
-    <section>
+    <motion.section
+      variants={boxVariant}
+      initial="hidden"
+      animate="visible"
+      exit="exit"
+    >
       <section className="social-media mb-5">
         <h2 className="mb-5 text-xl font-medium text-slate-600 dark:text-slate-200">
           Find me on
@@ -82,7 +89,7 @@ export default function MainContact() {
         Or contact me via message
       </h2>
       <FormContact />
-    </section>
+    </motion.section>
   );
 }
 
@@ -175,7 +182,10 @@ const FormContact = () => {
           placeholder="Enter your message"
         ></textarea>
       </label>
-      <button
+      <motion.button
+        whileTap={{ scale: 0.98 }}
+        whileHover={{ scale: 1.01 }}
+        type="submit"
         className={`bg-primary-blue hover:bg-gradient-to-r transition-colors duration-500 from-primary-green to-primary-blue text-white py-2.5 px-4 rounded relative flex items-center justify-center ${
           loadingContact ? "cursor-not-allowed" : ""
         }`}
@@ -220,7 +230,7 @@ L193.6,289.8L124.9,265l291-156.2L342.9,396.9z"
             </svg>
           </span>
         )}
-      </button>
+      </motion.button>
     </form>
   );
 };

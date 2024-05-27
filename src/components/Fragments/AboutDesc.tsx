@@ -1,8 +1,17 @@
+"use client";
 import Link from "next/link";
+import { motion } from "framer-motion";
+import { boxVariant } from "@/utils/landingAnimation.config";
 
 export default function AboutDesc() {
   return (
-    <section className="text-slate-600 dark:text-slate-200 flex flex-col gap-6 mb-6">
+    <motion.section
+      variants={boxVariant}
+      initial="hidden"
+      animate="visible"
+      exit="exit"
+      className="text-slate-600 dark:text-slate-200 flex flex-col gap-6 mb-6"
+    >
       <p>
         Hello! My name is Galih Roswandi, and I am a software developer based in
         Tasikmalaya City 🇮🇩. I specialize in full-stack web development. With
@@ -39,6 +48,6 @@ export default function AboutDesc() {
         page, and let{"'"}s discuss how we can collaborate on interesting
         projects.
       </p>
-    </section>
+    </motion.section>
   );
 }

@@ -1,8 +1,17 @@
+"use client";
 import Image from "next/image";
+import { motion } from "framer-motion";
+import { boxVariant } from "@/utils/landingAnimation.config";
 
 export default function CardCareer() {
   return (
-    <section className="card bg-slate-100 dark:bg-slate-900 w-fit p-4 rounded flex justify-between items-center gap-2 sm:gap-3">
+    <motion.section
+      variants={boxVariant}
+      initial="hidden"
+      animate="visible"
+      exit="exit"
+      className="card bg-slate-100 dark:bg-slate-900 w-fit p-4 rounded flex justify-between items-center gap-2 sm:gap-3"
+    >
       <Image
         src={"/img/solusi247.png"}
         alt="Solusi 247"
@@ -29,6 +38,6 @@ export default function CardCareer() {
           ~ 10 Months
         </p>
       </section>
-    </section>
+    </motion.section>
   );
 }

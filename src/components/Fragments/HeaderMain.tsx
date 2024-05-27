@@ -1,3 +1,6 @@
+"use client";
+import { boxVariant } from "@/utils/landingAnimation.config";
+import { motion } from "framer-motion";
 export default function HeaderMain({
   title,
   desc,
@@ -9,11 +12,18 @@ export default function HeaderMain({
 }) {
   return (
     <header className="border-b border-slate-600 dark:border-slate-300 border-dashed py-4 md:py-6 mb-6">
-      <TextTitle textname={title} />
-      {children}
-      <p className="text-sm md:text-base text-slate-600 dark:text-slate-200">
-        {desc}
-      </p>
+      <motion.section
+        variants={boxVariant}
+        initial="hidden"
+        animate="visible"
+        exit="exit"
+      >
+        <TextTitle textname={title} />
+        {children}
+        <p className="text-sm md:text-base text-slate-600 dark:text-slate-200">
+          {desc}
+        </p>
+      </motion.section>
     </header>
   );
 }

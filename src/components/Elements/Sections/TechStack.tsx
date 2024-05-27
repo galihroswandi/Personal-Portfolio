@@ -1,6 +1,9 @@
+"use client";
 import Image from "next/image";
 import StackImage from "../small/StackImage";
 import { TextHeaderWithIcon } from "./HeaderContent";
+import { motion } from "framer-motion";
+import { boxVariant } from "@/utils/landingAnimation.config";
 
 export default function TechStack() {
   return (
@@ -25,7 +28,13 @@ export default function TechStack() {
 
 const Stack = () => {
   return (
-    <section className="mt-5 flex flex-row flex-wrap gap-2.5">
+    <motion.section
+      variants={boxVariant}
+      initial="hidden"
+      animate="visible"
+      exit="exit"
+      className="mt-5 flex flex-row flex-wrap gap-2.5"
+    >
       <StackImage titleTech="HTML">
         <Image
           src={"/icons/html5.svg"}
@@ -215,6 +224,6 @@ const Stack = () => {
           className="w-6"
         />
       </StackImage>
-    </section>
+    </motion.section>
   );
 };

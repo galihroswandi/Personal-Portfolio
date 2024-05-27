@@ -1,5 +1,7 @@
-import Image from "next/image";
+"use client";
+import { motion } from "framer-motion";
 import ButtonWithImage from "../Buttons/ButtonWithImage";
+import { boxVariant } from "@/utils/landingAnimation.config";
 
 export default function HeaderContent() {
   return (
@@ -24,7 +26,13 @@ export default function HeaderContent() {
         linkUrl="https://www.cakeresume.com/pdf/s--tBeLbuI1RntBOWKzRq21Gg--/7E8Nz.pdf"
         customParentClass={`flex items-center gap-3`}
       >
-        <section className="border-b-2 border-slate-600 text-slate-600 dark:text-slate-200 dark:border-slate-200 px-0.5">
+        <motion.section
+          variants={boxVariant}
+          initial="hidden"
+          animate="visible"
+          exit="exit"
+          className="border-b-2 border-slate-600 text-slate-600 dark:text-slate-200 dark:border-slate-200 px-0.5"
+        >
           <svg
             width="20"
             height="20"
@@ -38,8 +46,16 @@ export default function HeaderContent() {
               fill="currentColor"
             />
           </svg>
-        </section>
-        <span className="text-base">Download CV</span>
+        </motion.section>
+        <motion.span
+          variants={boxVariant}
+          initial="hidden"
+          animate="visible"
+          exit="exit"
+          className="text-base"
+        >
+          Download CV
+        </motion.span>
       </ButtonWithImage>
     </section>
   );
@@ -57,7 +73,13 @@ export const TextHeaderWithIcon = ({
   customClassTitle?: string;
 }) => {
   return (
-    <section className="text-slate-600 dark:text-slate-200">
+    <motion.section
+      variants={boxVariant}
+      initial="hidden"
+      animate="visible"
+      exit="exit"
+      className="text-slate-600 dark:text-slate-200"
+    >
       <section className="flex items-center gap-2 mb-1">
         {children}
         <h1
@@ -67,6 +89,6 @@ export const TextHeaderWithIcon = ({
         </h1>
       </section>
       <p className="text-sm md:text-base">{desc}</p>
-    </section>
+    </motion.section>
   );
 };

@@ -1,9 +1,18 @@
+"use client";
 import React from "react";
 import CardProject, { TechStackImage } from "../Elements/Cards/CardProject";
+import { motion } from "framer-motion";
+import { boxVariant } from "@/utils/landingAnimation.config";
 
 export default function CardsProject() {
   return (
-    <section className="grid sm:grid-cols-2 gap-7 items-center">
+    <motion.section
+      variants={boxVariant}
+      initial="hidden"
+      animate="visible"
+      exit="exit"
+      className="grid sm:grid-cols-2 gap-7 items-center"
+    >
       <CardProject
         title="E-Comerce Garuda Store"
         desc="This simple e-commerce project uses ReactJS, Firebase, and Redux technologies. In this project, e-commerce applications are built using the ReactJS framework for a responsive user interface."
@@ -33,6 +42,6 @@ export default function CardsProject() {
           alt="tailwindcss logo"
         />
       </CardProject>
-    </section>
+    </motion.section>
   );
 }

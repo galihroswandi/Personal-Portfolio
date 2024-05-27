@@ -1,5 +1,8 @@
+"use client";
+import { boxVariant } from "@/utils/landingAnimation.config";
 import CardService from "../Elements/Cards/CardService";
 import { TextHeaderWithIcon } from "../Elements/Sections/HeaderContent";
+import { motion } from "framer-motion";
 
 export default function Services() {
   return (
@@ -18,7 +21,13 @@ export default function Services() {
           />
         </svg>
       </TextHeaderWithIcon>
-      <section className="mt-5 grid grid-cols-1 sm:grid-cols-2 gap-5">
+      <motion.section
+        variants={boxVariant}
+        initial="hidden"
+        animate="visible"
+        exit="exit"
+        className="mt-5 grid grid-cols-1 sm:grid-cols-2 gap-5"
+      >
         <CardService
           title="Website creation services"
           desc="Professional offer to create engaging, functional, and responsive
@@ -61,7 +70,7 @@ export default function Services() {
             />
           </svg>
         </CardService>
-      </section>
+      </motion.section>
     </section>
   );
 }
