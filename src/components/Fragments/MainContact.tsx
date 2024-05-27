@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import ButtonWithImage from "../Elements/Buttons/ButtonWithImage";
 import sendbot from "@/services/sendbot";
 import { ToastContainer, toast } from "react-toastify";
@@ -108,10 +108,10 @@ const FormContact = () => {
     })
       .then((res: any) => {
         setLoadingContact(false);
-	toast.success("Message send successfully", {
- 	  position: "bottom-left",
-	  autoClose: 5000
-	});
+        toast.success("Message send successfully", {
+          position: "bottom-left",
+          autoClose: 5000,
+        });
 
         const name = document.getElementById("name") as HTMLInputElement;
         const email = document.getElementById(
@@ -169,6 +169,7 @@ const FormContact = () => {
           name="message"
           id="message"
           rows={4}
+          required
           onChange={(e) => setMessage(e.target.value)}
           className="py-2.5 px-4 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded outline-none text-slate-600 dark:text-slate-200"
           placeholder="Enter your message"
@@ -246,6 +247,7 @@ const InputForm = ({
         id={title.toLowerCase()}
         placeholder={placeholder}
         autoComplete="off"
+        required
         onChange={(e) => onchange(e.target.value)}
         className="w-full py-2.5 px-4 border dark:bg-slate-900 border-slate-200 dark:border-slate-800 rounded outline-none text-slate-600 dark:text-slate-200"
       />
