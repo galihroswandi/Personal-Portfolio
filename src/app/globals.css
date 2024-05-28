@@ -9,3 +9,12 @@
 .nav-button.active {
   @apply bg-slate-100 dark:bg-slate-900;
 }
+
+.sidebar::-webkit-scrollbar {
+  width: 0;
+  @apply bg-transparent;
+}
+
+.sidebar::-webkit-scrollbar-track {
+  background: transparent;
+}

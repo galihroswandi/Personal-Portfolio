@@ -49,7 +49,7 @@ export default function SidebarSocialMedia() {
         useButton={false}
         blank="_blank"
         linkUrl="https://instagram.com/galih_roswandi/"
-        customParentClass="bg-gradient-to-r from-[#FF9B01] via-[#FD02CE] to-[#9109F9] text-white rounded flex items-center justify-center p-2 lg:gap-2"
+        customParentClass="w-fit bg-gradient-to-r from-[#FF9B01] via-[#FD02CE] to-[#9109F9] text-white rounded flex items-center justify-center p-2 lg:gap-2"
       >
         {" "}
         <svg
