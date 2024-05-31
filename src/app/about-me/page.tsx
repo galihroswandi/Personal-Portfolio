@@ -4,11 +4,13 @@ import HeaderMain from "@/components/Fragments/HeaderMain";
 import Navbar from "@/components/Fragments/Navbar";
 import Sidebar from "@/components/Fragments/Sidebar";
 import { aboutMejsonld } from "@/seo/about-me";
+import ParticlesBackground from "@/utils/ParticlesBackground";
 import { Metadata } from "next";
 
 export default function page() {
   return (
     <>
+      <ParticlesBackground customParentClass="hidden dark:block" />
       <section className="relative md:px-5 lg:px-14 xl:max-w-[85%] mx-auto overflow-x-hidden">
         <Navbar />
         <Sidebar />
