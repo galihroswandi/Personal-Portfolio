@@ -11,7 +11,7 @@ export default function HeaderMain({
   children?: React.ReactNode;
 }) {
   return (
-    <header className="border-b border-slate-600 dark:border-slate-300 border-dashed py-4 md:py-6 mb-6">
+    <header className="border-b border-slate-600 dark:border-slate-300 border-dashed py-4 md:py-6 md:pt-5 mb-6">
       <motion.section
         variants={boxVariant}
         initial="hidden"

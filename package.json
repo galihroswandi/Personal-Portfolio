@@ -19,6 +19,7 @@
     "node-telegram-bot-api": "^0.66.0",
     "react": "^18",
     "react-dom": "^18",
+    "react-simple-typewriter": "^5.0.1",
     "react-toastify": "^10.0.5",
     "sharp": "^0.33.4",
     "tsparticles": "^3.4.0"

@@ -188,6 +188,42 @@ const Stack = () => {
           className="w-6"
         />
       </StackImage>
+      <StackImage titleTech="">
+        <Image
+          src={"/icons/firefly-logo.webp"}
+          alt="firefly logo"
+          width={100}
+          height={50}
+          className="h-7"
+        />
+      </StackImage>
+      <StackImage titleTech="Hyperledger Besu">
+        <Image
+          src={"/icons/besu-logo.svg"}
+          alt="besu logo"
+          width={100}
+          height={50}
+          className="w-6"
+        />
+      </StackImage>
+      <StackImage titleTech="Git">
+        <Image
+          src={"/icons/git.svg"}
+          alt="git logo"
+          width={50}
+          height={50}
+          className="w-6"
+        />
+      </StackImage>
+      <StackImage titleTech="Github">
+        <Image
+          src={"/icons/github.svg"}
+          alt="github logo"
+          width={50}
+          height={50}
+          className="w-6"
+        />
+      </StackImage>
       <StackImage titleTech="Docker">
         <Image
           src={"/icons/docker.svg"}
@@ -219,6 +255,42 @@ const Stack = () => {
         <Image
           src={"/icons/nginx.svg"}
           alt="nginx logo"
+          width={50}
+          height={50}
+          className="w-6"
+        />
+      </StackImage>
+      <StackImage titleTech="PHP">
+        <Image
+          src={"/icons/php.svg"}
+          alt="php logo"
+          width={50}
+          height={50}
+          className="w-6"
+        />
+      </StackImage>
+      <StackImage titleTech="Laravel">
+        <Image
+          src={"/icons/laravel.svg"}
+          alt="laravel logo"
+          width={50}
+          height={50}
+          className="w-6"
+        />
+      </StackImage>
+      <StackImage titleTech="Chart JS">
+        <Image
+          src={"/icons/chartjs.svg"}
+          alt="chartjs logo"
+          width={50}
+          height={50}
+          className="w-6"
+        />
+      </StackImage>
+      <StackImage titleTech="Jest Unit Testing">
+        <Image
+          src={"/icons/jest.svg"}
+          alt="jest logo"
           width={50}
           height={50}
           className="w-6"
