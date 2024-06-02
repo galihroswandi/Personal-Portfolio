@@ -38,3 +38,14 @@ div.hexagone {
   );
   @apply h-24 w-full bg-gradient-to-r from-primary-green to-primary-blue relative;
 }
+
+.particles-anim {
+  opacity: 0;
+  animation: fadeIn 0.5s forwards;
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}
