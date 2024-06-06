@@ -7,7 +7,7 @@ User-agent: *
 Disallow: /contacts
 
 # Host
-Host: https://galihroswandi.com
+Host: https://www.galihroswandi.com
 
 # Sitemaps
-Sitemap: https://galihroswandi.com/sitemap.xml
+Sitemap: https://www.galihroswandi.com/sitemap.xml

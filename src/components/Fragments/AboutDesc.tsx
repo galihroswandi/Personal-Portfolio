@@ -40,7 +40,7 @@ export default function AboutDesc() {
         dreams with dedication and perseverance.
       </p>
       <p>
-        Feel free to contact me at <b>galihroswandi25@gmail.com</b> or through
+        Feel free to reach out through
         the{" "}
         <Link className="underline" href="/contacts">
           Contact
