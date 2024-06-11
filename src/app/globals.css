@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 .nav-button.active.mobile {
-  @apply bg-gradient-to-b from-[#0A66C2] to-[#5FA04E];
+  @apply bg-gradient-to-b from-primary-blue;
 }
 
 .nav-button.active {

@@ -9,8 +9,8 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        "primary-blue": "#03A0D9",
-        "primary-green": "#5FA04E",
+        "primary-blue": "#0290AC",
+        "primary-green": "#D55406",
         "primary-dark": "#00080B",
       },
       boxShadow: {
