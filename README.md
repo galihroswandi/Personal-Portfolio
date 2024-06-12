@@ -1,7 +1,7 @@
 
 # Personal Portfolio
 
-![GR Digital ID](logo.png)
+![GR Digital ID](./public/logo.png)
 
 This is a personal portfolio app built using Next.js and Tailwind CSS. The app displays projects, an about page, blogs, and contact information.
 
