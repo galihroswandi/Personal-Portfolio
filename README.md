@@ -1,7 +1,7 @@
 
 # Personal Portfolio
 <p align="center">
-  <img src="./logo.png" alt="Logo" width="200">
+  <img src="./public/logo.png" alt="Logo" width="200">
 </p>
 
 This is a personal portfolio app built using Next.js and Tailwind CSS. The app displays projects, an about page, blogs, and contact information.
