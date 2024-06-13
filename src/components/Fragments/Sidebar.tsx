@@ -28,6 +28,12 @@ export default function Sidebar() {
         />
       </section>
       <SidebarSocialMedia />
+      <section className="copyright text-center mb-0">
+        <small className="text-slate-600 dark:text-slate-400 text-center flex justify-center flex-wrap gap-1">
+          © 2024 <span className="md:hidden lg:block">Galih Roswandi</span>{" "}
+          <span className="hidden md:block lg:hidden">GR</span>
+        </small>
+      </section>
     </section>
   );
 }
