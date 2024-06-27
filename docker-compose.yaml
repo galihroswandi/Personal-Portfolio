@@ -1,0 +1,8 @@
+version: '3.3'
+services:
+  web:
+    image: gr:2.0.0
+    restart: always
+    ports:
+      - "4001:443"
+    command: npm start -p 4001

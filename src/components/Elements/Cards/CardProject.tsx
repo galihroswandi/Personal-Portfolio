@@ -8,17 +8,19 @@ export default function CardProject({
   title,
   desc,
   linkProject,
+  target_link,
 }: {
-  children: React.ReactNode;
+  children?: React.ReactNode;
   imgProject: string;
   title: string;
   desc: string;
   linkProject: string;
+  target_link?: string;
 }) {
   return (
     <Link
       href={linkProject}
-      target="_blank"
+      target={(target_link && "_blank") || "_self"}
       className="card rounded bg-slate-100 dark:bg-slate-900 inline-block group"
     >
       <Image

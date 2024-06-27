@@ -1,0 +1,34 @@
+FROM ubuntu:22.04
+ENV DEBIAN_FRONTEND=noninteractive
+ENV TZ="Asia/Jakarta"
+
+RUN apt update
+
+# In ubuntu 22.04
+RUN apt install -y nginx vim
+
+#
+# nodejs
+#
+RUN curl -sL https://deb.nodesource.com/setup_20.x | bash -
+RUN apt -y install nodejs npm
+
+#
+# SSL
+#
+RUN mkdir -p /etc/nginx/ssl
+COPY ssl/cloudflare_origin_cert.pem /etc/nginx/ssl/cloudflare_origin_cert.pem
+COPY ssl/cloudflare_origin_key.pem /etc/nginx/ssl/cloudflare_origin_key.pem
+
+#
+# nginx
+#
+RUN mkdir -p /etc/nginx/sites-available
+COPY conf/nginx.conf /etc/nginx/sites-available/nginx.conf
+RUN ln -s /etc/nginx/sites-available/nginx.conf /etc/nginx/sites-enabled
+RUN nginx -t
+
+
+RUN mkdir -p /code/gr
+WORKDIR /code/gr
+EXPOSE 80 443 4001
