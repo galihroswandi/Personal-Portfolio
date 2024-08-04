@@ -3,8 +3,8 @@ export const aboutMejsonld = () => {
         "@context": "https://schema.org",
         "@type": "Person",
         "name": "Galih Roswandi",
-        "url": "https://www.galihroswandi.com/about",
-        "image": "https://www.galihroswandi.com/img/me.png",
+        "url": `${process.env.NEXT_SITE_URL}/about"`,
+        "image": `${process.env.NEXT_SITE_URL}/img/me.png"`,
         "sameAs": [
           "https://instagram.com/galih_roswandi",
           "https://github.com/galihroswandi",
@@ -41,7 +41,7 @@ export const aboutMejsonld = () => {
         "worksFor": {
           "@type": "Organization",
           "name": "GR Digital",
-          "url": "https://www.galihroswandi.com"
+          "url": `${process.env.NEXT_SITE_URL}`,
         },
         "makesOffer": [
           {
@@ -51,7 +51,7 @@ export const aboutMejsonld = () => {
             "priceCurrency": "IDR",
             "itemCondition": "https://schema.org/NewCondition",
             "availability": "https://schema.org/InStock",
-            "url": "https://www.galihroswandi.com/services"
+            "url": `${process.env.NEXT_SITE_URL}/services`,
           },
           {
             "@type": "Offer",
@@ -60,7 +60,7 @@ export const aboutMejsonld = () => {
             "priceCurrency": "IDR",
             "itemCondition": "https://schema.org/NewCondition",
             "availability": "https://schema.org/InStock",
-            "url": "https://www.galihroswandi.com/contacts"
+            "url": `${process.env.NEXT_SITE_URL}/contacts`,
           }
         ],
         "aggregateRating": {

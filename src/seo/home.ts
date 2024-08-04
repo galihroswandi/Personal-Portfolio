@@ -3,7 +3,7 @@ export const homeJsonld = () => {
     "@context": "https://schema.org",
     "@type": "Person",
     "name": "Galih Roswandi",
-    "url": "https://www.galihroswandi.com",
+    "url": `${process.env.NEXT_SITE_URL}`,
     "sameAs": [
       "https://instagram.com/galih_roswandi",
       "https://github.com/galihroswandi",
@@ -33,7 +33,7 @@ export const homeJsonld = () => {
       "Github"
     ],
     "jobTitle": "Frontend Developer",
-    "alumni": "https://www.galihroswandi.com/alumni",
+    "alumni": `${process.env.NEXT_SITE_URL}/alumni`,
     "address": {
       "@type": "PostalAddress",
       "addressLocality": "Tasikmalaya",
@@ -48,7 +48,7 @@ export const homeJsonld = () => {
         "priceCurrency": "IDR",
         "itemCondition": "https://schema.org/newCondition",
         "availability": "https://schema.org/InStock",
-        "url": "https://www.galihroswandi.com"
+        "url": `${process.env.NEXT_SITE_URL}`
       },
       {
         "@type": "Offer",
@@ -58,7 +58,7 @@ export const homeJsonld = () => {
         "priceCurrency": "IDR",
         "itemCondition": "https://schema.org/newCondition",
         "availability": "https://schema.org/InStock",
-        "url": "https://www.galihroswandi.com/contacts"
+        "url": `${process.env.NEXT_SITE_URL}/contacts`
       }
     ]
   };
