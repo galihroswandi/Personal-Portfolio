@@ -4,6 +4,18 @@ import { motion } from "framer-motion";
 import { boxVariant } from "@/utils/landingAnimation.config";
 
 export default function CardCareer() {
+  const calculateMonthsSiceAugust = () => {
+    const startDate = new Date(2023, 7, 1);
+    const currentDate = new Date();
+
+    let months;
+    months = (currentDate.getFullYear() - startDate.getFullYear()) * 12;
+    months -= startDate.getMonth();
+    months += currentDate.getMonth();
+
+    return months;
+  };
+
   return (
     <motion.section
       variants={boxVariant}
@@ -35,7 +47,7 @@ export default function CardCareer() {
           1 August 2023 - Present
         </p>
         <p className="text-sm text-slate-600 dark:text-slate-300">
-          ~ 10 Months
+          ~ {calculateMonthsSiceAugust()} months
         </p>
       </section>
     </motion.section>
