@@ -16,6 +16,8 @@
 # production
 /build
 
+/certbot
+
 # misc
 .DS_Store
 *.pem
