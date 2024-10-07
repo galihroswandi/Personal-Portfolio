@@ -1,0 +1,4 @@
+services:
+  client:
+    image: gr-client:2.0.1
+    restart: always

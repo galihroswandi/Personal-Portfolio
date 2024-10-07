@@ -53,6 +53,9 @@ export default function CardsProject() {
           logoUrl="/icons/tailwindcss.svg"
           alt="tailwindcss logo"
         />
+        <TechStackImage logoUrl="/icons/docker.svg" alt="docker logo" />
+        <TechStackImage logoUrl="/icons/linux.svg" alt="linux logo" />
+        <TechStackImage logoUrl="/icons/nginx.svg" alt="nginx logo" />
       </CardProject>
     </motion.section>
   );

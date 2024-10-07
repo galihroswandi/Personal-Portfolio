@@ -1,34 +1,17 @@
-FROM ubuntu:22.04
-ENV DEBIAN_FRONTEND=noninteractive
-ENV TZ="Asia/Jakarta"
+FROM ubuntu:24.10
 
 RUN apt update
 
-# In ubuntu 22.04
-RUN apt install -y nginx vim
+# In ubuntu 24.10 install package with apt
+RUN apt install -y curl vim nginx
 
 #
-# nodejs
+# Nodejs
 #
 RUN curl -sL https://deb.nodesource.com/setup_20.x | bash -
-RUN apt -y install nodejs npm
+RUN apt install -y nodejs
+RUN npm i -g next
 
-#
-# SSL
-#
-RUN mkdir -p /etc/nginx/ssl
-COPY ssl/cloudflare_origin_cert.pem /etc/nginx/ssl/cloudflare_origin_cert.pem
-COPY ssl/cloudflare_origin_key.pem /etc/nginx/ssl/cloudflare_origin_key.pem
+RUN mkdir -p /app
 
-#
-# nginx
-#
-RUN mkdir -p /etc/nginx/sites-available
-COPY conf/nginx.conf /etc/nginx/sites-available/nginx.conf
-RUN ln -s /etc/nginx/sites-available/nginx.conf /etc/nginx/sites-enabled
-RUN nginx -t
-
-
-RUN mkdir -p /code/gr
-WORKDIR /code/gr
-EXPOSE 80 443 4001
+EXPOSE 3000 443

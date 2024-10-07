@@ -1,0 +1,18 @@
+# Stage 1: Install dependencies
+FROM gr:2.0.1 AS deps
+WORKDIR /app
+COPY package.json ./package.json
+COPY package-lock.json ./package-lock.json
+RUN npm update && npm install
+
+# Stage 2: Build aplikasi
+FROM gr:2.0.1 AS builder
+WORKDIR /app
+COPY --from=deps /app/node_modules ./node_modules
+COPY . .
+
+# Expose port yang diperlukan
+EXPOSE 3000
+
+# Jalankan aplikasi
+CMD ["npm", "run", "dev"]
