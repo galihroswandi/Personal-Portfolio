@@ -1,3 +1,4 @@
+import React from "react";
 import TechStack from "@/components/Elements/Sections/TechStack";
 import Typewritter from "@/components/Elements/Sections/Typewritter";
 import CareerMain from "@/components/Fragments/CareerMain";

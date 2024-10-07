@@ -1,12 +1,15 @@
 import { Metadata } from "next";
 import { blogJsonld } from "@/seo/blog";
 import ParticlesBackground from "@/utils/ParticlesBackground";
+import BlogHeader from "@/components/Fragments/BlogHeader";
 
-export default function page({ params }: { params: { slug: string } }) {
+export default function page() {
   return (
     <>
       <ParticlesBackground customParentClass="hidden dark:block" />
-      <section className="relative md:px-5 lg:px-14 xl:max-w-[85%] mx-auto overflow-x-hidden"></section>
+      <main className="w-full px-5 py-5 md:pl-20 lg:pl-72 lg:py-3 relative md:px-5lg:px-14 xl:max-w-[85%] mx-auto overflow-x-hidden">
+        <BlogHeader />
+      </main>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
