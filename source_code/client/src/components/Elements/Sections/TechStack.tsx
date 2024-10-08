@@ -161,6 +161,15 @@ const Stack = () => {
           className="w-6"
         />
       </StackImage>
+      <StackImage titleTech="NestJS">
+        <Image
+          src={"/icons/nestjs.svg"}
+          alt="nestjs logo"
+          width={50}
+          height={50}
+          className="w-6"
+        />
+      </StackImage>
       <StackImage titleTech="Figma">
         <Image
           src={"/icons/figma.svg"}
