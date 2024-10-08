@@ -46,7 +46,7 @@ export default function CardsProject() {
         title="Personal Portfolio"
         desc="This website showcases a description about me and includes a feature to contact me. It was created using Next.js and Tailwind CSS. I also used the Framer Motion library for animations."
         imgProject="/img/project-3.png"
-        linkProject="https://gr.mahpardigital.com"
+        linkProject="https://galih.roswandi.com"
       >
         <TechStackImage logoUrl="/icons/nextjs.svg" alt="nextjs logo" />
         <TechStackImage
