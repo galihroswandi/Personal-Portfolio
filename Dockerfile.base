@@ -10,7 +10,7 @@ RUN apt install -y curl vim nginx
 #
 RUN curl -sL https://deb.nodesource.com/setup_20.x | bash -
 RUN apt install -y nodejs
-RUN npm i -g next
+RUN npm i -g next@14.2.3
 
 RUN mkdir -p /app
 
