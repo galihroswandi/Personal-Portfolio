@@ -1,0 +1,91 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffff;
+  --primary-blue: #0290ac;
+  --primary-orange: #d55406;
+  --text-color: oklch(44.6% 0.043 257.281);
+}
+
+@theme {
+  --font-sans: var(--font-geist-sans);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #00080b;
+    --text-color: oklch(92.9% 0.013 255.508);
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--text-color);
+  font-family: Inter, Helvetica, sans-serif;
+}
+
+.nav-button.active.mobile {
+  background-image: linear-gradient(
+    to bottom,
+    var(--color-primary-blue),
+    var(--color-primary-green)
+  );
+}
+
+.nav-button.active {
+  background-color: #f1f5f9; /* slate-100 */
+}
+
+@media (prefers-color-scheme: dark) {
+  .nav-button.active {
+    background-color: #0f172a; /* slate-900 */
+  }
+}
+
+.sidebar::-webkit-scrollbar {
+  width: 0;
+  background: transparent;
+}
+
+.sidebar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+div.hexagone {
+  display: inline-block;
+  filter: url(#round);
+}
+
+.hexagone::before {
+  content: "";
+  display: flex;
+  clip-path: polygon(
+    20% 0%,
+    85% 0,
+    85% 40%,
+    170% 35%,
+    100% 100%,
+    20% 100%,
+    0 100%,
+    0 0
+  );
+  height: 6rem; /* h-24 */
+  width: 100%;
+  background-image: linear-gradient(
+    to right,
+    var(--color-primary-green),
+    var(--color-primary-blue)
+  );
+  position: relative;
+}
+
+.particles-anim {
+  opacity: 0;
+  animation: fadeIn 0.5s 0.5s forwards;
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}
