@@ -5,13 +5,11 @@ import HeaderMain from "@/components/Fragments/HeaderMain";
 import Navbar from "@/components/Fragments/Navbar";
 import Services from "@/components/Fragments/Services";
 import Sidebar from "@/components/Fragments/Sidebar";
-import ParticlesBackground from "@/components/utils/ParticlesBackground";
 import { Metadata } from "next";
 
 export default function Home() {
   return (
     <>
-      <ParticlesBackground customParentClass="hidden dark:block" />
       <section className="relative md:px-5 lg:px-14 xl:max-w-[85%] mx-auto overflow-x-hidden">
         <Navbar />
         <Sidebar />

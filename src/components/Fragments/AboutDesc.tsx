@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { boxVariant } from "../utils/landingAnimation.config";
+import { boxVariant } from "@/utils/landingAnimation.config";
 
 export default function AboutDesc() {
   return (
@@ -40,7 +40,8 @@ export default function AboutDesc() {
         dreams with dedication and perseverance.
       </p>
       <p>
-        Feel free to reach out through the{" "}
+        Feel free to reach out through
+        the{" "}
         <Link className="underline" href="/contacts">
           Contact
         </Link>{" "}
