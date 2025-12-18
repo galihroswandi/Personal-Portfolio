@@ -1,7 +1,7 @@
 "use client";
 import { motion } from "framer-motion";
-import { boxVariant } from "@/utils/landingAnimation.config";
 import CardProject from "../Elements/Cards/CardProject";
+import { boxVariant } from "../utils/landingAnimation.config";
 
 export default function BlogContent() {
   return (
