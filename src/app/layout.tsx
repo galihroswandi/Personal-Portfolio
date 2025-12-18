@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 
 import "./globals.css";
-import Providers from "@/components/ProgressBarProvider";
+import Providers from "@/components/providers/ProgressBarProvider";
+import ThemeProvider from "@/components/providers/ThemeProvider";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -20,12 +21,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="scroll-smooth" id="html-root">
+    <html lang="en" suppressHydrationWarning>
       <head>
-        <link rel="icon" href="/favicon.svg" sizes="any" />
+        <link rel="icon" href="./favicon.svg" sizes="any" />
       </head>
       <body className={`${inter.variable} antialiased`}>
-        <Providers>{children}</Providers>
+        <ThemeProvider>
+          <Providers>{children}</Providers>
+        </ThemeProvider>
       </body>
     </html>
   );
