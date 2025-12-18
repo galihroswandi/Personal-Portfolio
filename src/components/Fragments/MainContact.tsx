@@ -1,12 +1,12 @@
 "use client";
 import React, { useState } from "react";
 import ButtonWithImage from "../Elements/Buttons/ButtonWithImage";
-import sendbot from "@/services/sendbot";
+// import sendbot from "@/services/sendbot";
 import { ToastContainer, toast } from "react-toastify";
 import { motion } from "framer-motion";
 
 import "react-toastify/dist/ReactToastify.css";
-import { boxVariant } from "@/utils/landingAnimation.config";
+import { boxVariant } from "../utils/landingAnimation.config";
 
 export default function MainContact() {
   return (
@@ -108,36 +108,36 @@ const FormContact = () => {
     e.preventDefault();
     setLoadingContact(true);
 
-    sendbot({
-      name,
-      email,
-      message,
-    })
-      .then((res: any) => {
-        setLoadingContact(false);
-        toast.success("Message send successfully", {
-          position: "bottom-left",
-          autoClose: 5000,
-        });
+    // sendbot({
+    //   name,
+    //   email,
+    //   message,
+    // })
+    //   .then((res: any) => {
+    //     setLoadingContact(false);
+    //     toast.success("Message send successfully", {
+    //       position: "bottom-left",
+    //       autoClose: 5000,
+    //     });
 
-        const name = document.getElementById("name") as HTMLInputElement;
-        const email = document.getElementById(
-          "email/telegram"
-        ) as HTMLInputElement;
-        const message = document.getElementById("message") as HTMLInputElement;
+    //     const name = document.getElementById("name") as HTMLInputElement;
+    //     const email = document.getElementById(
+    //       "email/telegram"
+    //     ) as HTMLInputElement;
+    //     const message = document.getElementById("message") as HTMLInputElement;
 
-        name.value = "";
-        email.value = "";
-        message.value = "";
-      })
-      .catch((err: any) => {
-        setLoadingContact(false);
+    //     name.value = "";
+    //     email.value = "";
+    //     message.value = "";
+    //   })
+    //   .catch((err: any) => {
+    //     setLoadingContact(false);
 
-        toast.error("Failed to send message", {
-          position: "bottom-left",
-          autoClose: 5000,
-        });
-      });
+    //     toast.error("Failed to send message", {
+    //       position: "bottom-left",
+    //       autoClose: 5000,
+    //     });
+    //   });
   };
 
   return (
@@ -186,7 +186,7 @@ const FormContact = () => {
         whileTap={{ scale: 0.98 }}
         whileHover={{ scale: 1.01 }}
         type="submit"
-        className={`bg-primary-blue hover:bg-gradient-to-r transition-colors duration-500 from-primary-green to-primary-blue text-white py-2.5 px-4 rounded relative flex items-center justify-center ${
+        className={`bg-primary hover:bg-linear-to-r transition-colors duration-500 from-primary-green to-primary-blue text-white py-2.5 px-4 rounded relative flex items-center justify-center ${
           loadingContact ? "cursor-not-allowed" : ""
         }`}
         disabled={loadingContact}

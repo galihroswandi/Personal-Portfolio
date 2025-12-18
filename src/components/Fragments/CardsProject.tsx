@@ -1,8 +1,7 @@
 "use client";
-import React from "react";
 import CardProject, { TechStackImage } from "../Elements/Cards/CardProject";
 import { motion } from "framer-motion";
-import { boxVariant } from "@/utils/landingAnimation.config";
+import { boxVariant } from "../utils/landingAnimation.config";
 
 export default function CardsProject() {
   return (

@@ -1,27 +1,41 @@
 @import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
 
 :root {
   --background: #ffff;
   --primary-blue: #0290ac;
   --primary-orange: #d55406;
   --text-color: oklch(44.6% 0.043 257.281);
+  --color-surface: #f1f5f9;
 }
 
 @theme {
   --font-sans: var(--font-geist-sans);
+  --color-primary: var(--primary-blue);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #00080b;
-    --text-color: oklch(92.9% 0.013 255.508);
-  }
+.dark {
+  --color-surface: #0f172a;
+  --background: #00080b;
+  --text-color: oklch(92.9% 0.013 255.508);
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
   background: var(--background);
   color: var(--text-color);
   font-family: Inter, Helvetica, sans-serif;
+}
+
+.inverted {
+  clip-path: url("#clip");
+  width: inherit;
+  height: inherit;
+  background-color: #513d34;
+  aspect-ratio: 2 / 1;
 }
 
 .nav-button.active.mobile {
@@ -33,13 +47,7 @@ body {
 }
 
 .nav-button.active {
-  background-color: #f1f5f9; /* slate-100 */
-}
-
-@media (prefers-color-scheme: dark) {
-  .nav-button.active {
-    background-color: #0f172a; /* slate-900 */
-  }
+  background-color: var(--color-surface);
 }
 
 .sidebar::-webkit-scrollbar {

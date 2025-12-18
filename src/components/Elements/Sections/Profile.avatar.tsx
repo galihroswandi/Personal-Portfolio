@@ -1,34 +1,28 @@
+import Image from "next/image";
 import DarkLight from "./DarkLight";
 
 export default function ProfileAvatar() {
   return (
     <>
-      <section className="w-full relative hidden lg:block header">
-        <div className="hexagone w-full h-24 rounded-xl"></div>
+      <section className="w-full relative hidden lg:block">
+        <div className="inverted w-full h-24"></div>
         <DarkLight
           borderLeft={false}
-          customParentClass="text-slate-600 dark:text-slate-100 absolute top-0.5 right-1"
+          customParentClass="text-slate-600 dark:text-slate-100 absolute top-1 right-1"
         />
       </section>
 
+      {/* https://corner-inverter.douiri.org/ */}
       <svg
-        style={{ visibility: "hidden", position: "absolute" }}
+        xmlns="http://www.w3.org/2000/svg"
+        className="block absolute"
         width="0"
         height="0"
-        xmlns="http://www.w3.org/2000/svg"
-        version="1.1"
       >
         <defs>
-          <filter id="round">
-            <feGaussianBlur in="SourceGraphic" stdDeviation="5" result="blur" />
-            <feColorMatrix
-              in="blur"
-              mode="matrix"
-              values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 19 -9"
-              result="goo"
-            />
-            <feComposite in="SourceGraphic" in2="goo" operator="atop" />
-          </filter>
+          <clipPath id="clip" clipPathUnits="objectBoundingBox">
+            <path d="M0.05,0H0.8A0.05,0.1,0,0,1,0.85,0.1V0.2A0.05,0.1,0,0,0,0.9,0.3H0.95A0.05,0.1,0,0,1,1,0.4V0.9A0.05,0.1,0,0,1,0.95,1H0.05A0.05,0.1,0,0,1,0,0.9V0.1A0.05,0.1,0,0,1,0.05,0Z" />
+          </clipPath>
         </defs>
       </svg>
     </>
