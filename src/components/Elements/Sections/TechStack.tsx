@@ -107,37 +107,10 @@ const Stack = () => {
           className="w-6"
         />
       </StackImage>
-      <StackImage titleTech="Firebase">
-        <Image
-          src={"/icons/firebase.svg"}
-          alt="firebase logo"
-          width={50}
-          height={50}
-          className="w-6"
-        />
-      </StackImage>
       <StackImage titleTech="Mysql">
         <Image
           src={"/icons/mysql.svg"}
           alt="mysql logo"
-          width={50}
-          height={50}
-          className="w-6"
-        />
-      </StackImage>
-      <StackImage titleTech="Vite">
-        <Image
-          src={"/icons/vite.svg"}
-          alt="vite logo"
-          width={50}
-          height={50}
-          className="w-6"
-        />
-      </StackImage>
-      <StackImage titleTech="NPM">
-        <Image
-          src={"/icons/npm.svg"}
-          alt="npm logo"
           width={50}
           height={50}
           className="w-6"
@@ -193,24 +166,6 @@ const Stack = () => {
           src={"/icons/solidity.svg"}
           alt="solidity logo"
           width={50}
-          height={50}
-          className="w-6"
-        />
-      </StackImage>
-      <StackImage titleTech="">
-        <Image
-          src={"/icons/firefly-logo.webp"}
-          alt="firefly logo"
-          width={100}
-          height={50}
-          className="h-7"
-        />
-      </StackImage>
-      <StackImage titleTech="Hyperledger Besu">
-        <Image
-          src={"/icons/besu-logo.svg"}
-          alt="besu logo"
-          width={100}
           height={50}
           className="w-6"
         />
@@ -282,15 +237,6 @@ const Stack = () => {
         <Image
           src={"/icons/laravel.svg"}
           alt="laravel logo"
-          width={50}
-          height={50}
-          className="w-6"
-        />
-      </StackImage>
-      <StackImage titleTech="Chart JS">
-        <Image
-          src={"/icons/chartjs.svg"}
-          alt="chartjs logo"
           width={50}
           height={50}
           className="w-6"
