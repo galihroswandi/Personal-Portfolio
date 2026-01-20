@@ -1,4 +1,3 @@
-import React from "react";
 import Profile from "../Elements/Sections/Profile";
 import DarkLight from "../Elements/Sections/DarkLight";
 import Navigation from "../Elements/Sections/Navigation";
