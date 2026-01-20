@@ -30,7 +30,6 @@ export default function Home() {
                   "Software Developer",
                   "Web Developer",
                   "Frontend Developer",
-                  "Blockchain Developer",
                 ]}
               />
             </h1>
