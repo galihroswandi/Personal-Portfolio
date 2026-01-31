@@ -3,7 +3,9 @@ import NotBlog from "@/components/Elements/Errors/NotBlog";
 import HeaderMain from "@/components/Fragments/HeaderMain";
 import Navbar from "@/components/Fragments/Navbar";
 import Sidebar from "@/components/Fragments/Sidebar";
+import BlogPostList from "@/components/Fragments/BlogPostList";
 import { blogJsonld } from "@/seo/blog";
+import { blogPosts } from "@/data/blog";
 import ParticlesBackground from "@/components/utils/ParticlesBackground";
 
 export default function page() {
@@ -15,8 +17,11 @@ export default function page() {
         <Sidebar />
         <main className="w-full px-5 md:pl-20 lg:pl-72 lg:py-3 pb-20">
           <HeaderMain title="Blog" desc="Showcase of my writing" />
-          <NotBlog />
-          {/* <BlogContent /> */}
+          {blogPosts.length > 0 ? (
+            <BlogPostList posts={blogPosts} />
+          ) : (
+            <NotBlog />
+          )}
         </main>
       </section>
       <script

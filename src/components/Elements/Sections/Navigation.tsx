@@ -1,7 +1,7 @@
 "use client";
-import React from "react";
 import ButtonWithImage from "../Buttons/ButtonWithImage";
 import { usePathname } from "next/navigation";
+import { LucideBookOpen, LucideFeather } from "lucide-react";
 
 interface NavigationProps {
   iconColor: string;
@@ -74,25 +74,23 @@ export default function Navigation(props: NavigationProps) {
           useMobile ? "mobile" : "desktop"
         } text-${iconColor} p-1.5 lg:px-3 lg:py-2 rounded-full lg:rounded lg:flex lg:items-center lg:gap-3 lg:w-full md:hover:bg-slate-100 hover:bg-[#0299D0] dark:md:hover:bg-slate-900`}
       >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          xmlnsXlink="http://www.w3.org/1999/xlink"
-          viewBox="0 0 24 24"
-          width={25}
-          height={25}
-        >
-          <g
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          >
-            <path d="M5 21c.5-4.5 2.5-8 7-10"></path>
-            <path d="M9 18c6.218 0 10.5-3.288 11-12V4h-4.014c-9 0-11.986 4-12 9c0 1 0 3 2 5h3z"></path>
-          </g>
-        </svg>
+        <LucideFeather className="w-6 h-6" />
         <span className="hidden lg:block text-lg font-medium">About Me</span>
+      </ButtonWithImage>
+      <ButtonWithImage
+        useButton={false}
+        linkUrl="/learning-journey"
+        ariaLabel="Learning Journey"
+        customParentClass={`nav-button ${
+          pathname === "/learning-journey" ? "active" : ""
+        } ${
+          useMobile ? "mobile" : "desktop"
+        } text-${iconColor} p-1.5 lg:px-3 lg:py-2 rounded-full lg:rounded lg:flex lg:items-center lg:gap-3 lg:w-full md:hover:bg-slate-100 hover:bg-[#0299D0] dark:md:hover:bg-slate-900`}
+      >
+        <LucideBookOpen className="w-6 h-6" />
+        <span className="hidden lg:block text-lg font-medium">
+          Learning Journey
+        </span>
       </ButtonWithImage>
       <ButtonWithImage
         useButton={false}

@@ -1,27 +1,22 @@
+"use client";
+
 import Image from "next/image";
-import Link from "next/link";
-import React from "react";
+import type { Project } from "@/data/projects";
 
 export default function CardProject({
-  children,
-  imgProject,
-  title,
-  desc,
-  linkProject,
-  target_link,
+  project,
+  onSelect,
 }: {
-  children?: React.ReactNode;
-  imgProject: string;
-  title: string;
-  desc: string;
-  linkProject: string;
-  target_link?: string;
+  project: Project;
+  onSelect: (project: Project) => void;
 }) {
+  const { imgProject, title, desc, techStack } = project;
+
   return (
-    <Link
-      href={linkProject}
-      target={(target_link && "_blank") || "_self"}
-      className="card rounded bg-slate-100 dark:bg-slate-900 inline-block group"
+    <button
+      type="button"
+      onClick={() => onSelect(project)}
+      className="card rounded bg-slate-100 dark:bg-slate-900 inline-block group text-left w-full"
     >
       <Image
         src={imgProject}
@@ -37,7 +32,7 @@ export default function CardProject({
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
             fill="currentColor"
-            className="w-5 h-5 transition duration-500 group-hover:translate-x-1 group-hover:-translate-y-1"
+            className="w-5 h-5 transition duration-500 group-hover:translate-x-1 group-hover:-translate-y-1 shrink-0"
           >
             <path
               fillRule="evenodd"
@@ -49,9 +44,15 @@ export default function CardProject({
         <p className="text-sm text-slate-500 dark:text-slate-400">{desc}</p>
       </section>
       <section className="tech-stack flex flex-wrap items-center gap-3 px-3 pb-3">
-        {children}
+        {techStack.map((item) => (
+          <TechStackImage
+            key={item.logoUrl}
+            logoUrl={item.logoUrl}
+            alt={item.alt}
+          />
+        ))}
       </section>
-    </Link>
+    </button>
   );
 }
 
