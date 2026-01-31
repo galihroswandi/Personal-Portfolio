@@ -1,5 +1,4 @@
 "use client";
-import React from "react";
 import ButtonWithImage from "../Buttons/ButtonWithImage";
 import { usePathname } from "next/navigation";
 import { LucideBookOpen, LucideFeather } from "lucide-react";
@@ -83,7 +82,7 @@ export default function Navigation(props: NavigationProps) {
         linkUrl="/learning-journey"
         ariaLabel="Learning Journey"
         customParentClass={`nav-button ${
-          pathname === "/about-me" ? "active" : ""
+          pathname === "/learning-journey" ? "active" : ""
         } ${
           useMobile ? "mobile" : "desktop"
         } text-${iconColor} p-1.5 lg:px-3 lg:py-2 rounded-full lg:rounded lg:flex lg:items-center lg:gap-3 lg:w-full md:hover:bg-slate-100 hover:bg-[#0299D0] dark:md:hover:bg-slate-900`}

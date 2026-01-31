@@ -1,9 +1,10 @@
-import CardsProject from "@/components/Fragments/CardsProject";
+import LearningJourneyList from "@/components/Fragments/LearningJourneyList";
 import HeaderMain from "@/components/Fragments/HeaderMain";
 import Navbar from "@/components/Fragments/Navbar";
 import Sidebar from "@/components/Fragments/Sidebar";
 import ParticlesBackground from "@/components/utils/ParticlesBackground";
-import { showcaseJsonld } from "@/seo/showcase-project";
+import { learningJourneyJsonld } from "@/seo/learning-journey";
+import { learningJourneyItems } from "@/data/learning-journey";
 import { Metadata } from "next";
 
 export default function page() {
@@ -18,30 +19,30 @@ export default function page() {
             title="Learning Journey"
             desc="Continuous growth through exploration and practice"
           />
-          <CardsProject />
+          <LearningJourneyList items={learningJourneyItems} />
         </main>
       </section>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: JSON.stringify(showcaseJsonld()),
+          __html: JSON.stringify(learningJourneyJsonld()),
         }}
-      ></script>
+      />
     </>
   );
 }
 
 export const metadata: Metadata = {
-  title: "Explore Galih Roswandi's Projects",
+  title: "Learning Journey - Galih Roswandi",
   description:
-    "Discover the diverse range of projects created by Galih Roswandi. From web development to software solutions, explore the portfolio here.",
+    "What Galih Roswandi is currently learning: skills, technologies, and topics in progress. See the learning journey and growth in practice.",
   alternates: {
-    canonical: `${process.env.NEXT_SITE_URL}/showcase-project`,
+    canonical: `${process.env.NEXT_SITE_URL}/learning-journey`,
   },
   openGraph: {
     countryName: "Indonesia",
-    title: "Explore Galih Roswandi's Projects",
+    title: "Learning Journey - Galih Roswandi",
     description:
-      "Discover the diverse range of projects created by Galih Roswandi. From web development to software solutions, explore the portfolio here.",
+      "What Galih Roswandi is currently learning: skills, technologies, and topics in progress.",
   },
 };
