@@ -64,13 +64,13 @@ export const projects: Project[] = [
   },
   {
     id: "4",
-    title: "Kedain for UMKM",
+    title: "Baywira for UMKM",
     desc: "A website that helps UMKM to manage their sales, with an easy-to-use UI and payment integration will certainly make it easier for users to pay via QRIS.",
     imgProject: "/img/project-4.png",
     repositoryUrl: undefined,
-    websiteUrl: "https://kedain.roswandi.com",
+    websiteUrl: "https://www.baywira.id",
     detail:
-      "Kedain for UMKM adalah website yang membantu UMKM mengelola penjualan dengan antarmuka yang mudah digunakan. Integrasi pembayaran memudahkan pelanggan membayar via QRIS. Dibangun dengan Next.js di frontend dan NestJS di backend, database MySQL. Deploy menggunakan Docker, Linux, dan Nginx. Proyek ini fokus pada pengalaman pengguna dan alur pembayaran yang lancar.",
+      "Baywira for UMKM adalah website yang membantu UMKM mengelola penjualan dengan antarmuka yang mudah digunakan. Integrasi pembayaran memudahkan pelanggan membayar via QRIS. Dibangun dengan Next.js di frontend dan NestJS di backend, database MySQL. Deploy menggunakan Docker, Linux, dan Nginx. Proyek ini fokus pada pengalaman pengguna dan alur pembayaran yang lancar.",
     techStack: [
       { logoUrl: "/icons/nextjs.svg", alt: "nextjs logo" },
       { logoUrl: "/icons/nestjs.svg", alt: "nestjs logo" },
