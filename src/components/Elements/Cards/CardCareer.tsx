@@ -8,12 +8,14 @@ export default function CardCareer() {
     const startDate = new Date(2023, 7, 1);
     const currentDate = new Date();
 
-    let months;
-    months = (currentDate.getFullYear() - startDate.getFullYear()) * 12;
+    let months = (currentDate.getFullYear() - startDate.getFullYear()) * 12;
     months -= startDate.getMonth();
     months += currentDate.getMonth();
 
-    return months;
+    const years = Math.floor(months / 12);
+    const remainingMonths = months % 12;
+
+    return { years, months: remainingMonths };
   };
 
   return (
@@ -46,9 +48,19 @@ export default function CardCareer() {
         <p className="text-sm text-slate-600 dark:text-slate-300">
           1 August 2023 - Present
         </p>
-        <p className="text-sm text-slate-600 dark:text-slate-300">
-          ~ {calculateMonthsSiceAugust()} months
-        </p>
+        {(() => {
+          const duration = calculateMonthsSiceAugust();
+          return (
+            <>
+              <p className="text-sm text-slate-600 dark:text-slate-300">
+                ~{" "}
+                {duration.years > 0
+                  ? `${duration.years} tahun ${duration.months} bulan`
+                  : `${duration.months} bulan`}
+              </p>
+            </>
+          );
+        })()}
       </section>
     </motion.section>
   );
