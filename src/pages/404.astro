@@ -1,0 +1,41 @@
+---
+/**
+ * Not-found page. A static host serves one 404 file for every language, so it speaks both and
+ * links to both home pages. Never indexed, no canonical, no hreflang.
+ */
+import { site } from '@/config/site';
+import { ui } from '@/i18n/ui';
+import { interpolate, langs, localePath } from '@/i18n/utils';
+import Minimal from '@/layouts/Minimal.astro';
+import { DEFAULT_OG_IMAGE, type HeadMeta } from '@/lib/seo';
+
+const meta: HeadMeta = {
+  lang: 'id',
+  path: '/404/',
+  title: `${ui.id['notFound.title']} · ${ui.en['notFound.title']} | ${site.name}`,
+  // Bilingual on purpose: one 404 file serves both languages.
+  description: `${ui.id['notFound.title']} di portofolio ${site.name}. ${ui.en['notFound.title']} on the ${site.name} portfolio.`,
+  indexable: false,
+  canonical: false,
+  og: {
+    type: 'website',
+    image: DEFAULT_OG_IMAGE,
+    imageAlt: interpolate(ui.id['og.alt'], { title: ui.id['og.defaultTitle'] }),
+  },
+};
+---
+
+<Minimal meta={meta}>
+  <p class="mono">404</p>
+  <h1>
+    {ui.id['notFound.title']} · <span lang="en">{ui.en['notFound.title']}</span>
+  </h1>
+  {langs.map((lang) => (
+    <div lang={lang}>
+      <p>{ui[lang]['notFound.text']}</p>
+      <a href={localePath(lang)} hreflang={lang}>
+        {ui[lang]['notFound.home']}
+      </a>
+    </div>
+  ))}
+</Minimal>

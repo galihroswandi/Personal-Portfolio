@@ -190,3 +190,60 @@ tilt already works on the wrapper, so it would apply to a canvas too.
 - Hero h1: words are inline-block spans. Chrome adds a space at an inline-block boundary in the
   accessible name, so trailing punctuation stays in the same span as the word before it, and
   the emphasised phrase becomes one `<em>` per word. A test checks the heading's name.
+
+## 027 · Sitemap and robots.txt are endpoints, not `@astrojs/sitemap`
+
+The integration runs after the build and only sees URLs. It cannot know which pages are
+`noindex` (unreviewed copy, case studies with placeholders) or when their content changed, so
+`filter` and `lastmod` would have to re-derive both from files in `astro.config.mjs`.
+`src/pages/sitemap.xml.ts` and `robots.txt.ts` read the page registry (`src/lib/pages.ts`) that
+the pages themselves use, so the sitemap, the `robots` meta and hreflang cannot disagree. One
+dependency fewer. `check:seo` verifies the result against the built HTML.
+
+## 028 · One URL form: https, no www, trailing slash
+
+`site.url` is the only origin. Page URLs always end in `/` (`trailingSlash: 'always'`,
+`build.format: 'directory'`), and Vercel redirects the slash-less form with a 308
+(`vercel.json` → `trailingSlash: true`). `vercel.json` also sends `X-Robots-Tag: noindex,
+nofollow` on every host except the canonical one (preview URLs, branch domains, an old domain
+after a move). Vercel adds `noindex` to preview deployments itself, but not to custom domains on
+preview branches. A Vitest test keeps the host in `vercel.json` equal to `site.url`.
+
+## 029 · `/` stays indexable but is not in the sitemap
+
+It is the hreflang `x-default` and a real language chooser (text in both languages, plain
+links). For people with JavaScript it redirects to `/id/` or `/en/`, and Googlebot follows JS
+redirects, so it will usually not be shown in results; Google documents this "auto-redirecting
+home page" as an `x-default` use. Listing a redirecting URL in the sitemap would be noise.
+Updates 008: the page now has its own title, description, canonical and Open Graph tags.
+
+## 030 · Unready pages are `noindex` locally and block production
+
+A page is indexable only when its language is reviewed (`reviewedLangs` in `ui.ts`), its entry
+says `reviewed: true`, and (case studies) it has no placeholder text. Unready pages get
+`noindex, follow` and stay out of the sitemap. Production builds (`VERCEL_ENV` or
+`DEPLOY_ENV = production`) fail in `check:content` and `check:seo` until everything is ready,
+so production never ships `noindex` outside the 404 page.
+
+## 031 · Missing CV files and unset profiles are hidden, not linked
+
+`check:seo` found the CV buttons pointing to `/cv/*.pdf` files that do not exist. The buttons
+now render only when `public/cv/galih-roswandi-<lang>.pdf` exists, and social links only when
+`site.social.*` is a real URL. `check:content` lists both as notes.
+
+## 032 · Open Graph images and icons are drawn with opentype.js + sharp
+
+Build-time endpoints (`src/pages/og/[...slug].png.ts`, `favicon.*`, `apple-touch-icon.png`,
+`icons/[size].png`) turn text into SVG paths with opentype.js (3.6 MB unpacked, dev only) and
+rasterize with sharp (already installed for Astro's image service). Satori (≈20 MB plus its
+dependencies) and astro-og-canvas (canvaskit-wasm, ≈26 MB) do layout we do not need. Two
+quirks: opentype.js 2.0 is CommonJS under Node (loaded with `createRequire`), and its
+`Path.toPathData()` prints `NaN` for some coordinates, so `og.ts` serializes path commands
+itself (a test guards it). Fonts are the bundled Fraunces 500 and JetBrains Mono 500 WOFF
+files in `src/assets/fonts/` (SIL OFL, licenses alongside).
+
+## 033 · One `theme-color`
+
+The spec asked for one per color scheme. The page is always dark (`data-theme="dark"`, 009),
+so a light-scheme value would paint a light browser bar above a dark page. There is a single
+`theme-color` from `--surface`; add a `media` variant if a theme toggle lands.

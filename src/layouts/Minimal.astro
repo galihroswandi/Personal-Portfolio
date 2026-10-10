@@ -1,0 +1,65 @@
+---
+/**
+ * Bare page shell for pages outside the language tree (language chooser, 404): same tokens and
+ * head tags as Base, no header or footer, because those link to a language-specific page.
+ */
+import { Font } from 'astro:assets';
+import SEO from '@/components/seo/SEO.astro';
+import type { HeadMeta } from '@/lib/seo';
+import '@/styles/tokens.css';
+import '@/styles/global.css';
+
+interface Props {
+  meta: HeadMeta;
+}
+
+const { meta } = Astro.props;
+---
+
+<!doctype html>
+<html lang={meta.lang} data-theme="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <SEO meta={meta} />
+    <meta name="color-scheme" content="dark light" />
+    <Font cssVariable="--font-fraunces" preload={[{ weight: 400, style: 'normal' }]} />
+    <Font cssVariable="--font-jakarta" preload={[{ weight: 400, style: 'normal' }]} />
+    <slot name="head" />
+  </head>
+  <body>
+    <main id="main" class="container section section--last minimal">
+      <slot />
+    </main>
+  </body>
+</html>
+
+<style>
+  .minimal {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-5);
+    max-width: calc(var(--measure-text) + 2 * var(--gutter));
+  }
+
+  .minimal :global(ul) {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2) var(--space-5);
+    padding: 0;
+    list-style: none;
+  }
+
+  .minimal :global(a) {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--touch-target);
+    color: var(--accent-ink);
+    font-weight: 600;
+    text-underline-offset: var(--space-1);
+  }
+
+  .minimal :global(p) {
+    color: var(--ink-muted);
+  }
+</style>

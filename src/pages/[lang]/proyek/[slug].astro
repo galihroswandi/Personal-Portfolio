@@ -8,18 +8,22 @@ import type { Lang } from '@/i18n/ui';
 import { localePath, useTranslations } from '@/i18n/utils';
 import Base from '@/layouts/Base.astro';
 import { getAllProjects, projectLang, type Project } from '@/lib/content';
+import { getProjectPage, headMeta, type SitePage } from '@/lib/pages';
 
-export const getStaticPaths = (async () =>
-  (await getAllProjects()).map((project) => ({
+export const getStaticPaths = (async () => {
+  const projects = await getAllProjects();
+  return projects.map((project) => ({
     params: { lang: projectLang(project), slug: project.data.slug },
-    props: { project },
-  }))) satisfies GetStaticPaths;
+    props: { project, page: getProjectPage(project, projects) },
+  }));
+}) satisfies GetStaticPaths;
 
 interface Props {
   project: Project;
+  page: SitePage;
 }
 
-const { project } = Astro.props;
+const { project, page } = Astro.props;
 const lang = Astro.params.lang as Lang;
 const t = useTranslations(lang);
 const { Content } = await render(project);
@@ -31,7 +35,7 @@ const rows = [
 ];
 ---
 
-<Base title={t('meta.caseStudyTitle', { title: data.title })} description={data.problem}>
+<Base meta={headMeta(page)}>
   <article class="container section section--last case">
     <a class="case__back" href={`${localePath(lang)}#proyek`}>
       <span aria-hidden="true">←</span>

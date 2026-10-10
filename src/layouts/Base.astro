@@ -4,27 +4,21 @@ import { Font } from 'astro:assets';
 import Footer from '@/components/layout/Footer.astro';
 import Navbar from '@/components/layout/Navbar.astro';
 import StatusStrip from '@/components/layout/StatusStrip.astro';
-import { langTags } from '@/i18n/ui';
-import { getAlternateUrl, getLangFromUrl, langs, useTranslations } from '@/i18n/utils';
+import SEO from '@/components/seo/SEO.astro';
+import { useTranslations } from '@/i18n/utils';
 import { MOTION_PAUSED_VALUE, MOTION_STORAGE_KEY } from '@/lib/motion';
+import type { HeadMeta } from '@/lib/seo';
 import '@/styles/tokens.css';
 import '@/styles/global.css';
 import '@/styles/motion.css';
 
 interface Props {
-  title: string;
-  description: string;
+  meta: HeadMeta;
 }
 
-const { title, description } = Astro.props;
-const lang = getLangFromUrl(Astro.url);
+const { meta } = Astro.props;
+const { lang } = meta;
 const t = useTranslations(lang);
-const canonical = new URL(Astro.url.pathname, Astro.site);
-const alternates = langs.map((code) => ({
-  hreflang: langTags[code],
-  href: new URL(getAlternateUrl(Astro.url.pathname, code), Astro.site).href,
-}));
-const xDefault = new URL('/', Astro.site).href;
 ---
 
 <!doctype html>
@@ -32,14 +26,7 @@ const xDefault = new URL('/', Astro.site).href;
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>{title}</title>
-    <meta name="description" content={description} />
-    <link rel="canonical" href={canonical.href} />
-    {alternates.map((alt) => (
-      <link rel="alternate" hreflang={alt.hreflang} href={alt.href} />
-    ))}
-    <link rel="alternate" hreflang="x-default" href={xDefault} />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <SEO meta={meta} />
     <meta name="color-scheme" content="dark light" />
     <script
       is:inline

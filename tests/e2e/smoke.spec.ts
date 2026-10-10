@@ -12,7 +12,7 @@ for (const { path, lang } of pages) {
       await expect(page.locator('html')).toHaveAttribute('lang', lang);
       await expect(page.locator('h1')).toHaveCount(1);
       await expect(page).toHaveTitle(/Galih Roswandi/);
-      for (const hreflang of ['id-ID', 'en-US', 'x-default']) {
+      for (const hreflang of ['id', 'en', 'x-default']) {
         await expect(page.locator(`link[rel="alternate"][hreflang="${hreflang}"]`)).toHaveCount(1);
       }
     });

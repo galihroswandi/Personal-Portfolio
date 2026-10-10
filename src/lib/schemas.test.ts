@@ -31,3 +31,23 @@ describe('projectSchema', () => {
     expect(projectSchema.safeParse({ ...valid, slug: 'Has Spaces' }).success).toBe(false);
   });
 });
+
+describe('projectSchema SEO fields', () => {
+  it('accepts optional search title, description and dates', () => {
+    const parsed = projectSchema.parse({
+      ...valid,
+      seoTitle: 'Aplikasi HMI dengan Qt',
+      seoDescription:
+        'Studi kasus aplikasi desktop HMI untuk operator, dibangun dengan C++ dan Qt dari nol.',
+      publishedDate: '2026-10-10',
+    });
+    expect(parsed.publishedDate).toBeInstanceOf(Date);
+  });
+
+  it('rejects a search title that would overflow with the site name, and a short description', () => {
+    expect(projectSchema.safeParse({ ...valid, seoTitle: 'x'.repeat(60) }).success).toBe(false);
+    expect(projectSchema.safeParse({ ...valid, seoDescription: 'Terlalu pendek.' }).success).toBe(
+      false,
+    );
+  });
+});

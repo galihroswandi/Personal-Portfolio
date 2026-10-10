@@ -6,7 +6,8 @@ import Panel from '@/components/ui/Panel.astro';
 import { site } from '@/config/site';
 import type { Lang } from '@/i18n/ui';
 import { useTranslations } from '@/i18n/utils';
-import { cvHref } from '@/lib/cv';
+import { cvHref, hasCv } from '@/lib/cv';
+import { isRealUrl } from '@/lib/placeholders';
 import { buildMailto, splitEmail } from '@/lib/mailto';
 
 interface Props {
@@ -17,11 +18,12 @@ const { lang } = Astro.props;
 const t = useTranslations(lang);
 const mailto = buildMailto({ to: site.email, subject: t('contact.subject') });
 const { user, domain } = splitEmail(site.email);
+// Profiles that are not set yet (`#`) are left out rather than rendered as dead links.
 const socials = [
-  { href: site.social.github, label: t('contact.github') },
-  { href: site.social.linkedin, label: t('contact.linkedin') },
-  { href: site.social.instagram, label: t('contact.instagram') },
-];
+  { id: 'github', href: site.social.github, label: t('contact.github') },
+  { id: 'linkedin', href: site.social.linkedin, label: t('contact.linkedin') },
+  { id: 'instagram', href: site.social.instagram, label: t('contact.instagram') },
+].filter((social) => isRealUrl(social.href));
 ---
 
 <section id="kontak" class="container section section--last contact" aria-labelledby="kontak-title">
@@ -37,20 +39,30 @@ const socials = [
       <Button href={mailto} arrow data-event="email_click" data-event-label="contact">
         {t('contact.email')}
       </Button>
-      <Button href={cvHref(lang)} variant="secondary" download data-event="cv_download">
-        {t('contact.cv')}
-      </Button>
+      {hasCv(lang) && (
+        <Button href={cvHref(lang)} variant="secondary" download data-event="cv_download">
+          {t('contact.cv')}
+        </Button>
+      )}
     </div>
     <div class="contact__links">
-      <ul class="contact__social" aria-label={t('a11y.social')}>
-        {socials.map((social) => (
-          <li>
-            <a href={social.href} rel="me noopener" target="_blank">
-              {social.label}
-            </a>
-          </li>
-        ))}
-      </ul>
+      {socials.length > 0 && (
+        <ul class="contact__social" aria-label={t('a11y.social')}>
+          {socials.map((social) => (
+            <li>
+              <!-- rel="me": these are the owner's own profiles (identity link, followed). -->
+              <a
+                href={social.href}
+                rel="me noopener"
+                data-event="profile_click"
+                data-event-label={social.id}
+              >
+                {social.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      )}
       <!-- The visible address is assembled in the browser so it is not plain text in the HTML. -->
       <a
         class="contact__email"

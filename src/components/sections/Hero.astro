@@ -7,7 +7,7 @@ import Panel from '@/components/ui/Panel.astro';
 import { site } from '@/config/site';
 import type { Lang } from '@/i18n/ui';
 import { splitEmphasis, useTranslations } from '@/i18n/utils';
-import { cvHref } from '@/lib/cv';
+import { cvHref, hasCv } from '@/lib/cv';
 import { WORD_MAX_STEPS, revealStyle, splitTitleWords } from '@/lib/reveal';
 
 interface Props {
@@ -53,9 +53,11 @@ const title = splitTitleWords(splitEmphasis(t('hero.title'))).map((token) =>
       <Button href="#kontak" variant="secondary">
         {t('hero.ctaCollab')}
       </Button>
-      <Button href={cvHref(lang)} variant="ghost" download data-event="cv_download">
-        {t('hero.ctaCv')}
-      </Button>
+      {hasCv(lang) && (
+        <Button href={cvHref(lang)} variant="ghost" download data-event="cv_download">
+          {t('hero.ctaCv')}
+        </Button>
+      )}
     </div>
     <ul class="hero__meta motion-enter" style="--i: 4">
       <li>{t('hero.metaLocation')}</li>

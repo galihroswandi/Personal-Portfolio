@@ -7,19 +7,20 @@ import Experience from '@/components/sections/Experience.astro';
 import Hero from '@/components/sections/Hero.astro';
 import Services from '@/components/sections/Services.astro';
 import type { Lang } from '@/i18n/ui';
-import { langs, useTranslations } from '@/i18n/utils';
+import { langs } from '@/i18n/utils';
 import Base from '@/layouts/Base.astro';
 import { getProjects } from '@/lib/content';
+import { getHomePage, headMeta } from '@/lib/pages';
 
 export const getStaticPaths = (() =>
   langs.map((lang) => ({ params: { lang } }))) satisfies GetStaticPaths;
 
 const lang = Astro.params.lang as Lang;
-const t = useTranslations(lang);
 const projects = await getProjects(lang, { featuredOnly: true });
+const page = await getHomePage(lang);
 ---
 
-<Base title={t('meta.title')} description={t('meta.description')}>
+<Base meta={headMeta(page)}>
   <Hero lang={lang} />
   <CaseStudies lang={lang} projects={projects} />
   <About lang={lang} />

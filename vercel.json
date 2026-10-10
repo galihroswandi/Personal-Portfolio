@@ -1,0 +1,12 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "trailingSlash": true,
+  "headers": [
+    {
+      "source": "/(.*)",
+      "missing": [{ "type": "host", "value": { "eq": "galihroswandi.vercel.app" } }],
+      "headers": [{ "key": "X-Robots-Tag", "value": "noindex, nofollow" }]
+    }
+  ],
+  "redirects": []
+}

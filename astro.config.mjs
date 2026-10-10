@@ -2,12 +2,15 @@
 import { defineConfig, fontProviders } from 'astro/config';
 import mdx from '@astrojs/mdx';
 import react from '@astrojs/react';
-import sitemap from '@astrojs/sitemap';
 import { site } from './src/config/site.ts';
 
 export default defineConfig({
   site: site.url,
   output: 'static',
+  // Every page URL ends in `/` (`/id/`, `/en/proyek/x/`): files are `dir/index.html`, and Vercel
+  // redirects the slash-less form with a 308 (`vercel.json` → trailingSlash). See docs/seo.md.
+  trailingSlash: 'always',
+  build: { format: 'directory' },
   // Keep whitespace between inline elements (Astro 7 defaults to 'jsx', which strips it).
   compressHTML: true,
   i18n: {
@@ -44,13 +47,7 @@ export default defineConfig({
       fallbacks: ['ui-monospace', 'monospace'],
     },
   ],
-  integrations: [
-    mdx(),
-    react(),
-    sitemap({
-      i18n: { defaultLocale: 'id', locales: { id: 'id-ID', en: 'en-US' } },
-      // The root page only redirects to a language; it is not content.
-      filter: (page) => new URL(page).pathname !== '/',
-    }),
-  ],
+  // The sitemap is an endpoint (src/pages/sitemap.xml.ts) built from the page registry, so it
+  // knows which pages are indexable and when they changed (docs/decisions.md 027).
+  integrations: [mdx(), react()],
 });

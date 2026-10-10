@@ -9,7 +9,7 @@
   },
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build",
+    "build": "pnpm check:content && astro build && pnpm check:seo",
     "preview": "astro preview",
     "astro": "astro",
     "lint": "eslint . && prettier --check .",
@@ -18,13 +18,14 @@
     "test": "vitest run",
     "test:e2e": "playwright test",
     "check": "pnpm lint && pnpm typecheck && pnpm test && pnpm build",
-    "prepare": "simple-git-hooks"
+    "prepare": "simple-git-hooks",
+    "check:content": "tsx scripts/check-content.ts",
+    "check:seo": "tsx scripts/check-seo.ts"
   },
   "dependencies": {
     "@astrojs/markdown-satteri": "^0.4.3",
     "@astrojs/mdx": "^8.0.3",
     "@astrojs/react": "^7.0.1",
-    "@astrojs/sitemap": "^3.7.4",
     "@react-three/fiber": "^9.8.1",
     "@vercel/analytics": "^2.0.1",
     "astro": "^7.3.8",
@@ -45,8 +46,11 @@
     "eslint-plugin-astro": "^3.2.1",
     "globals": "^17.13.0",
     "lint-staged": "^17.6.0",
+    "node-html-parser": "9.0.4",
+    "opentype.js": "2.0.0",
     "prettier": "^3.9.9",
     "prettier-plugin-astro": "^1.1.0",
+    "sharp": "0.35.5",
     "simple-git-hooks": "^2.14.0",
     "tsx": "^4.23.15",
     "typescript": "~6.0.3",

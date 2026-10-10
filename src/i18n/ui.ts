@@ -13,17 +13,28 @@ export type Lang = keyof typeof languages;
 
 export const defaultLang: Lang = 'id';
 
-/** BCP 47 tags used for `hreflang`, `og:locale` and date formatting. */
+/**
+ * Has the owner reviewed this dictionary? Unreviewed languages stay `noindex`, out of the sitemap,
+ * and fail the production content gate (`pnpm check:content`).
+ */
+export const reviewedLangs: Record<Lang, boolean> = { id: true, en: false };
+
+/** BCP 47 tags used for date formatting. (`hreflang` and `og:locale` live in `src/lib/seo.ts`.) */
 export const langTags: Record<Lang, string> = {
   id: 'id-ID',
   en: 'en-US',
 };
 
 const id = {
-  'meta.title': 'Galih Roswandi · Fullstack developer',
+  'meta.title': 'Galih Roswandi, Fullstack Developer di Tasikmalaya',
   'meta.description':
-    'Fullstack developer di Tasikmalaya. Membangun antarmuka data untuk operator: aplikasi web, C++ dengan Qt, dan HMI.',
-  'meta.caseStudyTitle': '{title} · Studi kasus · Galih Roswandi',
+    'Fullstack developer di Tasikmalaya yang membangun antarmuka data untuk operator: aplikasi web, dasbor, HMI desktop C++/Qt. Terbuka untuk kerja dan freelance.',
+  /** Kicker and title on the generated Open Graph image. */
+  'og.homeKicker': 'PORTOFOLIO',
+  'og.homeTitle': 'Antarmuka data yang langsung dipahami operatornya.',
+  'og.caseKicker': 'STUDI KASUS',
+  'og.defaultTitle': 'Portofolio',
+  'og.alt': '{title} · Galih Roswandi, fullstack developer',
 
   'a11y.skip': 'Lompat ke isi',
   'a11y.mainNav': 'Utama',
@@ -92,6 +103,9 @@ const id = {
   'project.read': 'Baca studi kasus',
   'project.readLabel': 'Baca studi kasus: {title}',
   'project.back': 'Kembali ke beranda',
+  'project.ctaText': 'Punya kebutuhan serupa, atau ingin tahu lebih lanjut?',
+  'breadcrumb.label': 'Breadcrumb',
+  'breadcrumb.home': 'Beranda',
   'illustration.bars': 'Ilustrasi generik: grafik batang',
   'illustration.gauge': 'Ilustrasi generik: indikator setengah lingkaran',
   'illustration.grid': 'Ilustrasi generik: kisi titik',
@@ -153,19 +167,29 @@ const id = {
 
   'footer.copyright': '© {year} Galih Roswandi',
   'footer.location': 'Tasikmalaya · WIB',
+  'footer.nav': 'Tautan situs',
 
-  'root.title': 'Galih Roswandi',
-  'root.choose': 'Pilih bahasa · Choose a language',
+  'root.intro':
+    'Portofolio Galih Roswandi, fullstack developer di Tasikmalaya: aplikasi web, dasbor data, dan HMI desktop dengan C++ dan Qt.',
+  'root.choose': 'Pilih bahasa',
+
+  'notFound.title': 'Halaman tidak ditemukan',
+  'notFound.text': 'Alamat ini tidak ada atau sudah dipindahkan. Lanjutkan dari beranda:',
+  'notFound.home': 'Ke beranda (Bahasa Indonesia)',
 } as const;
 
 export type UIKey = keyof typeof id;
 
 // TODO(review): English copy below is a translation of the Indonesian source; owner to review.
 const en: Record<UIKey, string> = {
-  'meta.title': 'Galih Roswandi · Fullstack developer',
+  'meta.title': 'Galih Roswandi, Fullstack Developer in Tasikmalaya, Indonesia',
   'meta.description':
-    'Fullstack developer in Tasikmalaya, Indonesia. I build data interfaces for operators: web apps, C++ with Qt, and HMI.',
-  'meta.caseStudyTitle': '{title} · Case study · Galih Roswandi',
+    'Fullstack developer in Tasikmalaya, Indonesia, building data interfaces for operators: web apps, dashboards, desktop HMI in C++/Qt. Open to jobs and freelance.',
+  'og.homeKicker': 'PORTFOLIO',
+  'og.homeTitle': 'Data interfaces that operators understand at a glance.',
+  'og.caseKicker': 'CASE STUDY',
+  'og.defaultTitle': 'Portfolio',
+  'og.alt': '{title} · Galih Roswandi, fullstack developer',
 
   'a11y.skip': 'Skip to content',
   'a11y.mainNav': 'Main',
@@ -233,6 +257,9 @@ const en: Record<UIKey, string> = {
   'project.read': 'Read case study',
   'project.readLabel': 'Read case study: {title}',
   'project.back': 'Back to home',
+  'project.ctaText': 'Need something similar, or want to know more?',
+  'breadcrumb.label': 'Breadcrumb',
+  'breadcrumb.home': 'Home',
   'illustration.bars': 'Generic illustration: bar chart',
   'illustration.gauge': 'Generic illustration: half-circle gauge',
   'illustration.grid': 'Generic illustration: dot grid',
@@ -294,9 +321,15 @@ const en: Record<UIKey, string> = {
 
   'footer.copyright': '© {year} Galih Roswandi',
   'footer.location': 'Tasikmalaya · WIB',
+  'footer.nav': 'Site links',
 
-  'root.title': 'Galih Roswandi',
-  'root.choose': 'Pilih bahasa · Choose a language',
+  'root.intro':
+    'Portfolio of Galih Roswandi, a fullstack developer in Tasikmalaya, Indonesia: web apps, data dashboards, and desktop HMI in C++ with Qt.',
+  'root.choose': 'Choose a language',
+
+  'notFound.title': 'Page not found',
+  'notFound.text': 'This address does not exist or has moved. Continue from the home page:',
+  'notFound.home': 'Go to the home page (English)',
 };
 
 export const ui: Record<Lang, Record<UIKey, string>> = { id, en };
