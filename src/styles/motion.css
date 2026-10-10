@@ -10,6 +10,19 @@
  * - Content waiting to be revealed is only hidden while `<html>` has the `js` class.
  */
 
+/*
+ * Motion constants: values used only by the effects below, built from the tokens where they
+ * can be. Radar timing is not here: it comes from src/lib/radar.ts as inline custom properties.
+ */
+:root {
+  --word-stagger: 30ms;
+  --word-rise: 0.4em;
+  --chip-stagger: 25ms;
+  --chip-scale-from: 0.96;
+  --ring-scale-to: 2.4;
+  --ring-opacity-from: 0.6;
+}
+
 /* Global switches ------------------------------------------------------------------------- */
 
 :root[data-motion='paused'] .motion-loop,
@@ -37,5 +50,119 @@
   .js [data-reveal]:not([data-revealed]) .reveal-item {
     opacity: 0;
     transform: translateY(var(--reveal-distance));
+  }
+
+  /* A short rule that draws left to right (section tag). */
+  [data-reveal] .reveal-draw-x {
+    transform-origin: left center;
+    transition: transform var(--motion-draw) var(--motion-ease);
+  }
+
+  .js [data-reveal]:not([data-revealed]) .reveal-draw-x {
+    transform: scaleX(0);
+  }
+
+  /* A vertical line drawn by the element's ::before, top to bottom (timeline). */
+  .reveal-rail::before {
+    transform-origin: center top;
+    transition: transform var(--motion-draw) var(--motion-ease);
+  }
+
+  .js .reveal-rail[data-reveal]:not([data-revealed])::before {
+    transform: scaleY(0);
+  }
+
+  /* A one-time soft ring around a dot (the current timeline item). */
+  .reveal-ring::after {
+    content: '';
+    position: absolute;
+    inset: calc(-1 * var(--timeline-dot-border));
+    border: var(--timeline-dot-border) solid var(--accent);
+    border-radius: 50%;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  [data-revealed] .reveal-ring::after {
+    animation: ring-once var(--motion-draw) var(--motion-ease) both;
+    animation-delay: calc(var(--i, 0) * var(--motion-stagger) + var(--motion-slow));
+  }
+
+  /* Chips: a quick fade and scale cascade within one list. */
+  [data-reveal] .reveal-pop {
+    transition:
+      opacity var(--motion-base) var(--motion-ease),
+      transform var(--motion-base) var(--motion-ease);
+    transition-delay: calc(var(--i, 0) * var(--chip-stagger));
+  }
+
+  .js [data-reveal]:not([data-revealed]) .reveal-pop {
+    opacity: 0;
+    transform: scale(var(--chip-scale-from));
+  }
+
+  /* Panel corner brackets snap in from their corner after the panel has risen. */
+  .reveal-brackets::before,
+  .reveal-brackets::after {
+    transition: transform var(--motion-base) var(--motion-ease) var(--motion-slow);
+  }
+
+  .reveal-brackets::before {
+    transform-origin: left top;
+  }
+
+  .reveal-brackets::after {
+    transform-origin: right bottom;
+  }
+
+  .js .reveal-brackets[data-reveal]:not([data-revealed])::before,
+  .js .reveal-brackets[data-reveal]:not([data-revealed])::after {
+    transform: scale(0);
+  }
+
+  /* Hero entrance (first load, CSS only) ----------------------------------------------------- */
+
+  /*
+   * Order: badge (0), h1 words (1), sub (2), actions (3), meta (4); `--i` is set inline.
+   * Last item ends at 4 × 60 + 320 = 560ms. The h1 words start at one step and stagger by
+   * 30ms, capped at 7 steps: 60 + 210 + 200 = 470ms.
+   */
+  .motion-enter {
+    animation: rise var(--motion-slow) var(--motion-ease) both;
+    animation-delay: calc(var(--i, 0) * var(--motion-stagger));
+  }
+
+  .motion-word {
+    display: inline-block;
+    animation: word-rise var(--motion-base) var(--motion-ease) both;
+    animation-delay: calc(var(--motion-stagger) + var(--i, 0) * var(--word-stagger));
+  }
+}
+
+/* Keyframes ------------------------------------------------------------------------------- */
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(var(--reveal-distance));
+  }
+}
+
+@keyframes word-rise {
+  from {
+    opacity: 0;
+    transform: translateY(var(--word-rise));
+  }
+}
+
+@keyframes ring-once {
+  from {
+    opacity: var(--ring-opacity-from);
+    transform: scale(1);
+  }
+
+  to {
+    opacity: 0;
+    transform: scale(var(--ring-scale-to));
   }
 }

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { REVEAL_MAX_STEPS, revealStyle, splitWords, staggerIndex } from './reveal';
+import { REVEAL_MAX_STEPS, revealStyle, splitTitleWords, staggerIndex } from './reveal';
 
 describe('staggerIndex', () => {
   it('caps the step and never goes negative', () => {
@@ -16,14 +16,29 @@ describe('staggerIndex', () => {
   });
 });
 
-describe('splitWords', () => {
-  it('keeps the whitespace so the sentence is unchanged', () => {
-    const parts = splitWords('Fullstack developer  yang ');
-    expect(parts.map((part) => part.text).join('')).toBe('Fullstack developer  yang ');
-    expect(parts.filter((part) => part.word).map((part) => part.text)).toEqual([
-      'Fullstack',
-      'developer',
-      'yang',
-    ]);
+describe('splitTitleWords', () => {
+  const segments = [
+    { text: 'Builds data  interfaces ', emphasis: false },
+    { text: 'at a glance', emphasis: true },
+    { text: '.', emphasis: false },
+  ];
+
+  it('keeps the sentence and its whitespace unchanged', () => {
+    const text = splitTitleWords(segments)
+      .map((token) => (token.space ? token.text : token.pieces.map((p) => p.text).join('')))
+      .join('');
+    expect(text).toBe('Builds data  interfaces at a glance.');
+  });
+
+  it('keeps punctuation in the same word as the emphasised text before it', () => {
+    const words = splitTitleWords(segments).filter((token) => !token.space);
+    expect(words).toHaveLength(6);
+    expect(words.at(-1)).toEqual({
+      space: false,
+      pieces: [
+        { text: 'glance', emphasis: true },
+        { text: '.', emphasis: false },
+      ],
+    });
   });
 });

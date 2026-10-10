@@ -1,5 +1,7 @@
 ---
 /** One entry of the vertical timeline. Render inside an <ol class="timeline">. */
+import { revealStyle } from '@/lib/reveal';
+
 interface Props {
   period: string;
   title: string;
@@ -8,13 +10,15 @@ interface Props {
   /** The ongoing item: filled accent dot plus a screen-reader label. */
   current?: boolean;
   currentLabel?: string;
+  /** Position in the list, for the staggered reveal. */
+  index?: number;
 }
 
-const { period, title, place, text, current = false, currentLabel } = Astro.props;
+const { period, title, place, text, current = false, currentLabel, index = 0 } = Astro.props;
 ---
 
-<li class:list={['item', { 'item--current': current }]}>
-  <span class="item__dot" aria-hidden="true"></span>
+<li class:list={['item', 'reveal-item', { 'item--current': current }]} style={revealStyle(index)}>
+  <span class:list={['item__dot', { 'reveal-ring': current }]} aria-hidden="true"></span>
   <p class="item__period">
     {period}
     {current && currentLabel && <span class="visually-hidden"> ({currentLabel})</span>}

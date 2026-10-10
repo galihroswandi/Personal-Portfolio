@@ -14,12 +14,17 @@ interface Props {
 const { num, label, title, sub, titleId } = Astro.props;
 ---
 
-<header class="section-header">
+<!-- The tag rule draws first, then the title and sub-line rise (see motion.css). -->
+<header class="section-header" data-reveal="group">
   <SectionTag num={num} label={label} />
-  <h2 id={titleId} class="section-header__title">
+  <h2 id={titleId} class="section-header__title reveal-item" style="--i: 3">
     {title}
   </h2>
-  {sub && <p class="section-header__sub">{sub}</p>}
+  {sub && (
+    <p class="section-header__sub reveal-item" style="--i: 4">
+      {sub}
+    </p>
+  )}
 </header>
 
 <style>

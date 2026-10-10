@@ -8,6 +8,7 @@ import { site } from '@/config/site';
 import type { Lang } from '@/i18n/ui';
 import { splitEmphasis, useTranslations } from '@/i18n/utils';
 import { cvHref } from '@/lib/cv';
+import { WORD_MAX_STEPS, revealStyle, splitTitleWords } from '@/lib/reveal';
 
 interface Props {
   lang: Lang;
@@ -15,17 +16,37 @@ interface Props {
 
 const { lang } = Astro.props;
 const t = useTranslations(lang);
-const title = splitEmphasis(t('hero.title'));
+// Words are split at build time so each can rise on load (see splitTitleWords). Spaces stay
+// plain text, so the heading still reads as one sentence. The emphasised phrase becomes one
+// <em> per word, which keeps its accent color.
+let wordIndex = 0;
+const title = splitTitleWords(splitEmphasis(t('hero.title'))).map((token) =>
+  token.space ? token : { ...token, style: revealStyle(wordIndex++, WORD_MAX_STEPS) },
+);
 ---
 
 <section class="container hero" aria-labelledby="hero-title">
   <div class="hero__text">
-    <Badge lamp>{t('hero.badge')}</Badge>
+    <Badge lamp class="motion-enter">
+      {t('hero.badge')}
+    </Badge>
     <h1 id="hero-title" class="hero__title">
-      {title.map((part) => (part.emphasis ? <em>{part.text}</em> : part.text))}
+      {title.map((token) =>
+        token.space ? (
+          token.text
+        ) : (
+          <span class="motion-word" style={token.style}>
+            {token.pieces.map((piece) =>
+              piece.emphasis ? <em set:text={piece.text} /> : <Fragment set:text={piece.text} />,
+            )}
+          </span>
+        ),
+      )}
     </h1>
-    <p class="hero__sub">{t('hero.sub')}</p>
-    <div class="hero__actions">
+    <p class="hero__sub motion-enter" style="--i: 2">
+      {t('hero.sub')}
+    </p>
+    <div class="hero__actions motion-enter" style="--i: 3">
       <Button href="#proyek" arrow>
         {t('hero.ctaProjects')}
       </Button>
@@ -36,7 +57,7 @@ const title = splitEmphasis(t('hero.title'));
         {t('hero.ctaCv')}
       </Button>
     </div>
-    <ul class="hero__meta">
+    <ul class="hero__meta motion-enter" style="--i: 4">
       <li>{t('hero.metaLocation')}</li>
       <li>{t('hero.metaSince')}</li>
       <li>{t('hero.metaAvailable', { date: site.availableFrom })}</li>

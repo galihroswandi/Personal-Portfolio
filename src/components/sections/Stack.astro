@@ -5,6 +5,7 @@ import Chip from '@/components/ui/Chip.astro';
 import { stackTiers } from '@/config/stack';
 import type { Lang } from '@/i18n/ui';
 import { useTranslations } from '@/i18n/utils';
+import { CHIP_MAX_STEPS, revealStyle } from '@/lib/reveal';
 
 interface Props {
   lang: Lang;
@@ -26,9 +27,9 @@ const t = useTranslations(lang);
       <h3 class="tier__label" id={`stack-${tier.variant}`}>
         {t(tier.labelKey)}
       </h3>
-      <ul class="tier__chips" aria-labelledby={`stack-${tier.variant}`}>
-        {tier.items.map((item) => (
-          <li>
+      <ul class="tier__chips" aria-labelledby={`stack-${tier.variant}`} data-reveal="group">
+        {tier.items.map((item, index) => (
+          <li class="reveal-pop" style={revealStyle(index, CHIP_MAX_STEPS)}>
             <Chip variant={tier.variant}>{item}</Chip>
           </li>
         ))}

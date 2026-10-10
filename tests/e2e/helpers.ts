@@ -27,7 +27,7 @@ export async function scrollThrough(page: Page): Promise<void> {
   await page.evaluate(async () => {
     const step = window.innerHeight / 2;
     for (let y = 0; y <= document.documentElement.scrollHeight; y += step) {
-      window.scrollTo(0, y);
+      window.scrollTo({ top: y, behavior: 'instant' });
       await new Promise((resolve) => requestAnimationFrame(() => setTimeout(resolve, 50)));
     }
   });

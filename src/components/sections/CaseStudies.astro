@@ -5,6 +5,7 @@ import SectionHeader from '@/components/sections/SectionHeader.astro';
 import type { Lang } from '@/i18n/ui';
 import { useTranslations } from '@/i18n/utils';
 import type { Project } from '@/lib/content';
+import { revealStyle } from '@/lib/reveal';
 
 interface Props {
   lang: Lang;
@@ -23,8 +24,8 @@ const t = useTranslations(lang);
     title={t('section.cases.title')}
   />
   <ul class="grid">
-    {projects.map((project) => (
-      <li>
+    {projects.map((project, index) => (
+      <li data-reveal style={revealStyle(index)}>
         <ProjectCard lang={lang} project={project.data} />
       </li>
     ))}

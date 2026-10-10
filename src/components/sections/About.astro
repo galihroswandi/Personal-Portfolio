@@ -62,6 +62,7 @@ const principles: { title: UIKey; text: UIKey }[] = [
 
   <div class="bento">
     <BentoTile
+      index={0}
       variant="accent"
       cols={2}
       rows={2}
@@ -70,14 +71,16 @@ const principles: { title: UIKey; text: UIKey }[] = [
       value={t('bento.experience.value')}
       note={t('bento.experience.note')}
     />
-    <BentoTile label={t('bento.stack.label')} value={t('bento.stack.value')} />
+    <BentoTile index={1} label={t('bento.stack.label')} value={t('bento.stack.value')} />
     <BentoTile
+      index={2}
       variant="sunken"
       label={t('bento.location.label')}
       value={t('bento.location.value')}
       note={t('bento.location.note')}
     />
     <BentoTile
+      index={3}
       variant="inverse"
       cols={2}
       label={t('bento.learning.label')}

@@ -22,8 +22,9 @@ const t = useTranslations(lang);
       label={t('section.experience.label')}
       title={t('section.experience.title')}
     />
-    <ol class="timeline">
+    <ol class="timeline reveal-rail" data-reveal="group">
       <TimelineItem
+        index={0}
         current
         currentLabel={t('timeline.current')}
         period={t('timeline.job.period')}
@@ -32,6 +33,7 @@ const t = useTranslations(lang);
         text={t('timeline.job.text')}
       />
       <TimelineItem
+        index={1}
         period={t('timeline.learn.period')}
         title={t('timeline.learn.title')}
         place={t('timeline.learn.place')}
@@ -56,14 +58,27 @@ const t = useTranslations(lang);
     min-width: 0;
   }
 
+  /* The line is a ::before (not a border) so it can draw in; the transparent border keeps the
+     original geometry, which the timeline dots are centred on. */
   .timeline {
+    position: relative;
     display: flex;
     flex-direction: column;
     gap: var(--space-6);
     margin-left: var(--space-2);
     padding: 0 0 0 var(--space-6);
-    border-left: var(--border-width-strong) solid var(--hairline);
+    border-left: var(--border-width-strong) solid transparent;
     list-style: none;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: calc(-1 * var(--border-width-strong));
+    width: var(--border-width-strong);
+    background: var(--hairline);
   }
 
   @media (min-width: 1024px) {

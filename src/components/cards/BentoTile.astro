@@ -1,5 +1,7 @@
 ---
 /** One tile of the About bento grid: a label, a short value and an optional note. */
+import { revealStyle } from '@/lib/reveal';
+
 interface Props {
   label: string;
   value: string;
@@ -11,9 +13,20 @@ interface Props {
   rows?: 1 | 2;
   /** Larger value text, used by the 2x2 tile. */
   large?: boolean;
+  /** Position among its siblings, for the staggered reveal. */
+  index?: number;
 }
 
-const { label, value, note, variant = 'raised', cols = 1, rows = 1, large = false } = Astro.props;
+const {
+  label,
+  value,
+  note,
+  variant = 'raised',
+  cols = 1,
+  rows = 1,
+  large = false,
+  index = 0,
+} = Astro.props;
 ---
 
 <div
@@ -22,6 +35,8 @@ const { label, value, note, variant = 'raised', cols = 1, rows = 1, large = fals
     `tile--${variant}`,
     { 'tile--wide': cols === 2, 'tile--tall': rows === 2, 'tile--large': large },
   ]}
+  data-reveal
+  style={revealStyle(index)}
 >
   <p class="tile__label">{label}</p>
   <div>

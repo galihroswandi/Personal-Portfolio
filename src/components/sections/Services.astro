@@ -6,6 +6,7 @@ import { site } from '@/config/site';
 import type { Lang, UIKey } from '@/i18n/ui';
 import { useTranslations } from '@/i18n/utils';
 import { buildMailto } from '@/lib/mailto';
+import { revealStyle } from '@/lib/reveal';
 
 interface Props {
   lang: Lang;
@@ -33,7 +34,7 @@ const services: { title: UIKey; text: UIKey }[] = [
     {services.map((service, index) => {
       const title = t(service.title);
       return (
-        <li>
+        <li data-reveal style={revealStyle(index)}>
           <ServiceCard
             featured={index === 0}
             title={title}
