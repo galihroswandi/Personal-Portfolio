@@ -1,0 +1,38 @@
+---
+/** Site footer: copyright (year computed at build) and location. */
+import type { Lang } from '@/i18n/ui';
+import { useTranslations } from '@/i18n/utils';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const year = new Date().getFullYear();
+---
+
+<footer class="footer">
+  <div class="container footer__inner">
+    <p>{t('footer.copyright', { year })}</p>
+    <p class="mono">{t('footer.location')}</p>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    border-top: var(--hairline-width) solid var(--hairline);
+    color: var(--ink-muted);
+    font-size: 0.875rem;
+    line-height: 1.4;
+  }
+
+  .footer__inner {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-2) var(--space-5);
+    padding-block: var(--space-6);
+  }
+</style>

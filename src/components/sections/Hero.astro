@@ -1,0 +1,141 @@
+---
+/** Opening block: badge, the page's only h1, sub-line, actions, meta row and the radar. */
+import RadarFallback from '@/components/islands/RadarFallback.astro';
+import Badge from '@/components/ui/Badge.astro';
+import Button from '@/components/ui/Button.astro';
+import Panel from '@/components/ui/Panel.astro';
+import { site } from '@/config/site';
+import type { Lang } from '@/i18n/ui';
+import { splitEmphasis, useTranslations } from '@/i18n/utils';
+import { cvHref } from '@/lib/cv';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const title = splitEmphasis(t('hero.title'));
+---
+
+<section class="container hero" aria-labelledby="hero-title">
+  <div class="hero__text">
+    <Badge lamp>{t('hero.badge')}</Badge>
+    <h1 id="hero-title" class="hero__title">
+      {title.map((part) => (part.emphasis ? <em>{part.text}</em> : part.text))}
+    </h1>
+    <p class="hero__sub">{t('hero.sub')}</p>
+    <div class="hero__actions">
+      <Button href="#proyek" arrow>
+        {t('hero.ctaProjects')}
+      </Button>
+      <Button href="#kontak" variant="secondary">
+        {t('hero.ctaCollab')}
+      </Button>
+      <Button href={cvHref(lang)} variant="ghost" download data-event="cv_download">
+        {t('hero.ctaCv')}
+      </Button>
+    </div>
+    <ul class="hero__meta">
+      <li>{t('hero.metaLocation')}</li>
+      <li>{t('hero.metaSince')}</li>
+      <li>{t('hero.metaAvailable', { date: site.availableFrom })}</li>
+    </ul>
+  </div>
+
+  <Panel class="hero__radar" role="img" aria-label={t('hero.radarLabel')}>
+    <div class="hero__scene" data-scene>
+      <RadarFallback />
+    </div>
+    <span class="hero__caption" aria-hidden="true">
+      {t('hero.radarCaption')}
+    </span>
+  </Panel>
+</section>
+
+<style>
+  .hero {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-7);
+    padding-block: var(--space-7) 0;
+  }
+
+  .hero__text {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-5);
+    min-width: 0;
+  }
+
+  .hero__sub {
+    max-width: var(--measure-text);
+    color: var(--ink-muted);
+    font-size: 1.125rem;
+    line-height: 1.65;
+  }
+
+  .hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-3);
+  }
+
+  .hero__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2) var(--space-5);
+    padding: 0;
+    list-style: none;
+    color: var(--ink-muted);
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    font-weight: 500;
+    line-height: 1.4;
+  }
+
+  .hero :global(.hero__radar) {
+    width: 100%;
+    aspect-ratio: 1;
+    border: var(--hairline-width) solid var(--hairline);
+    border-radius: var(--radius-xl);
+    background: var(--surface-raised);
+  }
+
+  .hero__scene {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    border-radius: inherit;
+  }
+
+  .hero__caption {
+    position: absolute;
+    bottom: var(--space-4);
+    left: var(--space-5);
+    color: var(--ink-subtle);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 500;
+    line-height: 1;
+  }
+
+  @media (min-width: 1024px) {
+    .hero {
+      flex-direction: row;
+      align-items: center;
+      padding-block: var(--space-9);
+    }
+
+    .hero__text {
+      flex: 1 1 0;
+    }
+
+    .hero :global(.hero__radar) {
+      flex: 0 0 var(--radar-size);
+      width: var(--radar-size);
+    }
+  }
+</style>

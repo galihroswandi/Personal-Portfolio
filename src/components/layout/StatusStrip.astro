@@ -1,0 +1,111 @@
+---
+/** Console status line above the navbar: availability, WIB clock, position, start date. */
+import LanguageSwitch from '@/components/layout/LanguageSwitch.astro';
+import { site } from '@/config/site';
+import type { Lang } from '@/i18n/ui';
+import { useTranslations } from '@/i18n/utils';
+import { formatCoordinates } from '@/lib/geo';
+import { CLOCK_FALLBACK } from '@/lib/time';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const { lat, lng } = site.location;
+---
+
+<div class="strip">
+  <div class="container strip__inner">
+    <ul class="strip__items" aria-label={t('a11y.statusStrip')}>
+      <li class="strip__item">
+        <span class="strip__lamp" aria-hidden="true"></span>
+        <span class="strip__label">{t('status.status')}</span>
+        <span class="strip__value">{t('status.available')}</span>
+      </li>
+      <li class="strip__item">
+        <span class="strip__label">{t('status.wib')}</span>
+        <span class="strip__value" data-clock>
+          {CLOCK_FALLBACK}
+        </span>
+      </li>
+      <li class="strip__item strip__item--wide">
+        <span class="strip__label">{t('status.pos')}</span>
+        <span class="strip__value">{formatCoordinates(lat, lng)}</span>
+      </li>
+      <li class="strip__item strip__item--wide">
+        <span class="strip__label">{t('status.from')}</span>
+        <span class="strip__value">{site.availableFrom}</span>
+      </li>
+    </ul>
+    <LanguageSwitch lang={lang} class="strip__lang" />
+  </div>
+</div>
+
+<style>
+  .strip {
+    border-bottom: var(--hairline-width) solid var(--hairline);
+    background: var(--surface-sunken);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 500;
+    line-height: 1.4;
+    letter-spacing: 0.04em;
+  }
+
+  .strip__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4);
+  }
+
+  .strip__items {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-1) var(--space-5);
+    padding: var(--space-2) 0;
+    list-style: none;
+    padding-inline-start: 0;
+  }
+
+  .strip__item {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    white-space: nowrap;
+  }
+
+  .strip__item--wide {
+    display: none;
+  }
+
+  .strip__label {
+    color: var(--ink-subtle);
+  }
+
+  .strip__value {
+    color: var(--ink);
+  }
+
+  .strip__lamp {
+    width: var(--lamp-size);
+    height: var(--lamp-size);
+    border-radius: 50%;
+    background: var(--success);
+  }
+
+  @media (min-width: 721px) {
+    .strip__item--wide {
+      display: inline-flex;
+    }
+  }
+
+  /* From desktop up the language switch lives in the navbar. */
+  @media (min-width: 1024px) {
+    .strip__inner :global(.strip__lang) {
+      display: none;
+    }
+  }
+</style>

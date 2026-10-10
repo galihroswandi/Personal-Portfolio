@@ -1,0 +1,167 @@
+---
+/** Case-study card: generic illustration, meta, title, Problem / My role / Result, chips, link. */
+import ProjectIllustration from '@/components/cards/ProjectIllustration.astro';
+import Chip from '@/components/ui/Chip.astro';
+import type { Lang } from '@/i18n/ui';
+import { localePath, useTranslations } from '@/i18n/utils';
+import type { ProjectData } from '@/lib/schemas';
+
+interface Props {
+  lang: Lang;
+  project: ProjectData;
+  /** Heading level, so the card fits the outline of the page it is on. */
+  headingLevel?: 'h2' | 'h3';
+}
+
+const { lang, project, headingLevel: Heading = 'h3' } = Astro.props;
+const t = useTranslations(lang);
+const href = localePath(lang, `proyek/${project.slug}`);
+const rows = [
+  { label: t('project.problem'), value: project.problem, highlight: false },
+  { label: t('project.myRole'), value: project.myRole, highlight: false },
+  { label: t('project.result'), value: project.result, highlight: true },
+];
+---
+
+<article class="card">
+  <ProjectIllustration lang={lang} kind={project.illustration} />
+  <div class="card__body">
+    <p class="card__meta">
+      {project.role} · {project.company}
+    </p>
+    <Heading class="card__title">{project.title}</Heading>
+    <dl class="card__rows">
+      {rows.map((row) => (
+        <div class="card__row">
+          <dt class:list={['card__label', { 'card__label--highlight': row.highlight }]}>
+            {row.label}
+          </dt>
+          <dd class="card__value">{row.value}</dd>
+        </div>
+      ))}
+    </dl>
+    <ul class="card__chips" aria-label={t('project.stack')}>
+      {project.stack.map((item) => (
+        <li>
+          <Chip>{item}</Chip>
+        </li>
+      ))}
+    </ul>
+    <a
+      class="card__link"
+      href={href}
+      aria-label={t('project.readLabel', { title: project.title })}
+      data-event="case_study_click"
+      data-event-label={project.slug}
+    >
+      {t('project.read')} <span aria-hidden="true">→</span>
+    </a>
+  </div>
+</article>
+
+<style>
+  .card {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border: var(--hairline-width) solid var(--hairline);
+    border-radius: var(--radius-lg);
+    background: var(--surface-raised);
+  }
+
+  .card:focus-within {
+    outline: var(--focus-ring-width) solid var(--focus-ring);
+    outline-offset: var(--focus-ring-offset);
+  }
+
+  /* The ring is drawn on the card; avoid a second ring on the link inside it. */
+  .card__link:focus-visible {
+    outline: none;
+  }
+
+  .card__body {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: var(--space-4);
+    padding: var(--space-5);
+  }
+
+  .card__meta {
+    color: var(--ink-muted);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 500;
+    line-height: 1.2;
+  }
+
+  .card__title {
+    font-size: 1.5rem;
+    font-weight: 500;
+    line-height: 1.2;
+    letter-spacing: -0.015em;
+  }
+
+  .card__rows {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  .card__row {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+  }
+
+  .card__label {
+    color: var(--ink-muted);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 500;
+    line-height: 1.2;
+  }
+
+  .card__label--highlight {
+    color: var(--accent-ink);
+  }
+
+  .card__value {
+    margin: 0;
+    color: var(--ink-muted);
+    font-size: 0.875rem;
+    line-height: 1.55;
+  }
+
+  .card__chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    padding: 0;
+    list-style: none;
+  }
+
+  .card__link {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-1);
+    align-self: flex-start;
+    min-height: var(--touch-target);
+    margin-top: auto;
+    color: var(--accent-ink);
+    font-size: 0.875rem;
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .card__link:hover {
+    text-decoration: underline;
+    text-underline-offset: var(--space-1);
+  }
+
+  @media (min-width: 721px) {
+    .card__title {
+      font-size: 1.75rem;
+    }
+  }
+</style>

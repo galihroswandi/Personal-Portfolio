@@ -1,0 +1,62 @@
+---
+/** 01 · Featured case studies, three cards. */
+import ProjectCard from '@/components/cards/ProjectCard.astro';
+import SectionHeader from '@/components/sections/SectionHeader.astro';
+import type { Lang } from '@/i18n/ui';
+import { useTranslations } from '@/i18n/utils';
+import type { Project } from '@/lib/content';
+
+interface Props {
+  lang: Lang;
+  projects: Project[];
+}
+
+const { lang, projects } = Astro.props;
+const t = useTranslations(lang);
+---
+
+<section id="proyek" class="container section" aria-labelledby="proyek-title">
+  <SectionHeader
+    titleId="proyek-title"
+    num={t('section.cases.num')}
+    label={t('section.cases.label')}
+    title={t('section.cases.title')}
+  />
+  <ul class="grid">
+    {projects.map((project) => (
+      <li>
+        <ProjectCard lang={lang} project={project.data} />
+      </li>
+    ))}
+  </ul>
+</section>
+
+<style>
+  .grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-5);
+    padding: 0;
+    list-style: none;
+  }
+
+  .grid > li {
+    display: flex;
+  }
+
+  .grid > li > :global(*) {
+    flex: 1;
+  }
+
+  @media (min-width: 721px) {
+    .grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+</style>

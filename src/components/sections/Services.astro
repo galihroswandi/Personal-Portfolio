@@ -1,0 +1,73 @@
+---
+/** 05 · Freelance services, each with a mailto "Diskusi" button and a prefilled subject. */
+import ServiceCard from '@/components/cards/ServiceCard.astro';
+import SectionHeader from '@/components/sections/SectionHeader.astro';
+import { site } from '@/config/site';
+import type { Lang, UIKey } from '@/i18n/ui';
+import { useTranslations } from '@/i18n/utils';
+import { buildMailto } from '@/lib/mailto';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+
+const services: { title: UIKey; text: UIKey }[] = [
+  { title: 'service.dashboard.title', text: 'service.dashboard.text' },
+  { title: 'service.internal.title', text: 'service.internal.text' },
+  { title: 'service.ux.title', text: 'service.ux.text' },
+];
+---
+
+<section id="layanan" class="container section" aria-labelledby="layanan-title">
+  <SectionHeader
+    titleId="layanan-title"
+    num={t('section.services.num')}
+    label={t('section.services.label')}
+    title={t('section.services.title')}
+    sub={t('section.services.sub')}
+  />
+  <ul class="grid">
+    {services.map((service, index) => {
+      const title = t(service.title);
+      return (
+        <li>
+          <ServiceCard
+            featured={index === 0}
+            title={title}
+            text={t(service.text)}
+            ctaLabel={t('service.cta')}
+            ctaAriaLabel={t('service.ctaLabel', { title })}
+            mailto={buildMailto({ to: site.email, subject: t('service.subject', { title }) })}
+          />
+        </li>
+      );
+    })}
+  </ul>
+</section>
+
+<style>
+  .grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-5);
+    padding: 0;
+    list-style: none;
+  }
+
+  .grid > li {
+    display: flex;
+  }
+
+  .grid > li > :global(*) {
+    flex: 1;
+  }
+
+  @media (min-width: 1024px) {
+    .grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+</style>

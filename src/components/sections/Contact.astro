@@ -1,0 +1,129 @@
+---
+/** 06 · Contact panel: email (mailto), CV download, social links and the address. */
+import SectionHeader from '@/components/sections/SectionHeader.astro';
+import Button from '@/components/ui/Button.astro';
+import Panel from '@/components/ui/Panel.astro';
+import { site } from '@/config/site';
+import type { Lang } from '@/i18n/ui';
+import { useTranslations } from '@/i18n/utils';
+import { cvHref } from '@/lib/cv';
+import { buildMailto, splitEmail } from '@/lib/mailto';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const mailto = buildMailto({ to: site.email, subject: t('contact.subject') });
+const { user, domain } = splitEmail(site.email);
+const socials = [
+  { href: site.social.github, label: t('contact.github') },
+  { href: site.social.linkedin, label: t('contact.linkedin') },
+  { href: site.social.instagram, label: t('contact.instagram') },
+];
+---
+
+<section id="kontak" class="container section section--last contact" aria-labelledby="kontak-title">
+  <Panel class="contact__panel">
+    <SectionHeader
+      titleId="kontak-title"
+      num={t('section.contact.num')}
+      label={t('section.contact.label')}
+      title={t('section.contact.title')}
+      sub={t('section.contact.sub')}
+    />
+    <div class="contact__actions">
+      <Button href={mailto} arrow data-event="email_click" data-event-label="contact">
+        {t('contact.email')}
+      </Button>
+      <Button href={cvHref(lang)} variant="secondary" download data-event="cv_download">
+        {t('contact.cv')}
+      </Button>
+    </div>
+    <div class="contact__links">
+      <ul class="contact__social" aria-label={t('a11y.social')}>
+        {socials.map((social) => (
+          <li>
+            <a href={social.href} rel="me noopener" target="_blank">
+              {social.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+      <!-- The visible address is assembled in the browser so it is not plain text in the HTML. -->
+      <a
+        class="contact__email"
+        href={mailto}
+        data-email-user={user}
+        data-email-domain={domain}
+        data-event="email_click"
+        data-event-label="address"
+      >
+        {domain ? `${user} [at] ${domain}` : user}
+      </a>
+    </div>
+  </Panel>
+</section>
+
+<script>
+  for (const link of document.querySelectorAll<HTMLElement>('[data-email-user]')) {
+    const { emailUser, emailDomain } = link.dataset;
+    if (emailUser && emailDomain) link.textContent = `${emailUser}@${emailDomain}`;
+  }
+</script>
+
+<style>
+  .contact :global(.contact__panel) {
+    padding: var(--space-6) var(--space-5);
+    border: var(--hairline-width) solid var(--hairline);
+    border-radius: var(--radius-xl);
+    background: var(--surface-raised);
+  }
+
+  .contact__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    margin-bottom: var(--space-6);
+  }
+
+  .contact__links {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-2) var(--space-5);
+  }
+
+  .contact__social {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 var(--space-5);
+    padding: 0;
+    list-style: none;
+  }
+
+  .contact__social a,
+  .contact__email {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--touch-target);
+    color: var(--accent-ink);
+    font-size: 0.875rem;
+    font-weight: 500;
+    text-underline-offset: var(--space-1);
+  }
+
+  .contact__email {
+    color: var(--ink-muted);
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    overflow-wrap: anywhere;
+  }
+
+  @media (min-width: 721px) {
+    .contact :global(.contact__panel) {
+      padding: var(--space-8);
+    }
+  }
+</style>

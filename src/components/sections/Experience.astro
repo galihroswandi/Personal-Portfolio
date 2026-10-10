@@ -1,0 +1,76 @@
+---
+/** 03 + 04 · Experience timeline (left) and tech stack tiers (right), one section. */
+import TimelineItem from '@/components/cards/TimelineItem.astro';
+import SectionHeader from '@/components/sections/SectionHeader.astro';
+import Stack from '@/components/sections/Stack.astro';
+import type { Lang } from '@/i18n/ui';
+import { useTranslations } from '@/i18n/utils';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+---
+
+<section id="pengalaman" class="container section experience" aria-labelledby="pengalaman-title">
+  <div class="experience__col">
+    <SectionHeader
+      titleId="pengalaman-title"
+      num={t('section.experience.num')}
+      label={t('section.experience.label')}
+      title={t('section.experience.title')}
+    />
+    <ol class="timeline">
+      <TimelineItem
+        current
+        currentLabel={t('timeline.current')}
+        period={t('timeline.job.period')}
+        title={t('timeline.job.title')}
+        place={t('timeline.job.place')}
+        text={t('timeline.job.text')}
+      />
+      <TimelineItem
+        period={t('timeline.learn.period')}
+        title={t('timeline.learn.title')}
+        place={t('timeline.learn.place')}
+        text={t('timeline.learn.text')}
+      />
+    </ol>
+  </div>
+  <div class="experience__col">
+    <Stack lang={lang} />
+  </div>
+</section>
+
+<style>
+  .experience {
+    display: flex;
+    flex-direction: column;
+    gap: var(--section-space);
+  }
+
+  .experience__col {
+    flex: 1 1 0;
+    min-width: 0;
+  }
+
+  .timeline {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+    margin-left: var(--space-2);
+    padding: 0 0 0 var(--space-6);
+    border-left: var(--border-width-strong) solid var(--hairline);
+    list-style: none;
+  }
+
+  @media (min-width: 1024px) {
+    .experience {
+      flex-direction: row;
+      align-items: flex-start;
+      gap: var(--space-8);
+    }
+  }
+</style>

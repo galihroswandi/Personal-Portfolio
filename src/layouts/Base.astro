@@ -1,6 +1,9 @@
 ---
-/** Page shell: <html lang>, head metadata, fonts, theme, skip link and the main landmark. */
+/** Page shell: <html lang>, head metadata, fonts, theme, skip link, header, main and footer. */
 import { Font } from 'astro:assets';
+import Footer from '@/components/layout/Footer.astro';
+import Navbar from '@/components/layout/Navbar.astro';
+import StatusStrip from '@/components/layout/StatusStrip.astro';
 import { langTags } from '@/i18n/ui';
 import { getAlternateUrl, getLangFromUrl, langs, useTranslations } from '@/i18n/utils';
 import '@/styles/tokens.css';
@@ -51,10 +54,27 @@ const xDefault = new URL('/', Astro.site).href;
     <a class="skip-link" href="#main">
       {t('a11y.skip')}
     </a>
-    <slot name="header" />
+    <header class="site-header">
+      <StatusStrip lang={lang} />
+      <Navbar lang={lang} />
+    </header>
     <main id="main" tabindex="-1">
       <slot />
     </main>
-    <slot name="footer" />
+    <Footer lang={lang} />
   </body>
 </html>
+
+<style>
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    border-bottom: var(--hairline-width) solid var(--hairline);
+    background: var(--surface);
+  }
+
+  main:focus {
+    outline: none;
+  }
+</style>

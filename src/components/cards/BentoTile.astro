@@ -1,0 +1,115 @@
+---
+/** One tile of the About bento grid: a label, a short value and an optional note. */
+interface Props {
+  label: string;
+  value: string;
+  note?: string;
+  variant?: 'raised' | 'sunken' | 'accent' | 'inverse';
+  /** Columns spanned on desktop (the grid has 4; on mobile 2). */
+  cols?: 1 | 2;
+  /** Rows spanned on desktop. */
+  rows?: 1 | 2;
+  /** Larger value text, used by the 2x2 tile. */
+  large?: boolean;
+}
+
+const { label, value, note, variant = 'raised', cols = 1, rows = 1, large = false } = Astro.props;
+---
+
+<div
+  class:list={[
+    'tile',
+    `tile--${variant}`,
+    { 'tile--wide': cols === 2, 'tile--tall': rows === 2, 'tile--large': large },
+  ]}
+>
+  <p class="tile__label">{label}</p>
+  <div>
+    <p class="tile__value">{value}</p>
+    {note && <p class="tile__note">{note}</p>}
+  </div>
+</div>
+
+<style>
+  .tile {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: var(--space-4);
+    padding: var(--space-5);
+    border-radius: var(--radius-lg);
+    color: var(--ink);
+  }
+
+  .tile--raised {
+    border: var(--hairline-width) solid var(--hairline);
+    background: var(--surface-raised);
+  }
+
+  .tile--sunken {
+    border: var(--hairline-width) solid var(--hairline);
+    background: var(--surface-sunken);
+  }
+
+  /* Accent and inverse tiles use their own text color only. */
+  .tile--accent {
+    background: var(--accent);
+    color: var(--on-accent);
+  }
+
+  .tile--inverse {
+    background: var(--ink);
+    color: var(--surface);
+  }
+
+  .tile--wide {
+    grid-column: span 2;
+  }
+
+  .tile__label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    line-height: 1.2;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .tile--raised .tile__label,
+  .tile--sunken .tile__label {
+    color: var(--ink-muted);
+  }
+
+  .tile__value {
+    font-family: var(--font-display);
+    font-size: 1.375rem;
+    font-weight: 500;
+    line-height: 1.25;
+    letter-spacing: -0.01em;
+  }
+
+  .tile--large .tile__value {
+    font-size: 1.75rem;
+    line-height: 1.15;
+  }
+
+  .tile__note {
+    margin-top: var(--space-2);
+    font-size: 0.875rem;
+    line-height: 1.5;
+  }
+
+  .tile--raised .tile__note,
+  .tile--sunken .tile__note {
+    color: var(--ink-muted);
+  }
+
+  @media (min-width: 721px) {
+    .tile--tall {
+      grid-row: span 2;
+    }
+
+    .tile--large .tile__value {
+      font-size: 2rem;
+    }
+  }
+</style>

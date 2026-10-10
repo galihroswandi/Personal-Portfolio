@@ -1,0 +1,16 @@
+---
+/**
+ * Server-rendered radar SVG. It is what paints first (LCP) and the final fallback when the 3D
+ * scene is not loaded. Colors come from tokens inside the SVG, so it follows the theme.
+ */
+import Radar from '@/assets/illustrations/radar.svg';
+---
+
+<Radar class="radar-fallback" width="100%" height="100%" />
+
+<style>
+  .radar-fallback {
+    width: 100%;
+    height: 100%;
+  }
+</style>

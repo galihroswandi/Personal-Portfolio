@@ -1,0 +1,75 @@
+---
+/** Freelance service framed as a problem solved, with a "Diskusi" mailto button. */
+import Button from '@/components/ui/Button.astro';
+
+interface Props {
+  title: string;
+  text: string;
+  ctaLabel: string;
+  /** Accessible name of the button, naming the service. */
+  ctaAriaLabel: string;
+  mailto: string;
+  featured?: boolean;
+}
+
+const { title, text, ctaLabel, ctaAriaLabel, mailto, featured = false } = Astro.props;
+---
+
+<article class:list={['service', { 'service--featured': featured }]}>
+  <h3 class="service__title">{title}</h3>
+  <p class="service__text">{text}</p>
+  <Button
+    href={mailto}
+    size="sm"
+    variant={featured ? 'primary' : 'secondary'}
+    class="service__cta"
+    aria-label={ctaAriaLabel}
+    data-event="email_click"
+    data-event-label={title}
+  >
+    {ctaLabel}
+  </Button>
+</article>
+
+<style>
+  .service {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    padding: var(--space-6);
+    border: var(--hairline-width) solid var(--hairline);
+    border-radius: var(--radius-lg);
+    background: var(--surface-raised);
+  }
+
+  .service--featured {
+    border-color: transparent;
+    background: var(--accent-soft);
+  }
+
+  .service__title {
+    font-size: 1.5rem;
+    letter-spacing: -0.01em;
+  }
+
+  .service__text {
+    flex: 1;
+    color: var(--ink-muted);
+    font-size: 0.9375rem;
+    line-height: 1.6;
+  }
+
+  .service--featured .service__text {
+    color: var(--ink);
+  }
+
+  .service :global(.service__cta) {
+    align-self: flex-start;
+  }
+
+  @media (min-width: 721px) {
+    .service__title {
+      font-size: 1.625rem;
+    }
+  }
+</style>

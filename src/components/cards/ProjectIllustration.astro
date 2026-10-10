@@ -1,0 +1,30 @@
+---
+/** Generic 16:10 project illustration. Never a screenshot or a real system layout. */
+import Bars from '@/assets/illustrations/bars.svg';
+import Gauge from '@/assets/illustrations/gauge.svg';
+import Grid from '@/assets/illustrations/grid.svg';
+import type { Lang } from '@/i18n/ui';
+import { useTranslations } from '@/i18n/utils';
+import type { ProjectData } from '@/lib/schemas';
+
+interface Props {
+  lang: Lang;
+  kind: ProjectData['illustration'];
+}
+
+const { lang, kind } = Astro.props;
+const t = useTranslations(lang);
+const illustrations = { bars: Bars, gauge: Gauge, grid: Grid } as const;
+const Illustration = illustrations[kind];
+---
+
+<div class="illustration" role="img" aria-label={t(`illustration.${kind}`)}>
+  <Illustration width="100%" height="100%" />
+</div>
+
+<style>
+  .illustration {
+    aspect-ratio: 16 / 10;
+    background: var(--surface-sunken);
+  }
+</style>

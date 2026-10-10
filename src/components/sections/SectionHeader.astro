@@ -1,0 +1,49 @@
+---
+/** Section tag + h2 (+ optional sub-line). Keeps every section heading identical. */
+import SectionTag from '@/components/ui/SectionTag.astro';
+
+interface Props {
+  num: string;
+  label: string;
+  title: string;
+  sub?: string;
+  /** id of the h2, for the section's aria-labelledby. */
+  titleId: string;
+}
+
+const { num, label, title, sub, titleId } = Astro.props;
+---
+
+<header class="section-header">
+  <SectionTag num={num} label={label} />
+  <h2 id={titleId} class="section-header__title">
+    {title}
+  </h2>
+  {sub && <p class="section-header__sub">{sub}</p>}
+</header>
+
+<style>
+  .section-header {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    margin-bottom: var(--space-6);
+  }
+
+  .section-header__title {
+    max-width: var(--measure-heading);
+  }
+
+  .section-header__sub {
+    max-width: var(--measure-text);
+    color: var(--ink-muted);
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+
+  @media (min-width: 721px) {
+    .section-header {
+      margin-bottom: var(--space-7);
+    }
+  }
+</style>

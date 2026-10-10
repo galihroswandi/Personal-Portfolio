@@ -1,0 +1,285 @@
+---
+/** Main navigation: monogram, section links, language switch, "Hire me", mobile disclosure menu. */
+import LanguageSwitch from '@/components/layout/LanguageSwitch.astro';
+import Button from '@/components/ui/Button.astro';
+import type { Lang, UIKey } from '@/i18n/ui';
+import { localePath, useTranslations } from '@/i18n/utils';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const home = localePath(lang);
+
+/** Section ids are fixed (Indonesian) in both languages so links and anchors stay stable. */
+const links: { id: string; key: UIKey }[] = [
+  { id: 'proyek', key: 'nav.projects' },
+  { id: 'tentang', key: 'nav.about' },
+  { id: 'pengalaman', key: 'nav.experience' },
+  { id: 'layanan', key: 'nav.services' },
+  { id: 'kontak', key: 'nav.contact' },
+];
+---
+
+<div class="container nav" data-nav>
+  <a class="nav__brand" href={home} aria-label={t('a11y.home')}>
+    <span class="nav__monogram" aria-hidden="true">
+      GR
+    </span>
+    <span aria-hidden="true">Galih Roswandi</span>
+  </a>
+
+  <nav class="nav__menu" id="site-menu" aria-label={t('a11y.mainNav')} data-nav-menu>
+    <ul class="nav__links">
+      {links.map(({ id, key }) => (
+        <li>
+          <a class="nav__link" href={`${home}#${id}`} data-nav-link={id}>
+            {t(key)}
+          </a>
+        </li>
+      ))}
+    </ul>
+  </nav>
+
+  <div class="nav__actions">
+    <LanguageSwitch lang={lang} class="nav__lang" />
+    <Button href={`${home}#kontak`} size="sm">
+      {t('nav.hire')}
+    </Button>
+    <button
+      class="nav__toggle"
+      type="button"
+      aria-expanded="false"
+      aria-controls="site-menu"
+      data-nav-toggle
+      data-label-open={t('a11y.menuOpen')}
+      data-label-close={t('a11y.menuClose')}
+      aria-label={t('a11y.menuOpen')}
+      hidden
+    >
+      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <line x1="4" y1="7" x2="20" y2="7"></line>
+        <line x1="4" y1="12" x2="20" y2="12"></line>
+        <line x1="4" y1="17" x2="20" y2="17"></line>
+      </svg>
+    </button>
+  </div>
+</div>
+
+<script>
+  /*
+   * Progressive enhancement. Without JavaScript the toggle stays hidden and the links are
+   * always visible (wrapped under the brand on small screens).
+   */
+  const root = document.querySelector<HTMLElement>('[data-nav]');
+  const menu = root?.querySelector<HTMLElement>('[data-nav-menu]');
+  const toggle = root?.querySelector<HTMLButtonElement>('[data-nav-toggle]');
+
+  if (root && menu && toggle) {
+    root.classList.add('nav--enhanced');
+    toggle.hidden = false;
+
+    const setOpen = (open: boolean) => {
+      toggle.setAttribute('aria-expanded', String(open));
+      toggle.setAttribute(
+        'aria-label',
+        (open ? toggle.dataset.labelClose : toggle.dataset.labelOpen) ?? '',
+      );
+      root.classList.toggle('nav--open', open);
+    };
+
+    toggle.addEventListener('click', () => {
+      setOpen(toggle.getAttribute('aria-expanded') !== 'true');
+    });
+
+    menu.addEventListener('click', (event) => {
+      if (event.target instanceof HTMLAnchorElement) setOpen(false);
+    });
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && toggle.getAttribute('aria-expanded') === 'true') {
+        setOpen(false);
+        toggle.focus();
+      }
+    });
+  }
+
+  // Highlight the link of the section currently in view.
+  const navLinks = new Map(
+    [...document.querySelectorAll<HTMLAnchorElement>('[data-nav-link]')].map((link) => [
+      link.dataset.navLink,
+      link,
+    ]),
+  );
+  const sections = [...navLinks.keys()]
+    .map((id) => (id ? document.getElementById(id) : null))
+    .filter((section): section is HTMLElement => section !== null);
+
+  if (sections.length > 0) {
+    // A section counts as active while it crosses a thin band 40% down the viewport.
+    const ACTIVE_BAND = '-40% 0px -59% 0px';
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (!entry.isIntersecting) continue;
+          for (const [id, link] of navLinks) {
+            if (id === entry.target.id) link.setAttribute('aria-current', 'true');
+            else link.removeAttribute('aria-current');
+          }
+        }
+      },
+      { rootMargin: ACTIVE_BAND },
+    );
+    sections.forEach((section) => observer.observe(section));
+  }
+</script>
+
+<style>
+  .nav {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3) var(--space-5);
+    padding-block: var(--space-3);
+  }
+
+  .nav__brand {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-3);
+    min-height: var(--touch-target);
+    color: var(--ink);
+    font-size: 0.9375rem;
+    font-weight: 600;
+    line-height: 1;
+    text-decoration: none;
+  }
+
+  .nav__monogram {
+    display: grid;
+    place-items: center;
+    width: var(--monogram-size);
+    height: var(--monogram-size);
+    border-radius: 50%;
+    background: var(--ink);
+    color: var(--surface);
+    font-family: var(--font-display);
+    font-weight: 500;
+    letter-spacing: -0.02em;
+  }
+
+  .nav__actions {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+  }
+
+  .nav__menu {
+    order: 3;
+    flex-basis: 100%;
+  }
+
+  .nav__links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 var(--space-5);
+    padding: 0;
+    list-style: none;
+  }
+
+  .nav__link {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--touch-target);
+    color: var(--ink-muted);
+    font-size: 0.9375rem;
+    font-weight: 500;
+    text-decoration: none;
+  }
+
+  .nav__link:hover,
+  .nav__link[aria-current='true'] {
+    color: var(--ink);
+  }
+
+  .nav__link[aria-current='true'] {
+    text-decoration: underline;
+    text-decoration-color: var(--accent);
+    text-decoration-thickness: var(--border-width-strong);
+    text-underline-offset: var(--space-2);
+  }
+
+  .nav__toggle {
+    display: grid;
+    place-items: center;
+    width: var(--touch-target);
+    height: var(--touch-target);
+    padding: 0;
+    border: var(--border-width-strong) solid var(--border-strong);
+    border-radius: var(--radius-md);
+    background: transparent;
+    cursor: pointer;
+  }
+
+  .nav__toggle[hidden] {
+    display: none;
+  }
+
+  .nav__toggle svg {
+    width: var(--icon-size);
+    height: var(--icon-size);
+    stroke: var(--ink);
+    stroke-width: 1.5;
+    stroke-linecap: round;
+  }
+
+  .nav__actions :global(.nav__lang) {
+    display: none;
+  }
+
+  /* Enhanced (JS) on small screens: links collapse into a disclosure panel. */
+  .nav--enhanced .nav__menu {
+    display: none;
+  }
+
+  .nav--enhanced.nav--open .nav__menu {
+    display: block;
+    padding-block: var(--space-2);
+    border-top: var(--hairline-width) solid var(--hairline);
+  }
+
+  .nav--enhanced.nav--open .nav__links {
+    flex-direction: column;
+  }
+
+  @media (min-width: 1024px) {
+    .nav {
+      flex-wrap: nowrap;
+    }
+
+    .nav__menu,
+    .nav--enhanced .nav__menu {
+      display: block;
+      order: 0;
+      flex-basis: auto;
+      padding: 0;
+      border: 0;
+    }
+
+    .nav__links,
+    .nav--enhanced.nav--open .nav__links {
+      flex-direction: row;
+    }
+
+    .nav__toggle:not([hidden]) {
+      display: none;
+    }
+
+    .nav__actions :global(.nav__lang) {
+      display: inline-flex;
+    }
+  }
+</style>
