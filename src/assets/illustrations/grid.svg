@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 225" aria-hidden="true" focusable="false">
+  <circle cx="80" cy="60" r="5" style="fill: var(--border-strong)" />
+  <circle cx="130" cy="60" r="5" style="fill: var(--border-strong)" />
+  <circle cx="180" cy="60" r="5" style="fill: var(--border-strong)" />
+  <circle cx="230" cy="60" r="5" style="fill: var(--border-strong)" />
+  <circle cx="280" cy="60" r="5" style="fill: var(--border-strong)" />
+  <circle cx="80" cy="112" r="5" style="fill: var(--border-strong)" />
+  <circle cx="130" cy="112" r="5" style="fill: var(--accent)" />
+  <circle cx="180" cy="112" r="5" style="fill: var(--border-strong)" />
+  <circle cx="230" cy="112" r="5" style="fill: var(--border-strong)" />
+  <circle cx="280" cy="112" r="5" style="fill: var(--border-strong)" />
+  <circle cx="80" cy="164" r="5" style="fill: var(--border-strong)" />
+  <circle cx="130" cy="164" r="5" style="fill: var(--border-strong)" />
+  <circle cx="180" cy="164" r="5" style="fill: var(--border-strong)" />
+  <circle cx="230" cy="164" r="5" style="fill: var(--accent)" />
+  <circle cx="280" cy="164" r="5" style="fill: var(--border-strong)" />
+  <line x1="130" y1="112" x2="230" y2="164" style="stroke: var(--accent); stroke-width: 1.5" />
+</svg>

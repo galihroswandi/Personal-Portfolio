@@ -1,0 +1,94 @@
+---
+/** Pill button: a link when `href` is set, otherwise a <button>. */
+import type { HTMLAttributes } from 'astro/types';
+
+type Variant = 'primary' | 'secondary' | 'ghost';
+type Size = 'md' | 'sm';
+
+interface Props extends Omit<HTMLAttributes<'a'>, 'class'> {
+  href?: string;
+  variant?: Variant;
+  size?: Size;
+  /** Adds a trailing "→" (hidden from screen readers). */
+  arrow?: boolean;
+  type?: 'button' | 'submit';
+  class?: string;
+}
+
+const {
+  href,
+  variant = 'primary',
+  size = 'md',
+  arrow = false,
+  type = 'button',
+  class: className,
+  ...rest
+} = Astro.props;
+const classes = ['btn', `btn--${variant}`, `btn--${size}`, className];
+---
+
+{href ? (
+  <a href={href} class:list={classes} {...rest}>
+    <slot />
+    {arrow && <span aria-hidden="true">→</span>}
+  </a>
+) : (
+  <button type={type} class:list={classes} {...(rest as HTMLAttributes<'button'>)}>
+    <slot />
+    {arrow && <span aria-hidden="true">→</span>}
+  </button>
+)}
+
+<style>
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+    min-height: var(--touch-target);
+    padding: var(--btn-pad-y) var(--btn-pad-x);
+    border: var(--border-width-strong) solid transparent;
+    border-radius: var(--radius-pill);
+    font-family: var(--font-sans);
+    font-size: 0.9375rem;
+    font-weight: 600;
+    line-height: 1;
+    text-decoration: none;
+    white-space: nowrap;
+    cursor: pointer;
+    background: transparent;
+  }
+
+  .btn--sm {
+    padding: var(--btn-sm-pad-y) var(--btn-sm-pad-x);
+    font-size: 0.875rem;
+  }
+
+  .btn--primary {
+    background: var(--accent);
+    color: var(--on-accent);
+  }
+
+  .btn--primary:hover {
+    background: var(--accent-hover);
+  }
+
+  .btn--secondary {
+    border-color: var(--border-strong);
+    color: var(--ink);
+  }
+
+  .btn--secondary:hover {
+    background: var(--surface-sunken);
+  }
+
+  .btn--ghost {
+    padding-inline: var(--space-2);
+    color: var(--accent-ink);
+  }
+
+  .btn--ghost:hover {
+    text-decoration: underline;
+    text-underline-offset: var(--space-1);
+  }
+</style>

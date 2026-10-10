@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 225" aria-hidden="true" focusable="false">
+  <line x1="30" y1="190" x2="330" y2="190" style="stroke: var(--hairline); stroke-width: 1" />
+  <rect x="44" y="150" width="30" height="40" rx="4" style="fill: var(--border-strong)" />
+  <rect x="88" y="120" width="30" height="70" rx="4" style="fill: var(--border-strong)" />
+  <rect x="132" y="135" width="30" height="55" rx="4" style="fill: var(--border-strong)" />
+  <rect x="176" y="90" width="30" height="100" rx="4" style="fill: var(--accent)" />
+  <rect x="220" y="110" width="30" height="80" rx="4" style="fill: var(--border-strong)" />
+  <rect x="264" y="70" width="30" height="120" rx="4" style="fill: var(--border-strong)" />
+</svg>

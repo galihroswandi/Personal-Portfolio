@@ -1,0 +1,39 @@
+---
+/** Mono technology chip. Use inside a list; the variant shows how well the tech is known. */
+interface Props {
+  variant?: 'daily' | 'used' | 'learning';
+}
+
+const { variant = 'used' } = Astro.props;
+---
+
+<span class:list={['chip', `chip--${variant}`]}>
+  <slot />
+</span>
+
+<style>
+  .chip {
+    display: inline-block;
+    padding: var(--chip-pad-y) var(--chip-pad-x);
+    border: var(--hairline-width) solid transparent;
+    border-radius: var(--radius-sm);
+    color: var(--ink);
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    font-weight: 500;
+    line-height: 1.2;
+  }
+
+  .chip--daily {
+    background: var(--accent-soft);
+  }
+
+  .chip--used {
+    border-color: var(--hairline);
+    background: var(--surface-raised);
+  }
+
+  .chip--learning {
+    border: var(--border-width-strong) dashed var(--border-strong);
+  }
+</style>

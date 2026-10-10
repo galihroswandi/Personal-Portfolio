@@ -87,6 +87,28 @@
   --border-width-strong: 1.5px;
   --focus-ring-width: 2px;
   --focus-ring-offset: 3px;
+
+  /* Component sizes from the design (off the 4px scale on purpose; named so nothing is magic). */
+  --btn-pad-y: 14px;
+  --btn-pad-x: var(--space-5);
+  --btn-sm-pad-y: 10px;
+  --btn-sm-pad-x: 18px;
+  --badge-pad-y: 6px;
+  --badge-pad-x: 14px;
+  --chip-pad-y: 7px;
+  --chip-pad-x: 14px;
+  --lamp-size: 8px;
+  --monogram-size: 36px;
+  --icon-size: 20px;
+  --tag-rule-width: 32px;
+  --bracket-size: 14px;
+  --timeline-dot: 11px;
+  --timeline-dot-border: 2px;
+  --radar-size: 420px;
+  --photo-width: 300px;
+  --bento-row: 160px;
+  --measure-text: 620px;
+  --measure-heading: 720px;
 }
 
 /* 720px is the mobile breakpoint from the design. Media queries cannot read custom properties. */

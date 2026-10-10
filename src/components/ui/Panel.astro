@@ -1,0 +1,50 @@
+---
+/**
+ * Container with two amber corner brackets (top-left, bottom-right). Used in exactly three
+ * places: the hero radar frame, the About photo and the Contact panel.
+ */
+import type { HTMLAttributes } from 'astro/types';
+
+interface Props extends HTMLAttributes<'div'> {
+  as?: 'div' | 'figure';
+}
+
+const { as: Tag = 'div', class: className, ...rest } = Astro.props;
+---
+
+<Tag class:list={['panel', className]} {...rest}>
+  <slot />
+</Tag>
+
+<style>
+  .panel {
+    position: relative;
+  }
+
+  .panel::before,
+  .panel::after {
+    content: '';
+    position: absolute;
+    z-index: 1;
+    width: var(--bracket-size);
+    height: var(--bracket-size);
+    border: var(--border-width-strong) solid var(--accent);
+    pointer-events: none;
+  }
+
+  .panel::before {
+    top: calc(-1 * var(--hairline-width));
+    left: calc(-1 * var(--hairline-width));
+    border-right: 0;
+    border-bottom: 0;
+    border-top-left-radius: inherit;
+  }
+
+  .panel::after {
+    right: calc(-1 * var(--hairline-width));
+    bottom: calc(-1 * var(--hairline-width));
+    border-left: 0;
+    border-top: 0;
+    border-bottom-right-radius: inherit;
+  }
+</style>

@@ -140,8 +140,13 @@ p {
   padding-inline: var(--gutter);
 }
 
+/* Sections space themselves from the one above; the last one adds its own bottom space. */
 .section {
-  padding-block: var(--section-space);
+  padding-block-start: var(--section-space);
+}
+
+.section--last {
+  padding-block-end: var(--section-space);
 }
 
 .visually-hidden {
