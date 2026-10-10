@@ -21,7 +21,7 @@ TypeScript 7 is the latest release, but `@astrojs/check` (peer `^5 || ^6`) and
 
 ## 004 · No eslint-plugin-jsx-a11y
 
-It does not support ESLint 10 yet. React is used only for two small islands (Clock, Scene3D),
+It does not support ESLint 10 yet. React was planned for two small islands (Clock, Scene3D; see 023 and 025),
 and accessibility is checked at runtime with axe in Playwright, which covers the Astro markup
 too.
 
@@ -92,8 +92,9 @@ A stronger option would be dropping the no-JS href.
 
 ## 015 · Navigation without JavaScript
 
-The menu button is rendered `hidden` and shown by the script. Without JavaScript the five links
-are always visible, wrapping under the brand on small screens. The `ID | EN` switch sits in the
+Without JavaScript the menu button is hidden and the five links are always visible, wrapping
+under the brand on small screens. (Updated by 024: the collapsed layout now keys off the `js`
+class instead of being applied by the menu script.) The `ID | EN` switch sits in the
 navbar from 1024px and in the status strip below that.
 
 ## 016 · Case-study cards are not one big link
@@ -102,3 +103,90 @@ Only "Baca studi kasus →" is a link (its `aria-label` includes the title). The
 focus ring through `:focus-within`, so it still looks like a single target to keyboard users
 without duplicate tab stops. The design-system README suggests the whole card as the target;
 the build prompt overrides it.
+
+## 017 · Scroll reveal uses IntersectionObserver, not `animation-timeline: view()`
+
+`view()` is at about 88% (caniuse, October 2026: Chrome/Edge 115+, Safari 26+, Firefox only from
+160). More important, it is scroll-linked: an element un-reveals when you scroll back up, and
+"play once" is the rule. One shared observer (`src/scripts/reveal.ts`) sets `data-revealed`
+once and stops watching; CSS transitions do the rest. Anything on screen at load is marked
+straight away. Content is only hidden while `<html class="js">`, so no-JS visitors and a
+missing observer (everything is revealed) still see the whole page.
+
+## 018 · Reduced motion is the absence of the motion rules
+
+Every keyframe use, transition and transform lives inside
+`@media (prefers-reduced-motion: no-preference)` in `motion.css` (and the few component rules).
+Reduced motion therefore gets the final, static frame without a separate override block:
+no loops, no transforms, content at full opacity. The brief allowed a 120ms fade for reveals
+under reduced motion; it is not used, and content simply appears.
+
+## 019 · "Paused" freezes loops in place
+
+The pause control sets `animation-play-state: paused` on `.motion-loop` elements instead of
+removing the animations. The radar stops where it is rather than snapping back to 12 o'clock,
+and sweep and pings stay in phase when resumed. Entrances still play when paused (they are
+short and one-off). The OS setting always wins over the stored choice. Under reduced motion
+the button is hidden, since nothing loops.
+
+## 020 · Cross-document view transitions
+
+`@view-transition { navigation: auto; }` with a 150ms cross-fade, inside the no-preference
+media query. Support is about 89% (Chrome 126+, Safari 18.2+, Firefox partial from 144); other
+browsers navigate normally. The sticky header has `view-transition-name: site-header` so it is
+captured on its own and does not flicker with the page fade. No client-side router.
+
+## 021 · Scroll progress line only where CSS can drive it
+
+`animation-timeline: scroll(root block)` inside `@supports`. Where it is not supported the line
+is not rendered; it is not emulated with a scroll listener. The timeline sits in a separate rule
+because the CSS minifier (Lightning CSS) otherwise folds it into the `animation` shorthand as
+`animation: … scroll(root)`, which browsers reject. A Playwright test guards this.
+
+## 022 · Motion-only constants live in `motion.css`
+
+The brief allowed only seven new tokens. Values used by a single effect (30ms word stagger, 25ms
+chip stagger, 2.4s lamp pulse, 1s colon blink, 2px card lift, the tilt perspective, …) are
+named custom properties at the top of `motion.css`, not literals in rules. Radar timing comes
+from `src/lib/radar.ts` as inline custom properties, so the SVG and any future 3D renderer
+share one source. The `radar-ping` keyframe stop (15% = 1.2s of 8s) cannot read a variable; a
+unit test checks that it matches `pingKeyframeStop()`.
+
+## 023 · The clock is a small script, not a React island
+
+`[data-clock]` showed a static `--:--` and no clock island existed. A React island would ship
+the React runtime for one line of text and break the 3 KB budget, so the StatusStrip script
+ticks it on the full minute with the existing `formatClock` / `msUntilNextMinute`. The digits
+are fixed-width (`tabular-nums` in a mono font), so ticking never shifts layout. The colon
+blinks only once the clock is live, and to 0.6 opacity at the lowest (text contrast floor).
+
+## 024 · Header layout settles before first paint
+
+The menu collapse (124px → 68px) and the pause control (strip 45px → 55px on phones) used to be
+applied by scripts after first paint, which moved the whole page. Lighthouse saw CLS up to 0.29
+when a web font swapped in the same frame. Both are now CSS keyed off the `js` class set by the
+inline head script; the scripts only add behaviour. If a script fails after `js` is set, the
+toggle is visible but inert, the same trade-off as the reveal.
+
+## 025 · 3D radar renderer deferred
+
+The brief assumed an existing `Scene3D` island. It does not exist: `three` and
+`@react-three/fiber` are installed but unused. Building it is new feature work (and React plus
+Three on the page), so only the SVG renderer is animated. `src/lib/radar.ts` holds the shared
+period, ping and blink timing and the blip data; a 3D scene would add its prism period (about
+20s per revolution) and a `sweepAngleAt(elapsed)` helper there. To be seamless, the scene should read the phase from the
+SVG sweep's running CSS animation (`getAnimations()[…].currentTime`), not start at 0°. The
+tilt already works on the wrapper, so it would apply to a canvas too.
+
+## 026 · Small drawing changes the motion needed
+
+- Radar: the afterglow wedge was on the leading (clockwise) side of the sweep line; it now
+  trails it. The radar SVG is inline in `RadarFallback.astro` (built from the blip data) and
+  `src/assets/illustrations/radar.svg` is gone.
+- Timeline: the vertical line is a `::before` instead of `border-left`, so it can draw in. A
+  transparent border keeps the original geometry the dots are centred on.
+- Project card: `overflow: hidden` moved from the card to its illustration, so the hover shadow
+  (a `::after` whose opacity changes) can sit outside the card.
+- Hero h1: words are inline-block spans. Chrome adds a space at an inline-block boundary in the
+  accessible name, so trailing punctuation stays in the same span as the word before it, and
+  the emphasised phrase becomes one `<em>` per word. A test checks the heading's name.

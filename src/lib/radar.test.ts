@@ -7,7 +7,6 @@ import {
   blipAngle,
   pingDelayMs,
   pingKeyframeStop,
-  sweepAngleAt,
 } from './radar';
 
 describe('blipAngle', () => {
@@ -36,18 +35,6 @@ describe('pingDelayMs', () => {
       expect(delay).toBeGreaterThanOrEqual(0);
       expect(delay).toBeLessThan(RADAR_PERIOD_MS);
     }
-  });
-});
-
-describe('sweepAngleAt', () => {
-  it('wraps once per period', () => {
-    expect(sweepAngleAt(0)).toBe(0);
-    expect(sweepAngleAt(RADAR_PERIOD_MS / 2)).toBe(180);
-    expect(sweepAngleAt(RADAR_PERIOD_MS * 3 + RADAR_PERIOD_MS / 4)).toBe(90);
-  });
-
-  it('agrees with the ping delay (same phase)', () => {
-    expect(sweepAngleAt(pingDelayMs(123))).toBeCloseTo(123, 0);
   });
 });
 

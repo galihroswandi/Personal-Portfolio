@@ -1,7 +1,7 @@
 /**
  * Radar geometry and timing. The single source for every radar renderer: the SVG fallback
  * (RadarFallback.astro writes these as inline custom properties) and any future 3D scene, so
- * both sweep with the same period and phase.
+ * both sweep with the same period and phase (see docs/decisions.md, 025).
  */
 
 /** One full sweep, clockwise, starting at 12 o'clock. */
@@ -11,8 +11,6 @@ export const RADAR_PING_MS = 1200;
 export const RADAR_BLIP_BLINK_MS = 3200;
 /** Rings fade in from the centre outward on load, this far apart. */
 export const RADAR_RING_STAGGER_MS = 80;
-/** Prism revolution for a 3D renderer (the SVG prism is static). */
-export const RADAR_PRISM_PERIOD_MS = 20_000;
 
 /** SVG coordinate system: a 400 × 400 view box centred on (200, 200). */
 export const RADAR_VIEWBOX = 400;
@@ -57,9 +55,4 @@ export function pingKeyframeStop(
   periodMs: number = RADAR_PERIOD_MS,
 ): number {
   return (pingMs / periodMs) * 100;
-}
-
-/** Sweep angle at a time since the sweep started, for renderers that draw frame by frame. */
-export function sweepAngleAt(elapsedMs: number, periodMs: number = RADAR_PERIOD_MS): number {
-  return ((((elapsedMs % periodMs) + periodMs) % periodMs) / periodMs) * 360;
 }
