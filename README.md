@@ -18,21 +18,55 @@ pnpm dev            # http://localhost:4321 → redirects to /id/ or /en/
 
 ## Scripts
 
-| Script           | What it does                                   |
-| ---------------- | ---------------------------------------------- |
-| `pnpm dev`       | Dev server                                     |
-| `pnpm build`     | Static build into `dist/`                      |
-| `pnpm preview`   | Serve `dist/` locally                          |
-| `pnpm lint`      | ESLint + Prettier check                        |
-| `pnpm format`    | Prettier write + ESLint fix                    |
-| `pnpm typecheck` | `astro check` (TypeScript + Astro templates)   |
-| `pnpm test`      | Vitest unit tests                              |
-| `pnpm test:e2e`  | Playwright smoke tests against the built site  |
-| `pnpm check`     | lint + typecheck + test + build (what CI runs) |
+| Script                 | What it does                                                |
+| ---------------------- | ----------------------------------------------------------- |
+| `pnpm dev`             | Dev server                                                  |
+| `pnpm build`           | Static build into `dist/`                                   |
+| `pnpm preview`         | Serve `dist/` locally                                       |
+| `pnpm lint`            | ESLint + Prettier check                                     |
+| `pnpm format`          | Prettier write + ESLint fix                                 |
+| `pnpm typecheck`       | `astro check` (TypeScript + Astro templates)                |
+| `pnpm test`            | Vitest unit tests                                           |
+| `pnpm test:e2e`        | Playwright smoke tests against the built site               |
+| `pnpm check`           | lint + typecheck + test + build (what CI runs)              |
+| `pnpm check:content`   | Unreviewed copy and placeholders; fails production builds   |
+| `pnpm check:seo`       | SEO audit of `dist/` (part of `pnpm build`)                 |
+| `pnpm validate:schema` | Posts built pages to validator.schema.org (manual, network) |
+
+`pnpm build` runs `check:content`, `astro build` and `check:seo`. With `VERCEL_ENV=production` (or
+`DEPLOY_ENV=production`) both checks fail on anything not ready to publish.
 
 ## Structure
 
 See `docs/decisions.md` for non-obvious choices.
+
+## SEO
+
+Canonical URLs, hreflang, sitemap, Open Graph images, structured data and the checks that guard
+them: see [`docs/seo.md`](docs/seo.md). The owner's off-site checklist (domain, Search Console,
+profiles) is [`docs/seo-checklist.md`](docs/seo-checklist.md), in Indonesian.
+
+Lighthouse 12.6 (mobile, simulated throttling, headless Chromium 156) on 10 October 2026,
+`dist/` served by a plain static server (no compression), 3 runs per URL:
+
+| URL                  | Build  | Performance | Accessibility | Best Practices | SEO | LCP       | CLS |
+| -------------------- | ------ | ----------- | ------------- | -------------- | --- | --------- | --- |
+| `/id/`               | Before | 96–97       | 100           | 100            | 100 | 2.3–2.4 s | 0   |
+| `/id/`               | After  | 97          | 100           | 100            | 100 | 2.3 s     | 0   |
+| `/en/`               | Before | 96–97       | 100           | 100            | 100 | 2.3–2.4 s | 0   |
+| `/en/`               | After  | 97          | 100           | 100            | 66¹ | 2.3 s     | 0   |
+| `/id/proyek/hmi-qt/` | Before | 98–99       | 100           | 100            | 100 | 2.0–2.1 s | 0   |
+| `/id/proyek/hmi-qt/` | After  | 98          | 100           | 100            | 66¹ | 2.1 s     | 0   |
+
+¹ Only the "Page is blocked from indexing" audit fails. These pages are `noindex` by design until the English copy
+is reviewed and the case studies have real content (decision 030). A production build cannot
+contain them in that state, so production pages score SEO 100 like `/id/`.
+
+The LCP here is higher than in the Performance table below because this server does not
+compress. The page's own weight barely changed: home HTML 9.98 → 10.74 KB gzip (head tags,
+JSON-LD, footer links). Initial JavaScript is the same 2.4 KB of inline scripts plus a 1.2 KB
+deferred analytics loader. The analytics library (1.5 KB) loads when the browser is idle, and
+only on Vercel.
 
 ## Motion
 

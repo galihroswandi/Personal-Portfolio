@@ -27,6 +27,8 @@ const t = useTranslations(lang);
         lang={code}
         aria-current={code === lang ? 'true' : undefined}
         data-lang-choice={code}
+        data-event={code === lang ? undefined : 'lang_switch'}
+        data-event-label={code === lang ? undefined : code}
       >
         {code.toUpperCase()}
       </a>

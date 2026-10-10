@@ -5,6 +5,7 @@ import Footer from '@/components/layout/Footer.astro';
 import Navbar from '@/components/layout/Navbar.astro';
 import StatusStrip from '@/components/layout/StatusStrip.astro';
 import SEO from '@/components/seo/SEO.astro';
+import { analyticsEnabled } from '@/config/env';
 import { useTranslations } from '@/i18n/utils';
 import { MOTION_PAUSED_VALUE, MOTION_STORAGE_KEY } from '@/lib/motion';
 import type { HeadMeta } from '@/lib/seo';
@@ -22,7 +23,7 @@ const t = useTranslations(lang);
 ---
 
 <!doctype html>
-<html lang={lang} data-theme="dark">
+<html lang={lang} data-theme="dark" data-analytics={analyticsEnabled ? 'on' : undefined}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -73,6 +74,10 @@ const t = useTranslations(lang);
     <Footer lang={lang} />
     <script>
       import '@/scripts/reveal';
+    </script>
+    <!-- Separate tag: it lazy-loads a chunk, which would stop the reveal script being inlined. -->
+    <script>
+      import '@/scripts/analytics';
     </script>
   </body>
 </html>
