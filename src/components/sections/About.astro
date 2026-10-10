@@ -39,7 +39,7 @@ const principles: { title: UIKey; text: UIKey }[] = [
       {photo ? (
         <Image src={photo} alt={t('about.photoAlt')} widths={[300, 600]} sizes="300px" />
       ) : (
-        <div class="about__placeholder" role="img" aria-label={t('about.photoAlt')}>
+        <div class="about__placeholder" role="img" aria-label={t('about.photoPlaceholderLabel')}>
           <span aria-hidden="true">{t('about.photoPlaceholder')}</span>
         </div>
       )}

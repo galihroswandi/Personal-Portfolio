@@ -142,6 +142,11 @@ export function auditSite(site: BuiltSite, options: AuditOptions): string[] {
     // Headings and images.
     const h1Count = root.querySelectorAll('h1').length;
     if (h1Count !== 1) fail(path, `${h1Count} <h1> elements (expected 1)`);
+    for (const figure of root.querySelectorAll('[role="img"]')) {
+      if (!attr(figure, 'aria-label') && !attr(figure, 'aria-labelledby')) {
+        fail(path, 'role="img" element has no accessible name');
+      }
+    }
     for (const image of root.querySelectorAll('img')) {
       if (image.getAttribute('alt') === undefined) {
         fail(path, `<img src="${attr(image, 'src')}"> has no alt`);

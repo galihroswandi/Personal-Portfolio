@@ -110,7 +110,8 @@ const id = {
   'illustration.gauge': 'Ilustrasi generik: indikator setengah lingkaran',
   'illustration.grid': 'Ilustrasi generik: kisi titik',
 
-  'about.photoAlt': 'Foto Galih Roswandi (placeholder)',
+  'about.photoAlt': 'Foto Galih Roswandi',
+  'about.photoPlaceholderLabel': 'Tempat foto Galih Roswandi (belum ada foto)',
   'about.photoPlaceholder': '[foto Anda]',
   'about.principle1.title': 'Data akurat',
   'about.principle1.text': 'Yang tampil harus sesuai sumbernya.',
@@ -264,7 +265,8 @@ const en: Record<UIKey, string> = {
   'illustration.gauge': 'Generic illustration: half-circle gauge',
   'illustration.grid': 'Generic illustration: dot grid',
 
-  'about.photoAlt': 'Photo of Galih Roswandi (placeholder)',
+  'about.photoAlt': 'Photo of Galih Roswandi',
+  'about.photoPlaceholderLabel': 'Space for a photo of Galih Roswandi (no photo yet)',
   'about.photoPlaceholder': '[foto Anda]',
   'about.principle1.title': 'Accurate data',
   'about.principle1.text': 'What is shown must match its source.',

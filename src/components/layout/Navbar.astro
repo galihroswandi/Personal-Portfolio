@@ -2,7 +2,8 @@
 /** Main navigation: monogram, section links, language switch, "Hire me", mobile disclosure menu. */
 import LanguageSwitch from '@/components/layout/LanguageSwitch.astro';
 import Button from '@/components/ui/Button.astro';
-import type { Lang, UIKey } from '@/i18n/ui';
+import { navLinks as links } from '@/config/nav';
+import type { Lang } from '@/i18n/ui';
 import { localePath, useTranslations } from '@/i18n/utils';
 
 interface Props {
@@ -12,15 +13,6 @@ interface Props {
 const { lang } = Astro.props;
 const t = useTranslations(lang);
 const home = localePath(lang);
-
-/** Section ids are fixed (Indonesian) in both languages so links and anchors stay stable. */
-const links: { id: string; key: UIKey }[] = [
-  { id: 'proyek', key: 'nav.projects' },
-  { id: 'tentang', key: 'nav.about' },
-  { id: 'pengalaman', key: 'nav.experience' },
-  { id: 'layanan', key: 'nav.services' },
-  { id: 'kontak', key: 'nav.contact' },
-];
 ---
 
 <div class="container nav" data-nav>
