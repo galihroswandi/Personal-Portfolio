@@ -1,4 +1,4 @@
-import { expect, test } from '@playwright/test';
+import { expect, test, type Page } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
 import { countAnimations, emulateReducedMotion, readCls, scrollThrough, trackCls } from './helpers';
 
@@ -154,4 +154,55 @@ test('scroll progress line follows the page scroll', async ({ page }) => {
     window.scrollTo({ top: document.documentElement.scrollHeight, behavior: 'instant' }),
   );
   await expect.poll(progress).toBe(1);
+});
+
+test.describe('radar', () => {
+  const radarLoops = (page: Page) =>
+    page.evaluate(
+      () =>
+        document
+          .getAnimations()
+          .filter(
+            (animation) =>
+              animation.playState === 'running' &&
+              animation.effect?.getComputedTiming().iterations === Infinity &&
+              (animation.effect as KeyframeEffect).target?.closest('[data-tilt]'),
+          ).length,
+    );
+
+  test('loops run on screen and pause off-screen', async ({ page }) => {
+    await page.goto('/id/');
+    expect(await radarLoops(page)).toBeGreaterThan(0);
+    await page.evaluate(() =>
+      window.scrollTo({ top: document.documentElement.scrollHeight, behavior: 'instant' }),
+    );
+    await expect(page.locator('[data-tilt]')).toHaveAttribute('data-offscreen', '');
+    expect(await radarLoops(page)).toBe(0);
+    await page.evaluate(() => window.scrollTo({ top: 0, behavior: 'instant' }));
+    await expect(page.locator('[data-tilt]')).not.toHaveAttribute('data-offscreen');
+    expect(await radarLoops(page)).toBeGreaterThan(0);
+  });
+
+  test('frame tilts toward a mouse pointer, within limits, and not when paused', async ({
+    page,
+  }) => {
+    await page.setViewportSize({ width: 1440, height: 900 });
+    await page.goto('/id/');
+    const frame = page.locator('[data-tilt]');
+    const box = await frame.boundingBox();
+    if (!box) throw new Error('radar frame not rendered');
+    await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);
+    // Top-right corner: both axes at (almost) the ±6° limit.
+    await page.mouse.move(box.x + box.width - 1, box.y + 1, { steps: 5 });
+    await expect
+      .poll(() =>
+        frame.evaluate((element) => parseFloat(element.style.getPropertyValue('--tilt-y'))),
+      )
+      .toBeCloseTo(6, 0);
+
+    await page.mouse.move(0, 0);
+    await page.getByRole('button', { name: 'Jeda animasi' }).click();
+    await page.mouse.move(box.x + box.width, box.y, { steps: 5 });
+    await expect(frame).toHaveCSS('transform', 'none');
+  });
 });

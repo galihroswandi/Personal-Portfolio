@@ -31,6 +31,10 @@
   --blink-period: 1s;
   /* Text never goes below this opacity in a loop, so its contrast stays readable. */
   --blink-opacity: 0.6;
+  --radar-blip-opacity: 0.35;
+  --radar-ping-opacity: 0.6;
+  --radar-ping-scale: 3;
+  --tilt-perspective: 1200px;
 }
 
 /* Global switches ------------------------------------------------------------------------- */
@@ -83,6 +87,11 @@
   .motion-raise:hover::after {
     opacity: 1;
   }
+}
+
+/* Radar pings are only visible while their animation runs. */
+.radar-ping {
+  opacity: 0;
 }
 
 /* Scroll progress: a 2px accent line on the sticky header, only where CSS can drive it. */
@@ -319,6 +328,41 @@
     animation-duration: var(--page-fade);
   }
 
+  /* Radar (SVG fallback) ---------------------------------------------------------------------- */
+
+  /* Timing comes from src/lib/radar.ts as inline custom properties on the <svg>. */
+  .radar-sweep {
+    transform-box: view-box;
+    transform-origin: 50% 50%;
+    animation: radar-spin var(--radar-period) linear infinite;
+  }
+
+  .radar-blip {
+    animation: radar-blink var(--radar-blink) ease-in-out infinite;
+  }
+
+  /* Same period as the sweep; the delay is when the sweep line reaches the blip. */
+  .radar-ping {
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: radar-ping var(--radar-period) var(--motion-ease) infinite;
+    animation-delay: var(--ping-delay, 0ms);
+  }
+
+  .radar-ring {
+    animation: fade-in var(--motion-slow) var(--motion-ease) both;
+    animation-delay: calc(var(--i, 0) * var(--radar-ring-stagger));
+  }
+
+  /* Pointer tilt: --tilt-x / --tilt-y are written by src/scripts/hero-radar.ts. Only with a
+     fine pointer and full motion, so it is off on touch, under reduced motion and when paused. */
+  @media (hover: hover) and (pointer: fine) {
+    :root[data-motion='full'] .motion-tilt {
+      transform: perspective(var(--tilt-perspective)) rotateX(var(--tilt-x, 0deg))
+        rotateY(var(--tilt-y, 0deg));
+    }
+  }
+
   /* Hero entrance (first load, CSS only) ----------------------------------------------------- */
 
   /*
@@ -373,6 +417,38 @@
 @keyframes blink {
   50% {
     opacity: var(--blink-opacity);
+  }
+}
+
+@keyframes radar-spin {
+  to {
+    transform: rotate(1turn);
+  }
+}
+
+@keyframes radar-blink {
+  50% {
+    opacity: var(--radar-blip-opacity);
+  }
+}
+
+/* 15% = RADAR_PING_MS / RADAR_PERIOD_MS (1.2s of 8s, src/lib/radar.ts; a unit test checks). */
+@keyframes radar-ping {
+  0% {
+    opacity: var(--radar-ping-opacity);
+    transform: scale(1);
+  }
+
+  15%,
+  100% {
+    opacity: 0;
+    transform: scale(var(--radar-ping-scale));
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
   }
 }
 

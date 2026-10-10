@@ -25,7 +25,7 @@ const title = splitTitleWords(splitEmphasis(t('hero.title'))).map((token) =>
 );
 ---
 
-<section class="container hero" aria-labelledby="hero-title">
+<section class="container hero" aria-labelledby="hero-title" data-tilt-area>
   <div class="hero__text">
     <Badge lamp class="motion-enter">
       {t('hero.badge')}
@@ -64,7 +64,7 @@ const title = splitTitleWords(splitEmphasis(t('hero.title'))).map((token) =>
     </ul>
   </div>
 
-  <Panel class="hero__radar" role="img" aria-label={t('hero.radarLabel')}>
+  <Panel class="hero__radar motion-tilt" role="img" aria-label={t('hero.radarLabel')} data-tilt>
     <div class="hero__scene" data-scene>
       <RadarFallback />
     </div>
@@ -73,6 +73,10 @@ const title = splitTitleWords(splitEmphasis(t('hero.title'))).map((token) =>
     </span>
   </Panel>
 </section>
+
+<script>
+  import '@/scripts/hero-radar';
+</script>
 
 <style>
   .hero {

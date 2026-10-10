@@ -2,11 +2,103 @@
 /**
  * Server-rendered radar SVG. It is what paints first (LCP) and the final fallback when the 3D
  * scene is not loaded. Colors come from tokens inside the SVG, so it follows the theme.
+ *
+ * Motion is CSS only (src/styles/motion.css): the sweep turns once per RADAR_PERIOD_MS and each
+ * blip pings when the sweep line passes it. Both use the same period, and the ping delay is the
+ * time the sweep needs to reach the blip's angle, so they stay in step without JavaScript.
  */
-import Radar from '@/assets/illustrations/radar.svg';
+import {
+  RADAR_BLIPS,
+  RADAR_BLIP_BLINK_MS,
+  RADAR_CENTER,
+  RADAR_PERIOD_MS,
+  RADAR_RADIUS,
+  RADAR_RINGS,
+  RADAR_RING_STAGGER_MS,
+  RADAR_VIEWBOX,
+  blipAngle,
+  pingDelayMs,
+} from '@/lib/radar';
+
+const c = RADAR_CENTER;
+const top = c - RADAR_RADIUS;
+const bottom = c + RADAR_RADIUS;
+const timing = [
+  `--radar-period: ${RADAR_PERIOD_MS}ms`,
+  `--radar-blink: ${RADAR_BLIP_BLINK_MS}ms`,
+  `--radar-ring-stagger: ${RADAR_RING_STAGGER_MS}ms`,
+].join('; ');
+const blips = RADAR_BLIPS.map((blip) => ({
+  ...blip,
+  fill: blip.accent ? 'var(--accent)' : 'var(--ink-muted)',
+  pingDelay: `--ping-delay: ${pingDelayMs(blipAngle(blip.x, blip.y))}ms`,
+}));
 ---
 
-<Radar class="radar-fallback" width="100%" height="100%" />
+<svg
+  class="radar-fallback"
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox={`0 0 ${RADAR_VIEWBOX} ${RADAR_VIEWBOX}`}
+  width="100%"
+  height="100%"
+  aria-hidden="true"
+  focusable="false"
+  style={timing}
+>
+  <g style="fill: none; stroke: var(--hairline); stroke-width: 1">
+    {RADAR_RINGS.map((r, index) => (
+      <circle class="radar-ring" cx={c} cy={c} r={r} style={`--i: ${index}`} />
+    ))}
+    <line class="radar-ring" x1={top} y1={c} x2={bottom} y2={c} />
+    <line class="radar-ring" x1={c} y1={top} x2={c} y2={bottom} />
+  </g>
+  <g style="fill: none; stroke: var(--ink); stroke-width: 1.5; stroke-linejoin: round">
+    <polygon points="200,112 278,156 278,244 200,288 122,244 122,156" />
+    <line x1="200" y1="112" x2="200" y2="288" />
+    <line x1="122" y1="156" x2="278" y2="244" />
+    <line x1="278" y1="156" x2="122" y2="244" />
+  </g>
+  <!-- The wedge trails the line (counter-clockwise of it) as the sweep turns clockwise. -->
+  <g class="radar-sweep motion-loop">
+    <path
+      d={`M ${c} ${c} L ${c} ${top} A ${RADAR_RADIUS} ${RADAR_RADIUS} 0 0 0 148 38 Z`}
+      style="fill: var(--accent); opacity: 0.16"
+    />
+    <line x1={c} y1={c} x2={c} y2={top} style="stroke: var(--accent); stroke-width: 2" />
+  </g>
+  {blips.map((blip) => (
+    <>
+      <circle
+        class="radar-ping motion-loop"
+        cx={blip.x}
+        cy={blip.y}
+        r={blip.r}
+        style={`fill: none; stroke: ${blip.fill}; stroke-width: 1; ${blip.pingDelay}`}
+      />
+      <circle
+        class="radar-blip motion-loop"
+        cx={blip.x}
+        cy={blip.y}
+        r={blip.r}
+        style={`fill: ${blip.fill}`}
+      />
+    </>
+  ))}
+  <g style="font-family: var(--font-mono); font-size: 11px; font-weight: 500; fill: var(--ink-subtle)">
+    <text x="200" y="22" text-anchor="middle">
+      000
+    </text>
+    <text x="386" y="204" text-anchor="end">
+      090
+    </text>
+    <text x="200" y="392" text-anchor="middle">
+      180
+    </text>
+    <text x="14" y="204">
+      270
+    </text>
+  </g>
+</svg>
 
 <style>
   .radar-fallback {
