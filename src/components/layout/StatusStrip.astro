@@ -46,7 +46,7 @@ const [hours, minutes] = CLOCK_FALLBACK.split(':');
       </li>
     </ul>
     <div class="strip__controls">
-      <button class="strip__pause" type="button" aria-pressed="false" data-motion-toggle hidden>
+      <button class="strip__pause" type="button" aria-pressed="false" data-motion-toggle>
         <span class="strip__pause-box" aria-hidden="true"></span>
         {t('status.pauseMotion')}
       </button>
@@ -64,14 +64,13 @@ const [hours, minutes] = CLOCK_FALLBACK.split(':');
   } from '@/lib/motion';
   import { formatClock, msUntilNextMinute } from '@/lib/time';
 
-  // Pause control. Hidden without JavaScript (it could not do anything) and, by CSS, under
-  // reduced motion (nothing loops then).
+  // Pause control. CSS hides it without JavaScript (it could not do anything; shown via the
+  // `js` class before first paint, so the strip does not grow later) and under reduced motion.
   const toggles = [...document.querySelectorAll<HTMLButtonElement>('[data-motion-toggle]')];
   const sync = (state = getMotionState()) => {
     for (const toggle of toggles) toggle.setAttribute('aria-pressed', String(state !== 'full'));
   };
   for (const toggle of toggles) {
-    toggle.hidden = false;
     toggle.addEventListener('click', () => {
       sync(setMotionPaused(toggle.getAttribute('aria-pressed') !== 'true'));
     });
@@ -180,7 +179,7 @@ const [hours, minutes] = CLOCK_FALLBACK.split(':');
     transform: translateY(-50%);
   }
 
-  .strip__pause[hidden] {
+  :global(html:not(.js)) .strip__pause {
     display: none;
   }
 

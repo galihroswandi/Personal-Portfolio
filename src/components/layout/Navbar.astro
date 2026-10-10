@@ -57,7 +57,6 @@ const links: { id: string; key: UIKey }[] = [
       data-label-open={t('a11y.menuOpen')}
       data-label-close={t('a11y.menuClose')}
       aria-label={t('a11y.menuOpen')}
-      hidden
     >
       <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
         <line x1="4" y1="7" x2="20" y2="7"></line>
@@ -70,16 +69,16 @@ const links: { id: string; key: UIKey }[] = [
 
 <script>
   /*
-   * Progressive enhancement. Without JavaScript the toggle stays hidden and the links are
-   * always visible (wrapped under the brand on small screens).
+   * Progressive enhancement. Without JavaScript the toggle is hidden and the links are always
+   * visible (wrapped under the brand on small screens). The collapsed layout keys off the `js`
+   * class, which the inline script in Base sets before first paint, so it does not shift when
+   * this script runs.
    */
   const root = document.querySelector<HTMLElement>('[data-nav]');
   const menu = root?.querySelector<HTMLElement>('[data-nav-menu]');
   const toggle = root?.querySelector<HTMLButtonElement>('[data-nav-toggle]');
 
   if (root && menu && toggle) {
-    root.classList.add('nav--enhanced');
-    toggle.hidden = false;
     const backdrop = document.querySelector<HTMLElement>('[data-nav-backdrop]');
     const isOpen = () => toggle.getAttribute('aria-expanded') === 'true';
 
@@ -249,7 +248,7 @@ const links: { id: string; key: UIKey }[] = [
     cursor: pointer;
   }
 
-  .nav__toggle[hidden] {
+  :global(html:not(.js)) .nav__toggle {
     display: none;
   }
 
@@ -265,12 +264,12 @@ const links: { id: string; key: UIKey }[] = [
     display: none;
   }
 
-  /* Enhanced (JS) on small screens: links collapse into a disclosure panel. */
-  .nav--enhanced .nav__menu {
+  /* With JS on small screens: links collapse into a disclosure panel. */
+  :global(.js) .nav__menu {
     display: none;
   }
 
-  .nav--enhanced.nav--open .nav__menu {
+  :global(.js) .nav--open .nav__menu {
     display: block;
     padding-block: var(--space-2);
     border-top: var(--hairline-width) solid var(--hairline);
@@ -278,7 +277,7 @@ const links: { id: string; key: UIKey }[] = [
 
   /* The panel slides and fades in and out (display is animated discretely). */
   @media (prefers-reduced-motion: no-preference) and (max-width: 1023px) {
-    .nav--enhanced .nav__menu {
+    :global(.js) .nav__menu {
       opacity: 0;
       transform: translateY(calc(-1 * var(--space-2)));
       transition:
@@ -287,20 +286,20 @@ const links: { id: string; key: UIKey }[] = [
         display var(--motion-base) allow-discrete;
     }
 
-    .nav--enhanced.nav--open .nav__menu {
+    :global(.js) .nav--open .nav__menu {
       opacity: 1;
       transform: none;
     }
 
     @starting-style {
-      .nav--enhanced.nav--open .nav__menu {
+      :global(.js) .nav--open .nav__menu {
         opacity: 0;
         transform: translateY(calc(-1 * var(--space-2)));
       }
     }
   }
 
-  .nav--enhanced.nav--open .nav__links {
+  :global(.js) .nav--open .nav__links {
     flex-direction: column;
   }
 
@@ -310,7 +309,7 @@ const links: { id: string; key: UIKey }[] = [
     }
 
     .nav__menu,
-    .nav--enhanced .nav__menu {
+    :global(.js) .nav__menu {
       display: block;
       order: 0;
       flex-basis: auto;
@@ -319,11 +318,11 @@ const links: { id: string; key: UIKey }[] = [
     }
 
     .nav__links,
-    .nav--enhanced.nav--open .nav__links {
+    :global(.js) .nav--open .nav__links {
       flex-direction: row;
     }
 
-    .nav__toggle:not([hidden]) {
+    .nav__toggle {
       display: none;
     }
 
