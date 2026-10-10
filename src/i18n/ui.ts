@@ -47,6 +47,7 @@ const id = {
   'status.wib': 'WIB',
   'status.pos': 'POS',
   'status.from': 'MULAI',
+  'status.pauseMotion': 'Jeda animasi',
 
   'hero.badge': 'Terbuka untuk peluang baru · Menerima proyek freelance',
   /** `*...*` marks the emphasised phrase (rendered as <em>). */
@@ -188,6 +189,7 @@ const en: Record<UIKey, string> = {
   'status.wib': 'WIB',
   'status.pos': 'POS',
   'status.from': 'FROM',
+  'status.pauseMotion': 'Pause motion',
 
   'hero.badge': 'Open to new opportunities · Taking freelance projects',
   'hero.title':

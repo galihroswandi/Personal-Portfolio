@@ -6,8 +6,10 @@ import Navbar from '@/components/layout/Navbar.astro';
 import StatusStrip from '@/components/layout/StatusStrip.astro';
 import { langTags } from '@/i18n/ui';
 import { getAlternateUrl, getLangFromUrl, langs, useTranslations } from '@/i18n/utils';
+import { MOTION_PAUSED_VALUE, MOTION_STORAGE_KEY } from '@/lib/motion';
 import '@/styles/tokens.css';
 import '@/styles/global.css';
+import '@/styles/motion.css';
 
 interface Props {
   title: string;
@@ -39,6 +41,24 @@ const xDefault = new URL('/', Astro.site).href;
     <link rel="alternate" hreflang="x-default" href={xDefault} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="color-scheme" content="dark light" />
+    <script
+      is:inline
+      define:vars={{ storageKey: MOTION_STORAGE_KEY, pausedValue: MOTION_PAUSED_VALUE }}
+    >
+      // Inline on purpose: runs before first paint. `js` lets CSS hide content that is about to
+      // be revealed (without it everything stays visible). The motion state mirrors
+      // resolveMotionState() in src/lib/motion.ts: the OS setting wins over the pause control.
+      const root = document.documentElement;
+      root.classList.add('js');
+      let paused = false;
+      try {
+        paused = localStorage.getItem(storageKey) === pausedValue;
+      } catch {
+        // Storage can be blocked; motion then follows the OS setting.
+      }
+      const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+      root.dataset.motion = reduced ? 'reduced' : paused ? 'paused' : 'full';
+    </script>
     <Font
       cssVariable="--font-fraunces"
       preload={[
@@ -62,6 +82,9 @@ const xDefault = new URL('/', Astro.site).href;
       <slot />
     </main>
     <Footer lang={lang} />
+    <script>
+      import '@/scripts/reveal';
+    </script>
   </body>
 </html>
 

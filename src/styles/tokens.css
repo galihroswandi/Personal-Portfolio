@@ -75,7 +75,10 @@
   --motion-fast: 120ms;
   --motion-base: 200ms;
   --motion-slow: 320ms;
+  --motion-draw: 600ms;
   --motion-ease: cubic-bezier(0, 0, 0.2, 1);
+  --motion-stagger: 60ms;
+  --reveal-distance: 12px;
 
   --content-max: 1120px;
   --gutter: 24px;

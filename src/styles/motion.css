@@ -1,0 +1,41 @@
+/*
+ * Motion. All keyframes and motion utility classes live here; components only add classes and
+ * an index (`--i`). Durations, easings and distances come from the motion tokens in tokens.css.
+ *
+ * Global switches (every effect respects them):
+ * - Movement only exists inside `@media (prefers-reduced-motion: no-preference)`. Under
+ *   `reduce` nothing below applies, so the page shows its final, static state.
+ * - `<html data-motion="paused">` (the pause control) freezes every `.motion-loop` element.
+ * - `[data-offscreen]` (set by a script on a looping region) freezes loops inside it.
+ * - Content waiting to be revealed is only hidden while `<html>` has the `js` class.
+ */
+
+/* Global switches ------------------------------------------------------------------------- */
+
+:root[data-motion='paused'] .motion-loop,
+[data-offscreen] .motion-loop {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  /* Scroll reveal ------------------------------------------------------------------------- */
+
+  /*
+   * `data-reveal` on an element: it fades up once when it enters the viewport.
+   * `data-reveal="group"`: the element stays put and its `.reveal-*` children animate.
+   * Siblings set `--i` (see src/lib/reveal.ts) to stagger by `--motion-stagger`.
+   */
+  [data-reveal]:not([data-reveal='group']),
+  [data-reveal] .reveal-item {
+    transition:
+      opacity var(--motion-slow) var(--motion-ease),
+      transform var(--motion-slow) var(--motion-ease);
+    transition-delay: calc(var(--i, 0) * var(--motion-stagger));
+  }
+
+  .js [data-reveal]:not([data-reveal='group'], [data-revealed]),
+  .js [data-reveal]:not([data-revealed]) .reveal-item {
+    opacity: 0;
+    transform: translateY(var(--reveal-distance));
+  }
+}
