@@ -23,7 +23,7 @@ const rows = [
 ];
 ---
 
-<article class="card">
+<article class="card motion-raise">
   <ProjectIllustration lang={lang} kind={project.illustration} />
   <div class="card__body">
     <p class="card__meta">
@@ -54,19 +54,29 @@ const rows = [
       data-event="case_study_click"
       data-event-label={project.slug}
     >
-      {t('project.read')} <span aria-hidden="true">→</span>
+      {t('project.read')}{' '}
+      <span class="motion-nudge" aria-hidden="true">
+        →
+      </span>
     </a>
   </div>
 </article>
 
 <style>
+  /* No overflow clipping: the hover shadow (.motion-raise) is drawn outside the card. The
+     illustration rounds its own top corners instead. */
   .card {
     display: flex;
     flex-direction: column;
-    overflow: hidden;
     border: var(--hairline-width) solid var(--hairline);
     border-radius: var(--radius-lg);
     background: var(--surface-raised);
+  }
+
+  .card > :global(.illustration) {
+    overflow: hidden;
+    border-radius: calc(var(--radius-lg) - var(--hairline-width))
+      calc(var(--radius-lg) - var(--hairline-width)) 0 0;
   }
 
   .card:focus-within {

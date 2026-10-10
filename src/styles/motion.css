@@ -21,6 +21,16 @@
   --chip-scale-from: 0.96;
   --ring-scale-to: 2.4;
   --ring-opacity-from: 0.6;
+  --nudge-distance: var(--space-1);
+  --lift-button: 1px;
+  --lift-card: 2px;
+  --progress-height: 2px;
+  --page-fade: 150ms;
+  --pulse-period: 2.4s;
+  --pulse-opacity: 0.35;
+  --blink-period: 1s;
+  /* Text never goes below this opacity in a loop, so its contrast stays readable. */
+  --blink-opacity: 0.6;
 }
 
 /* Global switches ------------------------------------------------------------------------- */
@@ -28,6 +38,56 @@
 :root[data-motion='paused'] .motion-loop,
 [data-offscreen] .motion-loop {
   animation-play-state: paused;
+}
+
+/* State-only utilities (they work without motion; the movement is added further down) ------ */
+
+/* An underline drawn by ::after. Components set the custom properties and the shown state. */
+.motion-underline {
+  position: relative;
+}
+
+.motion-underline::after {
+  content: '';
+  position: absolute;
+  right: var(--underline-inset, 0);
+  bottom: var(--underline-bottom, 0);
+  left: var(--underline-inset, 0);
+  height: var(--underline-thickness, var(--hairline-width));
+  background: var(--underline-color, currentColor);
+  transform: scaleX(0);
+  transform-origin: left center;
+  pointer-events: none;
+}
+
+/* A hover/focus shadow on a ::after, so only its opacity changes. */
+.motion-raise {
+  position: relative;
+}
+
+.motion-raise::after {
+  content: '';
+  position: absolute;
+  inset: calc(-1 * var(--hairline-width));
+  border-radius: inherit;
+  box-shadow: var(--shadow-lift);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.motion-raise:focus-within::after {
+  opacity: 1;
+}
+
+@media (hover: hover) {
+  .motion-raise:hover::after {
+    opacity: 1;
+  }
+}
+
+/* Scroll progress: a 2px accent line on the sticky header, only where CSS can drive it. */
+.motion-progress::after {
+  content: none;
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -120,6 +180,145 @@
     transform: scale(0);
   }
 
+  /* Project illustrations: play once when their card is revealed ----------------------------- */
+
+  /* Bars grow from the baseline. */
+  [data-reveal] .ill-bar {
+    transform-box: fill-box;
+    transform-origin: center bottom;
+    transition: transform var(--motion-slow) var(--motion-ease);
+    transition-delay: calc(var(--motion-slow) + var(--i, 0) * var(--motion-stagger));
+  }
+
+  .js [data-reveal]:not([data-revealed]) .ill-bar {
+    transform: scaleY(0);
+  }
+
+  /* The needle sweeps from the start of the arc to its resting angle (pivot set in the SVG). */
+  [data-reveal] .ill-needle {
+    transform-box: view-box;
+    transition: transform var(--motion-draw) var(--motion-ease) var(--motion-slow);
+  }
+
+  .js [data-reveal]:not([data-revealed]) .ill-needle {
+    transform: rotate(var(--needle-from));
+  }
+
+  /* Dots pop in sequence, then the path between the two lit dots draws. */
+  [data-reveal] .ill-dot {
+    transform-box: fill-box;
+    transform-origin: center;
+    transition: transform var(--motion-base) var(--motion-ease);
+    transition-delay: calc(var(--motion-slow) + var(--i, 0) * var(--chip-stagger));
+  }
+
+  .js [data-reveal]:not([data-revealed]) .ill-dot {
+    transform: scale(0);
+  }
+
+  [data-reveal] .ill-trace {
+    transition: stroke-dashoffset var(--motion-draw) var(--motion-ease);
+    transition-delay: calc(var(--motion-slow) + var(--motion-draw));
+  }
+
+  .js [data-reveal]:not([data-revealed]) .ill-trace {
+    stroke-dashoffset: 1;
+  }
+
+  /* Micro-interactions --------------------------------------------------------------------- */
+
+  /* Arrow glyphs nudge right when their link or button is hovered or focused. */
+  .motion-nudge {
+    display: inline-block;
+    transition: transform var(--motion-fast) var(--motion-ease);
+  }
+
+  :is(a, button):focus-visible .motion-nudge {
+    transform: translateX(var(--nudge-distance));
+  }
+
+  .motion-lift {
+    transition:
+      transform var(--motion-fast) var(--motion-ease),
+      background-color var(--motion-fast) var(--motion-ease);
+  }
+
+  .motion-lift:focus-visible {
+    transform: translateY(calc(-1 * var(--lift-button)));
+  }
+
+  .motion-underline::after {
+    transition: transform var(--motion-base) var(--motion-ease);
+  }
+
+  .motion-raise {
+    transition: transform var(--motion-base) var(--motion-ease);
+  }
+
+  .motion-raise::after {
+    transition: opacity var(--motion-base) var(--motion-ease);
+  }
+
+  .motion-raise:focus-within {
+    transform: translateY(calc(-1 * var(--lift-card)));
+  }
+
+  @media (hover: hover) {
+    :is(a, button):hover .motion-nudge {
+      transform: translateX(var(--nudge-distance));
+    }
+
+    .motion-lift:hover {
+      transform: translateY(calc(-1 * var(--lift-button)));
+    }
+
+    .motion-raise:hover {
+      transform: translateY(calc(-1 * var(--lift-card)));
+    }
+  }
+
+  @supports (animation-timeline: scroll()) {
+    .motion-progress::after {
+      content: '';
+      position: absolute;
+      right: 0;
+      bottom: calc(-1 * var(--hairline-width));
+      left: 0;
+      height: var(--progress-height);
+      background: var(--accent);
+      transform-origin: left center;
+      animation: progress linear both;
+      pointer-events: none;
+    }
+
+    /* Separate rule on purpose: the CSS minifier folds a timeline written next to the shorthand
+       into `animation: … scroll(root)`, which browsers reject. */
+    :root .motion-progress::after {
+      animation-timeline: scroll(root block);
+    }
+  }
+
+  /* Status strip: the lamp pulses, the clock colon blinks once a second once the clock runs. */
+  .motion-pulse {
+    animation: pulse var(--pulse-period) ease-in-out infinite;
+  }
+
+  [data-clock-live] .motion-blink {
+    animation: blink var(--blink-period) steps(1, end) infinite;
+  }
+
+  /* Page navigation (language switch, case studies): a short root cross-fade; the sticky
+     header has its own view-transition-name (Base.astro) so it stays put. */
+  @view-transition {
+    navigation: auto;
+  }
+
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation-duration: var(--page-fade);
+  }
+
   /* Hero entrance (first load, CSS only) ----------------------------------------------------- */
 
   /*
@@ -152,6 +351,28 @@
   from {
     opacity: 0;
     transform: translateY(var(--word-rise));
+  }
+}
+
+@keyframes progress {
+  from {
+    transform: scaleX(0);
+  }
+
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@keyframes pulse {
+  50% {
+    opacity: var(--pulse-opacity);
+  }
+}
+
+@keyframes blink {
+  50% {
+    opacity: var(--blink-opacity);
   }
 }
 

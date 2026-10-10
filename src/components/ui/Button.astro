@@ -24,18 +24,32 @@ const {
   class: className,
   ...rest
 } = Astro.props;
-const classes = ['btn', `btn--${variant}`, `btn--${size}`, className];
+const classes = [
+  'btn',
+  `btn--${variant}`,
+  `btn--${size}`,
+  { 'motion-lift': variant === 'primary', 'motion-underline': variant === 'ghost' },
+  className,
+];
 ---
 
 {href ? (
   <a href={href} class:list={classes} {...rest}>
     <slot />
-    {arrow && <span aria-hidden="true">→</span>}
+    {arrow && (
+      <span class="motion-nudge" aria-hidden="true">
+        →
+      </span>
+    )}
   </a>
 ) : (
   <button type={type} class:list={classes} {...(rest as HTMLAttributes<'button'>)}>
     <slot />
-    {arrow && <span aria-hidden="true">→</span>}
+    {arrow && (
+      <span class="motion-nudge" aria-hidden="true">
+        →
+      </span>
+    )}
   </button>
 )}
 
@@ -69,7 +83,8 @@ const classes = ['btn', `btn--${variant}`, `btn--${size}`, className];
     color: var(--on-accent);
   }
 
-  .btn--primary:hover {
+  .btn--primary:hover,
+  .btn--primary:focus-visible {
     background: var(--accent-hover);
   }
 
@@ -78,17 +93,29 @@ const classes = ['btn', `btn--${variant}`, `btn--${size}`, className];
     color: var(--ink);
   }
 
-  .btn--secondary:hover {
+  .btn--secondary:hover,
+  .btn--secondary:focus-visible {
     background: var(--surface-sunken);
   }
 
+  /* Ghost: the underline is a .motion-underline line that draws in from the left. */
   .btn--ghost {
+    --underline-inset: var(--space-2);
+    --underline-bottom: calc(var(--btn-pad-y) - var(--space-1));
+
     padding-inline: var(--space-2);
     color: var(--accent-ink);
   }
 
-  .btn--ghost:hover {
-    text-decoration: underline;
-    text-underline-offset: var(--space-1);
+  .btn--ghost:hover::after,
+  .btn--ghost:focus-visible::after {
+    transform: none;
+  }
+
+  /* The primary's transition (lift + background) comes from .motion-lift. */
+  @media (prefers-reduced-motion: no-preference) {
+    .btn--secondary {
+      transition: background-color var(--motion-fast) var(--motion-ease);
+    }
   }
 </style>

@@ -74,10 +74,12 @@ const xDefault = new URL('/', Astro.site).href;
     <a class="skip-link" href="#main">
       {t('a11y.skip')}
     </a>
-    <header class="site-header">
+    <header class="site-header motion-progress">
       <StatusStrip lang={lang} />
       <Navbar lang={lang} />
     </header>
+    <!-- Dims the page behind the open mobile menu; shown and hidden by the Navbar script. -->
+    <div class="nav-backdrop" data-nav-backdrop hidden></div>
     <main id="main" tabindex="-1">
       <slot />
     </main>
@@ -89,12 +91,45 @@ const xDefault = new URL('/', Astro.site).href;
 </html>
 
 <style>
+  /* The view-transition name keeps the header in place while the page cross-fades. */
   .site-header {
     position: sticky;
     top: 0;
     z-index: 10;
     border-bottom: var(--hairline-width) solid var(--hairline);
     background: var(--surface);
+    view-transition-name: site-header;
+  }
+
+  /* Below the header (z-index 10), above the page. */
+  .nav-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 9;
+    background: var(--surface-sunken);
+    opacity: 0.7;
+  }
+
+  .nav-backdrop[hidden] {
+    display: none;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .nav-backdrop {
+      transition:
+        opacity var(--motion-base) var(--motion-ease),
+        display var(--motion-base) allow-discrete;
+    }
+
+    .nav-backdrop[hidden] {
+      opacity: 0;
+    }
+
+    @starting-style {
+      .nav-backdrop {
+        opacity: 0;
+      }
+    }
   }
 
   main:focus {

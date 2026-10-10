@@ -36,4 +36,10 @@ const { variant = 'used' } = Astro.props;
   .chip--learning {
     border: var(--border-width-strong) dashed var(--border-strong);
   }
+
+  /* Hover only raises the border; chips are not interactive, so nothing moves. */
+  .chip:hover {
+    border-color: var(--border-strong);
+    color: var(--ink);
+  }
 </style>

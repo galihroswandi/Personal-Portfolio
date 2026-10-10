@@ -35,7 +35,7 @@ const links: { id: string; key: UIKey }[] = [
     <ul class="nav__links">
       {links.map(({ id, key }) => (
         <li>
-          <a class="nav__link" href={`${home}#${id}`} data-nav-link={id}>
+          <a class="nav__link motion-underline" href={`${home}#${id}`} data-nav-link={id}>
             {t(key)}
           </a>
         </li>
@@ -80,29 +80,50 @@ const links: { id: string; key: UIKey }[] = [
   if (root && menu && toggle) {
     root.classList.add('nav--enhanced');
     toggle.hidden = false;
+    const backdrop = document.querySelector<HTMLElement>('[data-nav-backdrop]');
+    const isOpen = () => toggle.getAttribute('aria-expanded') === 'true';
 
-    const setOpen = (open: boolean) => {
+    const setOpen = (open: boolean, { restoreFocus = false } = {}) => {
       toggle.setAttribute('aria-expanded', String(open));
       toggle.setAttribute(
         'aria-label',
         (open ? toggle.dataset.labelClose : toggle.dataset.labelOpen) ?? '',
       );
       root.classList.toggle('nav--open', open);
+      if (backdrop) backdrop.hidden = !open;
+      if (restoreFocus) toggle.focus();
     };
 
     toggle.addEventListener('click', () => {
-      setOpen(toggle.getAttribute('aria-expanded') !== 'true');
+      setOpen(!isOpen());
     });
 
     menu.addEventListener('click', (event) => {
       if (event.target instanceof HTMLAnchorElement) setOpen(false);
     });
 
+    backdrop?.addEventListener('click', () => setOpen(false, { restoreFocus: true }));
+
+    // While open, Tab cycles through the toggle and the menu links only. Focus is moved by
+    // hand on every Tab because the toggle comes after the links in the DOM.
     document.addEventListener('keydown', (event) => {
-      if (event.key === 'Escape' && toggle.getAttribute('aria-expanded') === 'true') {
-        setOpen(false);
-        toggle.focus();
+      if (!isOpen()) return;
+      if (event.key === 'Escape') {
+        setOpen(false, { restoreFocus: true });
+        return;
       }
+      if (event.key !== 'Tab') return;
+      event.preventDefault();
+      const cycle: HTMLElement[] = [toggle, ...menu.querySelectorAll<HTMLElement>('a[href]')];
+      const current = cycle.findIndex((element) => element === document.activeElement);
+      const step = event.shiftKey ? -1 : 1;
+      const next = current === -1 ? 0 : (current + step + cycle.length) % cycle.length;
+      cycle[next]?.focus();
+    });
+
+    // From desktop width the links are always visible; a menu left open would trap focus.
+    window.matchMedia('(min-width: 1024px)').addEventListener('change', (event) => {
+      if (event.matches && isOpen()) setOpen(false);
     });
   }
 
@@ -205,11 +226,15 @@ const links: { id: string; key: UIKey }[] = [
     color: var(--ink);
   }
 
-  .nav__link[aria-current='true'] {
-    text-decoration: underline;
-    text-decoration-color: var(--accent);
-    text-decoration-thickness: var(--border-width-strong);
-    text-underline-offset: var(--space-2);
+  /* The active underline grows from the left (.motion-underline). */
+  .nav__link {
+    --underline-bottom: var(--space-1);
+    --underline-thickness: var(--border-width-strong);
+    --underline-color: var(--accent);
+  }
+
+  .nav__link[aria-current='true']::after {
+    transform: none;
   }
 
   .nav__toggle {
@@ -249,6 +274,30 @@ const links: { id: string; key: UIKey }[] = [
     display: block;
     padding-block: var(--space-2);
     border-top: var(--hairline-width) solid var(--hairline);
+  }
+
+  /* The panel slides and fades in and out (display is animated discretely). */
+  @media (prefers-reduced-motion: no-preference) and (max-width: 1023px) {
+    .nav--enhanced .nav__menu {
+      opacity: 0;
+      transform: translateY(calc(-1 * var(--space-2)));
+      transition:
+        opacity var(--motion-base) var(--motion-ease),
+        transform var(--motion-base) var(--motion-ease),
+        display var(--motion-base) allow-discrete;
+    }
+
+    .nav--enhanced.nav--open .nav__menu {
+      opacity: 1;
+      transform: none;
+    }
+
+    @starting-style {
+      .nav--enhanced.nav--open .nav__menu {
+        opacity: 0;
+        transform: translateY(calc(-1 * var(--space-2)));
+      }
+    }
   }
 
   .nav--enhanced.nav--open .nav__links {
