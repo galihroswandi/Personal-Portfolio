@@ -1,6 +1,7 @@
 import { defineConfig, devices } from '@playwright/test';
 
-const PORT = 4321;
+// Not 4321, so a running `pnpm dev` is never mistaken for the built site.
+const PORT = 4329;
 
 export default defineConfig({
   testDir: 'tests/e2e',

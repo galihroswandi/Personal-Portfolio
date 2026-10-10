@@ -64,3 +64,41 @@ HTML (no script, no flash). The light tokens work by changing that attribute.
 
 Astro 7 starts `astro preview` in the background when it detects an AI coding agent. The flag
 keeps it in the foreground so Playwright can manage it. It has no effect in CI.
+
+## 011 · Section ids and the case-study route stay Indonesian in English
+
+`#proyek`, `#tentang`, … and `/en/proyek/<slug>/` are the same in both languages. The spec fixes
+them, and stable anchors mean a shared link keeps working after a language switch.
+
+## 012 · Content entry ids keep the language folder
+
+The project schema has a `slug` field, and Astro's glob loader uses a `slug` field as the entry
+id, so `id/hmi-qt.mdx` and `en/hmi-qt.mdx` would collide. `generateId` keeps the path
+(`id/hmi-qt`), and the language comes from the folder (`projectLang()`). The schema lives in
+`src/lib/schemas.ts` so Vitest can test it without Astro's virtual modules.
+
+## 013 · Component size tokens
+
+Some design values are off the 4px scale (chip padding 7px 14px, button padding 14px, 11px
+timeline dot, 420px radar, …). They are named in `tokens.css` under "Component sizes" so
+components never contain raw numbers.
+
+## 014 · Email address obfuscation is light
+
+The visible address is assembled in the browser from `data-` attributes (`user [at] domain`
+without JavaScript), as the spec asks. The spec also requires a real `mailto:` href for no-JS
+visitors, and that href contains the full address, so this only stops the most naive scrapers.
+A stronger option would be dropping the no-JS href.
+
+## 015 · Navigation without JavaScript
+
+The menu button is rendered `hidden` and shown by the script. Without JavaScript the five links
+are always visible, wrapping under the brand on small screens. The `ID | EN` switch sits in the
+navbar from 1024px and in the status strip below that.
+
+## 016 · Case-study cards are not one big link
+
+Only "Baca studi kasus →" is a link (its `aria-label` includes the title). The card shows the
+focus ring through `:focus-within`, so it still looks like a single target to keyboard users
+without duplicate tab stops. The design-system README suggests the whole card as the target;
+the build prompt overrides it.
