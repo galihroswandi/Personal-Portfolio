@@ -7,9 +7,19 @@ import { site } from '@/config/site';
 import { reviewedLangs, ui, type Lang } from '@/i18n/ui';
 import { interpolate, langs, localePath } from '@/i18n/utils';
 import { getAbout, getAllProjects, projectLang, type Project } from '@/lib/content';
+import {
+  articleNode,
+  breadcrumbNode,
+  graph,
+  personNode,
+  profilePageNode,
+  websiteNode,
+  type Crumb,
+  type Graph,
+} from '@/lib/jsonld';
 import { firstPublished, lastModified } from '@/lib/lastmod';
 import { hasPlaceholder } from '@/lib/placeholders';
-import { buildDescription, buildTitle, ogImagePath, type HeadMeta } from '@/lib/seo';
+import { absoluteUrl, buildDescription, buildTitle, ogImagePath, type HeadMeta } from '@/lib/seo';
 
 export interface OgCard {
   /** Mono line above the title (amber). */
@@ -136,4 +146,54 @@ export function headMeta(page: SitePage, jsonLd?: object): HeadMeta {
     },
     jsonLd,
   };
+}
+
+/** Home > Projects > case study. Shown on the page and in the BreadcrumbList. */
+export function breadcrumbs(page: SitePage): Crumb[] {
+  const t = ui[page.lang];
+  const home = localePath(page.lang);
+  return [
+    { name: t['breadcrumb.home'], path: home },
+    { name: t['nav.projects'], path: `${home}#proyek` },
+    { name: page.heading, path: page.path },
+  ];
+}
+
+const person = (lang: Lang, photoSrc?: string) =>
+  personNode({
+    description: ui[lang]['meta.description'],
+    image: photoSrc ? absoluteUrl(photoSrc) : undefined,
+  });
+
+/** Home: the person, the site, and the page as their profile. */
+export function homeJsonLd(page: SitePage, photoSrc?: string): Graph {
+  return graph([
+    person(page.lang, photoSrc),
+    websiteNode(),
+    profilePageNode({
+      path: page.path,
+      title: page.title,
+      lang: page.lang,
+      created: page.published,
+      modified: page.modified,
+    }),
+  ]);
+}
+
+/** Case study: an article by the person, with its breadcrumb trail. */
+export function caseStudyJsonLd(page: SitePage): Graph {
+  return graph([
+    person(page.lang),
+    websiteNode(),
+    breadcrumbNode(page.path, breadcrumbs(page)),
+    articleNode({
+      path: page.path,
+      headline: page.heading,
+      description: page.description,
+      lang: page.lang,
+      image: page.og.image,
+      published: page.published,
+      modified: page.modified,
+    }),
+  ]);
 }

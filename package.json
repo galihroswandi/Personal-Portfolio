@@ -20,7 +20,8 @@
     "check": "pnpm lint && pnpm typecheck && pnpm test && pnpm build",
     "prepare": "simple-git-hooks",
     "check:content": "tsx scripts/check-content.ts",
-    "check:seo": "tsx scripts/check-seo.ts"
+    "check:seo": "tsx scripts/check-seo.ts",
+    "validate:schema": "tsx scripts/validate-schema.ts"
   },
   "dependencies": {
     "@astrojs/markdown-satteri": "^0.4.3",

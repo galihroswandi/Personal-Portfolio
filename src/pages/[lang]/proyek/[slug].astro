@@ -3,12 +3,14 @@
 import type { GetStaticPaths } from 'astro';
 import { render } from 'astro:content';
 import ProjectIllustration from '@/components/cards/ProjectIllustration.astro';
+import Breadcrumb from '@/components/layout/Breadcrumb.astro';
+import Button from '@/components/ui/Button.astro';
 import Chip from '@/components/ui/Chip.astro';
 import type { Lang } from '@/i18n/ui';
 import { localePath, useTranslations } from '@/i18n/utils';
 import Base from '@/layouts/Base.astro';
 import { getAllProjects, projectLang, type Project } from '@/lib/content';
-import { getProjectPage, headMeta, type SitePage } from '@/lib/pages';
+import { breadcrumbs, caseStudyJsonLd, getProjectPage, headMeta, type SitePage } from '@/lib/pages';
 
 export const getStaticPaths = (async () => {
   const projects = await getAllProjects();
@@ -35,12 +37,9 @@ const rows = [
 ];
 ---
 
-<Base meta={headMeta(page)}>
+<Base meta={headMeta(page, caseStudyJsonLd(page))}>
   <article class="container section section--last case">
-    <a class="case__back" href={`${localePath(lang)}#proyek`}>
-      <span aria-hidden="true">←</span>
-      {t('project.back')}
-    </a>
+    <Breadcrumb label={t('breadcrumb.label')} crumbs={breadcrumbs(page)} />
     <header class="case__header">
       <p class="case__meta">
         {data.role} · {data.company}
@@ -70,6 +69,17 @@ const rows = [
     <div class="case__body">
       <Content />
     </div>
+    <footer class="case__footer">
+      <p>{t('project.ctaText')}</p>
+      <div class="case__actions">
+        <Button href={`${localePath(lang)}#kontak`} arrow>
+          {t('hero.ctaCollab')}
+        </Button>
+        <Button href={`${localePath(lang)}#proyek`} variant="secondary">
+          {t('project.back')}
+        </Button>
+      </div>
+    </footer>
   </article>
 </Base>
 
@@ -79,23 +89,6 @@ const rows = [
     flex-direction: column;
     gap: var(--space-6);
     max-width: calc(var(--measure-heading) + 2 * var(--gutter));
-  }
-
-  .case__back {
-    display: inline-flex;
-    align-items: center;
-    gap: var(--space-2);
-    align-self: flex-start;
-    min-height: var(--touch-target);
-    color: var(--accent-ink);
-    font-size: 0.875rem;
-    font-weight: 600;
-    text-decoration: none;
-  }
-
-  .case__back:hover {
-    text-decoration: underline;
-    text-underline-offset: var(--space-1);
   }
 
   .case__header {
@@ -151,6 +144,21 @@ const rows = [
     gap: var(--space-4);
     padding-top: var(--space-6);
     border-top: var(--hairline-width) solid var(--hairline);
+  }
+
+  .case__footer {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    padding-top: var(--space-6);
+    border-top: var(--hairline-width) solid var(--hairline);
+    color: var(--ink-muted);
+  }
+
+  .case__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
   }
 
   .case__body :global(h2) {
