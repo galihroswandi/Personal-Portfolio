@@ -1,0 +1,60 @@
+---
+/** Page shell: <html lang>, head metadata, fonts, theme, skip link and the main landmark. */
+import { Font } from 'astro:assets';
+import { langTags } from '@/i18n/ui';
+import { getAlternateUrl, getLangFromUrl, langs, useTranslations } from '@/i18n/utils';
+import '@/styles/tokens.css';
+import '@/styles/global.css';
+
+interface Props {
+  title: string;
+  description: string;
+}
+
+const { title, description } = Astro.props;
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const alternates = langs.map((code) => ({
+  hreflang: langTags[code],
+  href: new URL(getAlternateUrl(Astro.url.pathname, code), Astro.site).href,
+}));
+const xDefault = new URL('/', Astro.site).href;
+---
+
+<!doctype html>
+<html lang={lang} data-theme="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical.href} />
+    {alternates.map((alt) => (
+      <link rel="alternate" hreflang={alt.hreflang} href={alt.href} />
+    ))}
+    <link rel="alternate" hreflang="x-default" href={xDefault} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="color-scheme" content="dark light" />
+    <Font
+      cssVariable="--font-fraunces"
+      preload={[
+        { weight: 400, style: 'normal' },
+        { weight: 400, style: 'italic' },
+      ]}
+    />
+    <Font cssVariable="--font-jakarta" preload={[{ weight: 400, style: 'normal' }]} />
+    <Font cssVariable="--font-jetbrains" />
+    <slot name="head" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">
+      {t('a11y.skip')}
+    </a>
+    <slot name="header" />
+    <main id="main" tabindex="-1">
+      <slot />
+    </main>
+    <slot name="footer" />
+  </body>
+</html>

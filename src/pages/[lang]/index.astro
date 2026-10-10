@@ -1,0 +1,18 @@
+---
+import type { GetStaticPaths } from 'astro';
+import Base from '@/layouts/Base.astro';
+import { langs, useTranslations } from '@/i18n/utils';
+import type { Lang } from '@/i18n/ui';
+
+export const getStaticPaths = (() =>
+  langs.map((lang) => ({ params: { lang } }))) satisfies GetStaticPaths;
+
+const lang = Astro.params.lang as Lang;
+const t = useTranslations(lang);
+---
+
+<Base title={t('meta.title')} description={t('meta.description')}>
+  <div class="container section">
+    <h1>{t('meta.title')}</h1>
+  </div>
+</Base>

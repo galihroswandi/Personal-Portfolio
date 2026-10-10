@@ -1,0 +1,62 @@
+---
+/**
+ * Root page. Static hosting has no server redirects, so a tiny inline script sends visitors to
+ * their stored or browser language. Without JavaScript the two links below are the way in.
+ */
+import { languages, defaultLang, langTags, ui } from '@/i18n/ui';
+import { langs, localePath } from '@/i18n/utils';
+import { LANG_STORAGE_KEY } from '@/lib/lang-preference';
+import '@/styles/tokens.css';
+import '@/styles/global.css';
+
+const t = ui[defaultLang];
+const targets = Object.fromEntries(langs.map((lang) => [lang, localePath(lang)]));
+---
+
+<!doctype html>
+<html lang={defaultLang} data-theme="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{t['root.title']}</title>
+    <meta name="description" content={t['meta.description']} />
+    {langs.map((lang) => (
+      <link
+        rel="alternate"
+        hreflang={langTags[lang]}
+        href={new URL(localePath(lang), Astro.site).href}
+      />
+    ))}
+    <link rel="alternate" hreflang="x-default" href={new URL('/', Astro.site).href} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <script
+      is:inline
+      define:vars={{ targets, storageKey: LANG_STORAGE_KEY, fallback: localePath('en') }}
+    >
+      // Inline on purpose: it must run before paint. Unknown languages go to English.
+      let stored = null;
+      try {
+        stored = localStorage.getItem(storageKey);
+      } catch {
+        // Storage can be blocked; fall back to the browser language.
+      }
+      const browser = (navigator.language || '').toLowerCase().split('-')[0];
+      location.replace(targets[stored] || targets[browser] || fallback);
+    </script>
+  </head>
+  <body>
+    <main id="main" class="container section">
+      <h1>{t['root.title']}</h1>
+      <p>{t['root.choose']}</p>
+      <ul>
+        {langs.map((lang) => (
+          <li>
+            <a href={localePath(lang)} hreflang={lang} lang={lang}>
+              {languages[lang]}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </main>
+  </body>
+</html>
