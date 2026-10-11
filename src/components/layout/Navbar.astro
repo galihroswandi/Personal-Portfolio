@@ -2,6 +2,7 @@
 /** Main navigation: monogram, section links, language switch, "Hire me", mobile disclosure menu. */
 import LanguageSwitch from '@/components/layout/LanguageSwitch.astro';
 import Button from '@/components/ui/Button.astro';
+import ThemeToggle from '@/components/ui/ThemeToggle.astro';
 import { navLinks as links } from '@/config/nav';
 import type { Lang } from '@/i18n/ui';
 import { localePath, useTranslations } from '@/i18n/utils';
@@ -37,6 +38,7 @@ const home = localePath(lang);
 
   <div class="nav__actions">
     <LanguageSwitch lang={lang} class="nav__lang" />
+    <ThemeToggle lang={lang} class="nav__theme" />
     <Button href={`${home}#kontak`} size="sm">
       {t('nav.hire')}
     </Button>
@@ -252,7 +254,8 @@ const home = localePath(lang);
     stroke-linecap: round;
   }
 
-  .nav__actions :global(.nav__lang) {
+  .nav__actions :global(.nav__lang),
+  .nav__actions :global(.nav__theme) {
     display: none;
   }
 
@@ -320,6 +323,10 @@ const home = localePath(lang);
 
     .nav__actions :global(.nav__lang) {
       display: inline-flex;
+    }
+
+    .nav__actions :global(.nav__theme) {
+      display: inline-grid;
     }
   }
 </style>

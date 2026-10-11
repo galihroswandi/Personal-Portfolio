@@ -4,6 +4,7 @@
  * "pause motion" control (WCAG 2.2.2: the lamp and the radar loop for longer than 5 seconds).
  */
 import LanguageSwitch from '@/components/layout/LanguageSwitch.astro';
+import ThemeToggle from '@/components/ui/ThemeToggle.astro';
 import { site } from '@/config/site';
 import type { Lang } from '@/i18n/ui';
 import { useTranslations } from '@/i18n/utils';
@@ -48,8 +49,9 @@ const [hours, minutes] = CLOCK_FALLBACK.split(':');
     <div class="strip__controls">
       <button class="strip__pause" type="button" aria-pressed="false" data-motion-toggle>
         <span class="strip__pause-box" aria-hidden="true"></span>
-        {t('status.pauseMotion')}
+        <span class="strip__pause-label">{t('status.pauseMotion')}</span>
       </button>
+      <ThemeToggle lang={lang} class="strip__theme" />
       <LanguageSwitch lang={lang} class="strip__lang" />
     </div>
   </div>
@@ -206,6 +208,30 @@ const [hours, minutes] = CLOCK_FALLBACK.split(':');
     }
   }
 
+  /*
+   * On phones the strip has no room for the pause label next to the theme toggle and ID | EN
+   * (decision 036): the label stays for assistive tech, the square keeps a 44px hit area.
+   */
+  @media (max-width: 720px) {
+    .strip__controls {
+      gap: var(--space-1);
+    }
+
+    .strip__pause {
+      justify-content: center;
+      min-width: var(--touch-target);
+    }
+
+    .strip__pause-label {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip-path: inset(50%);
+      white-space: nowrap;
+    }
+  }
+
   .strip__lamp {
     width: var(--lamp-size);
     height: var(--lamp-size);
@@ -221,7 +247,8 @@ const [hours, minutes] = CLOCK_FALLBACK.split(':');
 
   /* From desktop up the language switch lives in the navbar. */
   @media (min-width: 1024px) {
-    .strip__inner :global(.strip__lang) {
+    .strip__inner :global(.strip__lang),
+    .strip__inner :global(.strip__theme) {
       display: none;
     }
   }

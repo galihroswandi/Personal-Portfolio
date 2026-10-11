@@ -1,0 +1,11 @@
+---
+/**
+ * Blocking script in the head: sets <html data-theme> before first paint, so there is no flash
+ * of the wrong theme. Its source is generated in src/lib/theme.ts from the same constants as the
+ * toggle. Without JavaScript the attribute is absent and the CSS follows the OS setting
+ * (tokens.css).
+ */
+import { themeInitScript } from '@/lib/theme';
+---
+
+<script is:inline set:html={themeInitScript()}></script>

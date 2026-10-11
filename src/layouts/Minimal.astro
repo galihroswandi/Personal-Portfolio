@@ -5,6 +5,7 @@
  */
 import { Font } from 'astro:assets';
 import SEO from '@/components/seo/SEO.astro';
+import ThemeScript from '@/components/seo/ThemeScript.astro';
 import type { HeadMeta } from '@/lib/seo';
 import '@/styles/tokens.css';
 import '@/styles/global.css';
@@ -17,10 +18,11 @@ const { meta } = Astro.props;
 ---
 
 <!doctype html>
-<html lang={meta.lang} data-theme="dark">
+<html lang={meta.lang}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <ThemeScript />
     <SEO meta={meta} />
     <meta name="color-scheme" content="dark light" />
     <Font cssVariable="--font-fraunces" preload={[{ weight: 400, style: 'normal' }]} />

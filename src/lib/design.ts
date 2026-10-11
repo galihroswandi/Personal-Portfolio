@@ -4,7 +4,6 @@ import { parseThemeTokens, token } from '@/lib/tokens';
 
 const tokens = parseThemeTokens(readFileSync('src/styles/tokens.css', 'utf8'));
 
-/** Dark is the only rendered theme (`data-theme="dark"`, decision 009). */
 const dark = tokens.dark;
 
 export const colors = {
@@ -15,4 +14,10 @@ export const colors = {
   hairline: token(dark, 'hairline'),
   accent: token(dark, 'accent'),
   accentInk: token(dark, 'accent-ink'),
+} as const;
+
+/** Page background per theme, for the `theme-color` tags and the favicon. */
+export const themeColors = {
+  dark: { surface: token(dark, 'surface'), ink: token(dark, 'ink') },
+  light: { surface: token(tokens.light, 'surface'), ink: token(tokens.light, 'ink') },
 } as const;

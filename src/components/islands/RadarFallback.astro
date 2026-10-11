@@ -62,7 +62,7 @@ const blips = RADAR_BLIPS.map((blip) => ({
   <g class="radar-sweep motion-loop">
     <path
       d={`M ${c} ${c} L ${c} ${top} A ${RADAR_RADIUS} ${RADAR_RADIUS} 0 0 0 148 38 Z`}
-      style="fill: var(--accent); opacity: 0.16"
+      style="fill: var(--accent); opacity: var(--radar-wedge-opacity)"
     />
     <line x1={c} y1={c} x2={c} y2={top} style="stroke: var(--accent); stroke-width: 2" />
   </g>

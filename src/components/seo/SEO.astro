@@ -6,7 +6,7 @@
  */
 import { site } from '@/config/site';
 import { langs } from '@/i18n/utils';
-import { colors } from '@/lib/design';
+import { themeColors } from '@/lib/design';
 import {
   absoluteUrl,
   buildAlternates,
@@ -71,7 +71,13 @@ const bingVerification = import.meta.env.PUBLIC_BING_VERIFICATION;
 <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
 <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 <link rel="manifest" href="/site.webmanifest" />
-<meta name="theme-color" content={colors.surface} />
+<!-- Baseline without JavaScript; the theme module collapses these into one tag (theme.ts). -->
+<meta name="theme-color" content={themeColors.dark.surface} />
+<meta
+  name="theme-color"
+  content={themeColors.light.surface}
+  media="(prefers-color-scheme: light)"
+/>
 
 {googleVerification && <meta name="google-site-verification" content={googleVerification} />}
 {bingVerification && <meta name="msvalidate.01" content={bingVerification} />}

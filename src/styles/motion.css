@@ -44,6 +44,20 @@
   animation-play-state: paused;
 }
 
+/*
+ * Theme change: toggleTheme() (src/lib/theme.ts) puts `theme-transition` on <html> for
+ * THEME_TRANSITION_MS after a button press, never on load. Only with motion 'full' (not reduced,
+ * not paused). !important because component rules are more specific and set their own transitions.
+ */
+:root[data-motion='full'].theme-transition,
+:root[data-motion='full'].theme-transition *,
+:root[data-motion='full'].theme-transition *::before,
+:root[data-motion='full'].theme-transition *::after {
+  transition-property: background-color, color, border-color, fill, stroke !important;
+  transition-duration: var(--motion-base) !important;
+  transition-timing-function: var(--motion-ease) !important;
+}
+
 /* State-only utilities (they work without motion; the movement is added further down) ------ */
 
 /* An underline drawn by ::after. Components set the custom properties and the shown state. */

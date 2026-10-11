@@ -5,6 +5,7 @@ import Footer from '@/components/layout/Footer.astro';
 import Navbar from '@/components/layout/Navbar.astro';
 import StatusStrip from '@/components/layout/StatusStrip.astro';
 import SEO from '@/components/seo/SEO.astro';
+import ThemeScript from '@/components/seo/ThemeScript.astro';
 import { analyticsEnabled } from '@/config/env';
 import { useTranslations } from '@/i18n/utils';
 import { MOTION_PAUSED_VALUE, MOTION_STORAGE_KEY } from '@/lib/motion';
@@ -23,10 +24,11 @@ const t = useTranslations(lang);
 ---
 
 <!doctype html>
-<html lang={lang} data-theme="dark" data-analytics={analyticsEnabled ? 'on' : undefined}>
+<html lang={lang} data-analytics={analyticsEnabled ? 'on' : undefined}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <ThemeScript />
     <SEO meta={meta} />
     <meta name="color-scheme" content="dark light" />
     <script
@@ -62,6 +64,8 @@ const t = useTranslations(lang);
     <a class="skip-link" href="#main">
       {t('a11y.skip')}
     </a>
+    <!-- Announces the theme after the toggle is pressed (ThemeToggle script). -->
+    <div class="visually-hidden" role="status" data-theme-status></div>
     <header class="site-header motion-progress">
       <StatusStrip lang={lang} />
       <Navbar lang={lang} />

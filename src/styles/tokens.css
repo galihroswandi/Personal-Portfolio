@@ -21,6 +21,7 @@
   --danger: #ff8c7a;
   --danger-soft: #3a1a17;
   --shadow-lift: 0 12px 32px rgba(0, 0, 0, 0.6);
+  --radar-wedge-opacity: 0.16;
 }
 
 [data-theme='light'] {
@@ -43,6 +44,37 @@
   --danger: #b3261e;
   --danger-soft: #f7dcd8;
   --shadow-lift: 0 12px 32px rgba(17, 22, 28, 0.12);
+  --radar-wedge-opacity: 0.16;
+}
+
+/*
+ * Without JavaScript <html> has no data-theme, so the light tokens apply through the OS setting.
+ * This block repeats [data-theme='light'] on purpose (CSS cannot share a rule between a media
+ * query and an attribute selector); src/lib/theme-tokens.test.ts fails if the two differ.
+ */
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme]) {
+    --surface: #f5f7fa;
+    --surface-raised: #ffffff;
+    --surface-sunken: #e8ecf1;
+    --ink: #11161c;
+    --ink-muted: #4a5663;
+    --ink-subtle: #5f6b78;
+    --hairline: #d5dce4;
+    --border-strong: #7a8795;
+    --accent: #b25e00;
+    --accent-hover: #8f4a00;
+    --on-accent: #ffffff;
+    --accent-ink: #9a5200;
+    --accent-soft: #fbe7c7;
+    --focus-ring: #0b5fc2;
+    --success: #0b6e6e;
+    --success-soft: #d4efee;
+    --danger: #b3261e;
+    --danger-soft: #f7dcd8;
+    --shadow-lift: 0 12px 32px rgba(17, 22, 28, 0.12);
+    --radar-wedge-opacity: 0.16;
+  }
 }
 
 :root {

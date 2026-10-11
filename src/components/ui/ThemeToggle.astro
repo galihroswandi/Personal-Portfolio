@@ -1,0 +1,118 @@
+---
+/**
+ * Theme switch: one icon button that shows the theme you would switch TO (sun while dark, moon
+ * while light) and is named after that action. It is an action button, so there is no
+ * aria-pressed (decision 035). Rendered once in the status strip (mobile) and once in the navbar
+ * (desktop), like the language switch; the script keeps every copy in sync.
+ */
+import type { Lang } from '@/i18n/ui';
+import { useTranslations } from '@/i18n/utils';
+
+interface Props {
+  lang: Lang;
+  class?: string;
+}
+
+const { lang, class: className } = Astro.props;
+const t = useTranslations(lang);
+---
+
+<button
+  class:list={['theme-toggle', className]}
+  type="button"
+  aria-label={t('a11y.themeToLight')}
+  data-theme-toggle
+  data-label-to-light={t('a11y.themeToLight')}
+  data-label-to-dark={t('a11y.themeToDark')}
+  data-status-light={t('a11y.themeLightOn')}
+  data-status-dark={t('a11y.themeDarkOn')}
+>
+  <svg class="theme-toggle__sun" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+    <circle cx="12" cy="12" r="4"></circle>
+    <path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.64 5.64l1.41 1.41M16.95 16.95l1.41 1.41M5.64 18.36l1.41-1.41M16.95 7.05l1.41-1.41"></path>
+  </svg>
+  <svg class="theme-toggle__moon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+    <path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5Z"></path>
+  </svg>
+</button>
+
+<script>
+  import { getTheme, syncThemeAcrossSources, toggleTheme } from '@/lib/theme';
+
+  const buttons = [...document.querySelectorAll<HTMLButtonElement>('[data-theme-toggle]')];
+  const status = document.querySelector('[data-theme-status]');
+  const root = document.documentElement;
+
+  // The name describes the action, so it changes with the theme (also after a change in another
+  // tab or in the OS setting).
+  const sync = () => {
+    const light = getTheme() === 'light';
+    for (const button of buttons) {
+      button.setAttribute(
+        'aria-label',
+        (light ? button.dataset.labelToDark : button.dataset.labelToLight) ?? '',
+      );
+    }
+  };
+
+  for (const button of buttons) {
+    button.addEventListener('click', () => {
+      const theme = toggleTheme();
+      // Polite announcement; focus stays on the button.
+      if (status)
+        status.textContent =
+          (theme === 'light' ? button.dataset.statusLight : button.dataset.statusDark) ?? '';
+    });
+  }
+
+  new MutationObserver(sync).observe(root, { attributes: true, attributeFilter: ['data-theme'] });
+  syncThemeAcrossSources();
+  sync();
+</script>
+
+<style>
+  .theme-toggle {
+    display: inline-grid;
+    place-items: center;
+    width: var(--touch-target);
+    height: var(--touch-target);
+    padding: 0;
+    border: 0;
+    border-radius: var(--radius-md);
+    background: transparent;
+    color: var(--ink-muted);
+    cursor: pointer;
+  }
+
+  .theme-toggle:hover {
+    color: var(--ink);
+  }
+
+  .theme-toggle svg {
+    width: var(--icon-size);
+    height: var(--icon-size);
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  /* Dark (also before the attribute exists): show the sun, the theme the button switches to. */
+  .theme-toggle__moon {
+    display: none;
+  }
+
+  :global(:root[data-theme='light']) .theme-toggle__sun {
+    display: none;
+  }
+
+  :global(:root[data-theme='light']) .theme-toggle__moon {
+    display: block;
+  }
+
+  /* It cannot do anything without JavaScript; `js` is set before first paint, so no shift. */
+  :global(html:not(.js)) .theme-toggle {
+    display: none;
+  }
+</style>
