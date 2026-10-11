@@ -137,6 +137,25 @@ every `.motion-loop` element (radar sweep, blips, pings, lamp, clock colon) free
 tilt is off; entrances still play. The OS setting wins: under reduced motion the state is
 `reduced` and the button is hidden, because nothing loops.
 
+## Theming
+
+Two themes, `dark` and `light`, set on `<html data-theme>`. All colors are tokens in
+`src/styles/tokens.css`; components never branch on the theme.
+
+- **Initial theme**: the saved choice (`localStorage` key `gr-theme`), else the system setting, else
+  dark. Change `INITIAL_THEME_STRATEGY` in `src/lib/theme.ts` to `'dark'` to always start dark.
+- **No flash**: a blocking inline script in the head (`ThemeScript.astro`, generated from the same
+  constants by `themeInitScript()`) sets the attribute before first paint.
+- **Toggle**: `ThemeToggle.astro`, an icon button in the status strip (below 1024px) and in the
+  navbar (from 1024px). It saves the choice, updates `theme-color` and syncs other tabs.
+- **Without JavaScript** the page follows the system setting through a duplicated light block in
+  `tokens.css`; `src/lib/theme-tokens.test.ts` keeps it identical to `[data-theme='light']`.
+- **Theme-aware component**: use tokens only (`var(--surface)`, `var(--ink)`, …). Add a new token
+  to all three light/dark blocks (the tests fail if the two light blocks differ) and a contrast
+  pair to `src/lib/contrast.test.ts` if it carries text.
+- Screenshots of both themes at 1440 and 390px are written to `docs/design/` by
+  `tests/e2e/theme.spec.ts`. See decisions 034 to 038.
+
 ## Performance
 
 Measured locally against `pnpm build && pnpm preview`, `/id/`, with Lighthouse 12 (mobile,
@@ -156,3 +175,13 @@ now settles before paint (see decision 024).
 - Frame time at 390px with a 4× CPU throttle (CDP), 5s samples: radar looping avg 16.7ms,
   p95 16.8ms; scrolling avg 16.6ms, p95 16.8ms; no frame over 50ms. Headless, so treat it as
   a smoke test, not a device measurement.
+
+**Light mode (theme toggle)**, same method, `/id/`, 5 runs each, before = commit `f00e25f`:
+
+| Run    | Performance | Accessibility | Best practices | SEO | CLS   |
+| ------ | ----------- | ------------- | -------------- | --- | ----- |
+| Before | 99 (all 5)  | 100           | 100            | 100 | 0.000 |
+| After  | 99 (all 5)  | 100           | 100            | 100 | 0.000 |
+
+The theme script adds 786 B gzip of JavaScript (it includes the shared `theme.ts` code), and the
+head script is about 190 bytes. No new requests or dependencies.
