@@ -7,7 +7,7 @@ import { readFileSync } from 'node:fs';
 import { createRequire } from 'node:module';
 import type * as OpenType from 'opentype.js';
 import type { Font } from 'opentype.js';
-import { colors } from '@/lib/design';
+import { colors, themeColors } from '@/lib/design';
 import { OG_IMAGE_HEIGHT, OG_IMAGE_WIDTH } from '@/lib/seo';
 
 // opentype.js is CommonJS under Node and its named exports are not detectable from ESM.
@@ -152,12 +152,20 @@ export function monogramSvg(size: number, shape: 'circle' | 'square'): string {
   const y = (size - (box.y2 - box.y1)) / 2 - box.y1;
   const background =
     shape === 'circle'
-      ? `<circle cx="${size / 2}" cy="${size / 2}" r="${size / 2}" fill="${colors.ink}"/>`
-      : `<rect width="${size}" height="${size}" fill="${colors.ink}"/>`;
+      ? `<circle class="bg" cx="${size / 2}" cy="${size / 2}" r="${size / 2}" fill="${colors.ink}"/>`
+      : `<rect class="bg" width="${size}" height="${size}" fill="${colors.ink}"/>`;
+  // Dark is the default (and what PNG rasterizers see). Browsers that honor the media query in an
+  // SVG favicon invert the monogram on a light browser UI so it stays visible.
+  const light = themeColors.light;
+  const lightScheme = `@media (prefers-color-scheme: light){.bg{fill:${light.ink}}.fg{fill:${light.surface}}}`;
   return [
     `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 ${size} ${size}">`,
+    `<style>${lightScheme}</style>`,
     background,
-    textPath(fonts.display, 'GR', x, y, fontSize, colors.surface),
+    textPath(fonts.display, 'GR', x, y, fontSize, colors.surface).replace(
+      '<path ',
+      '<path class="fg" ',
+    ),
     '</svg>',
   ].join('');
 }

@@ -44,6 +44,15 @@ html {
   }
 }
 
+html {
+  scrollbar-color: var(--border-strong) var(--surface);
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--on-accent);
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;

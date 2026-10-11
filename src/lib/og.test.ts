@@ -28,6 +28,13 @@ describe('ogCardSvg', () => {
 });
 
 describe('icons', () => {
+  it('the SVG favicon inverts on a light browser UI', () => {
+    const svg = monogramSvg(64, 'circle');
+    expect(svg).toContain('prefers-color-scheme: light');
+    expect(svg).toContain('class="bg"');
+    expect(svg).toContain('class="fg"');
+  });
+
   it('draws the monogram at the requested size', async () => {
     const meta = await sharp(await svgToPng(monogramSvg(180, 'square'))).metadata();
     expect([meta.width, meta.height]).toEqual([180, 180]);

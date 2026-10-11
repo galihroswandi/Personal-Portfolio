@@ -44,7 +44,7 @@
   --danger: #b3261e;
   --danger-soft: #f7dcd8;
   --shadow-lift: 0 12px 32px rgba(17, 22, 28, 0.12);
-  --radar-wedge-opacity: 0.16;
+  --radar-wedge-opacity: 0.11;
 }
 
 /*
@@ -73,7 +73,7 @@
     --danger: #b3261e;
     --danger-soft: #f7dcd8;
     --shadow-lift: 0 12px 32px rgba(17, 22, 28, 0.12);
-    --radar-wedge-opacity: 0.16;
+    --radar-wedge-opacity: 0.11;
   }
 }
 
