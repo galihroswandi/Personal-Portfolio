@@ -18,9 +18,13 @@ export interface CvCopy {
     experience: string;
     projects: string;
     skills: string;
-    links: string;
+    education: string;
   };
   available: string;
+  /** Standard date format ("Agustus 2023 – Sekarang"): ATS parsers read it more reliably. */
+  jobPeriod: string;
+  jobBullets: string[];
+  education: { school: string; program: string; period: string };
   projects: CvProject[];
 }
 
@@ -32,9 +36,19 @@ export const cvCopy: Record<Lang, CvCopy> = {
       experience: 'Pengalaman',
       projects: 'Proyek',
       skills: 'Keahlian',
-      links: 'Tautan',
+      education: 'Pendidikan',
     },
     available: 'Tersedia mulai',
+    jobPeriod: 'Agustus 2023 – Sekarang',
+    jobBullets: [
+      'Menampilkan data sistem di aplikasi web dan desktop (Qt), memastikan data sesuai dan antarmuka mudah dipahami operator.',
+      'Beralih dari web ke C++ dan Qt dalam sekitar dua bulan sampai membangun antarmuka operator yang berjalan, dibantu AI dengan aturan kode yang mudah dirawat dan praktik terbaik.',
+    ],
+    education: {
+      school: 'SMK Muhammadiyah Tasikmalaya',
+      program: 'Rekayasa Perangkat Lunak',
+      period: '2020 – 2023',
+    },
     projects: [
       {
         title: 'Flowvest: aplikasi keuangan pribadi',
@@ -60,9 +74,19 @@ export const cvCopy: Record<Lang, CvCopy> = {
       experience: 'Experience',
       projects: 'Projects',
       skills: 'Skills',
-      links: 'Links',
+      education: 'Education',
     },
     available: 'Available from',
+    jobPeriod: 'August 2023 – Present',
+    jobBullets: [
+      'Displaying system data in web and desktop (Qt) apps, making sure the data is correct and the interface is easy for operators to understand.',
+      'Moved from web to C++ and Qt in about two months and built a working operator interface, with AI assistance and maintainable-code rules and best practices.',
+    ],
+    education: {
+      school: 'SMK Muhammadiyah Tasikmalaya',
+      program: 'Software Engineering (Rekayasa Perangkat Lunak)',
+      period: '2020 – 2023',
+    },
     projects: [
       {
         title: 'Flowvest: a personal finance app',
