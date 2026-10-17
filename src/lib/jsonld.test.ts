@@ -110,7 +110,9 @@ describe('JSON-LD graphs', () => {
   });
 
   it('uses absolute URLs on the canonical origin', () => {
+    // sameAs lists the owner's profiles on other sites, so it is the one exception.
     const urls = strings(caseGraph)
+      .filter(([path]) => !path.includes('.sameAs['))
       .map(([, value]) => value)
       .filter((value) => value.startsWith('http'));
     for (const url of urls.filter((value) => !value.startsWith('https://schema.org'))) {

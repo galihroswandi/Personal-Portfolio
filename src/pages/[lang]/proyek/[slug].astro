@@ -3,6 +3,7 @@
 import type { GetStaticPaths } from 'astro';
 import { render } from 'astro:content';
 import ProjectIllustration from '@/components/cards/ProjectIllustration.astro';
+import ProjectPromo from '@/components/cards/ProjectPromo.astro';
 import Breadcrumb from '@/components/layout/Breadcrumb.astro';
 import Button from '@/components/ui/Button.astro';
 import Chip from '@/components/ui/Chip.astro';
@@ -66,6 +67,7 @@ const rows = [
         </li>
       ))}
     </ul>
+    {data.promo && <ProjectPromo lang={lang} slug={data.slug} promo={data.promo} />}
     <div class="case__body">
       <Content />
     </div>

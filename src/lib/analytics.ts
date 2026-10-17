@@ -7,6 +7,8 @@ export const ANALYTICS_EVENTS = [
   'cv_download',
   'email_click',
   'case_study_click',
+  'app_signup_click',
+  'repo_click',
   'profile_click',
   'lang_switch',
 ] as const;

@@ -18,7 +18,6 @@ export interface PersonNode extends Ref {
   url: string;
   jobTitle: string;
   description: string;
-  image?: string;
   address: {
     '@type': 'PostalAddress';
     addressLocality: string;
@@ -99,8 +98,6 @@ export const ids = {
 
 export interface PersonInput {
   description: string;
-  /** Absolute URL of a real photo; omitted until one exists. */
-  image?: string;
   social?: Readonly<Record<string, string>>;
   publishEmployer?: boolean;
 }
@@ -115,7 +112,6 @@ export function personNode(input: PersonInput): PersonNode {
     url: absoluteUrl('/'),
     jobTitle: 'Fullstack Developer',
     description: input.description,
-    ...(input.image ? { image: input.image } : {}),
     address: {
       '@type': 'PostalAddress',
       addressLocality: site.location.city,

@@ -1,0 +1,48 @@
+---
+# TODO(review): ditulis dari repo Flowvest, pemilik meninjau lalu ubah reviewed menjadi true.
+slug: flowvest
+title: 'Flowvest: aplikasi keuangan pribadi'
+role: Fullstack developer
+company: Proyek pribadi
+stack: [Next.js, React, TypeScript, Supabase, PostgreSQL, Tailwind CSS]
+problem: Pencatatan keuangan pribadi biasanya tersebar di catatan, spreadsheet, dan aplikasi bank yang tidak saling terhubung.
+myRole: Merancang dan membangun sendiri seluruh aplikasi, dari skema database dan keamanannya sampai antarmuka web.
+result: Sebelas area fitur berjalan di atas data asli dalam sekitar dua bulan (130 commit, 57 pull request), dengan Row Level Security di setiap tabel data pengguna.
+illustration: finance
+featured: true
+order: 1
+reviewed: false
+promo:
+  name: Flowvest
+  headline: Kelola keuangan Anda di satu tempat, gratis.
+  text: Catat setiap pemasukan dan pengeluaran, jaga budget, dan lihat seberapa dekat Anda dengan target tabungan. Daftar dengan email atau akun Google, lalu langsung pakai.
+  points:
+    - Catat pemasukan, pengeluaran, dan transfer di semua rekening dan e-wallet.
+    - Budget bulanan per kategori dengan tanda aman, waspada, atau melebihi.
+    - Target tabungan dan dana darurat, lengkap dengan perkiraan kapan tercapai.
+    - Mode privasi untuk menyamarkan angka saat membuka aplikasi di tempat umum.
+  cta: Daftar gratis
+  url: https://flowvest.vercel.app/register
+seoTitle: 'Flowvest: aplikasi keuangan pribadi'
+seoDescription: Studi kasus Flowvest, aplikasi keuangan pribadi multi-user dengan Next.js dan Supabase, dari transaksi dan budget sampai net worth.
+---
+
+Flowvest adalah aplikasi keuangan pribadi berbahasa Indonesia untuk banyak pengguna. Satu tempat untuk mencatat pemasukan, pengeluaran, dan transfer, memantau budget, lalu melihat gambaran besarnya: saldo semua rekening, net worth, target tabungan, sampai rencana hidup jangka panjang.
+
+## Apa yang dibangun
+
+Aplikasi ini punya sebelas area: beranda dengan ringkasan saldo dan kesehatan finansial, transaksi, statistik arus kas, rekening dan aset, pantauan saham Indonesia dengan watchlist, net worth, budget bulanan per kategori, target tabungan, utang dan piutang dengan bukti pembayaran, kategori, dan life roadmap.
+
+Pengguna masuk dengan email atau akun Google. Angka sensitif bisa disamarkan dengan privacy mode, ada mode gelap, dan tata letaknya berubah dari sidebar di desktop menjadi navigasi bawah di ponsel.
+
+## Keputusan teknis
+
+Data diambil di Server Component, lalu dikirim ke komponen klien yang hanya mengurus interaksi. Semua perubahan data lewat Server Action yang memperbarui halaman terkait setelah selesai.
+
+Keamanan dipegang database, bukan hanya kode aplikasi. Setiap tabel data pengguna di PostgreSQL dilindungi Row Level Security, jadi seseorang hanya bisa membaca dan mengubah barisnya sendiri walaupun ada query yang salah tulis. Bukti pembayaran piutang disimpan di bucket privat.
+
+Data pasar saham diambil dari sumber publik tanpa jaminan layanan, jadi hasilnya disimpan di cache selama satu jam supaya halaman tetap cepat dan tidak kena batas permintaan.
+
+## Sedang dikerjakan
+
+Bot Telegram untuk mencatat transaksi lewat chat biasa, misalnya "kopi 18rb". Pesan diurai dulu oleh parser lokal; model AI hanya dipakai sebagai lapisan tambahan, dengan output yang divalidasi dan perlindungan terhadap instruksi yang disisipkan di pesan. Fitur ini belum dirilis.

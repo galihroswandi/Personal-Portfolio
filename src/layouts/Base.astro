@@ -97,6 +97,14 @@ const t = useTranslations(lang);
     view-transition-name: site-header;
   }
 
+  /* Phones: the strip scrolls away and only the navbar stays (--strip-height is measured by the
+     StatusStrip script; without JavaScript the whole header stays, as before). */
+  @media (max-width: 720px) {
+    .site-header {
+      top: calc(-1 * var(--strip-height, 0px));
+    }
+  }
+
   /* Below the header (z-index 10), above the page. */
   .nav-backdrop {
     position: fixed;

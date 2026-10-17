@@ -16,8 +16,6 @@ export interface ContentInputs {
   siteValues: Record<string, string>;
   socialLinks: Record<string, string>;
   reviewedLangs: Record<string, boolean>;
-  /** Whether the About entry has a photo (otherwise the page shows a placeholder frame). */
-  aboutHasPhoto: Record<string, boolean>;
   /** Whether each language's CV PDF exists (otherwise the download buttons are hidden). */
   cvExists: Record<string, boolean>;
 }
@@ -61,13 +59,6 @@ export function auditContent(inputs: ContentInputs): ContentFindings {
   for (const [key, value] of Object.entries(inputs.siteValues)) {
     if (findPlaceholders(value).length > 0)
       blocking.push(`src/config/site.ts: ${key} is "${value}"`);
-  }
-  for (const [lang, hasPhoto] of Object.entries(inputs.aboutHasPhoto)) {
-    if (!hasPhoto) {
-      blocking.push(
-        `src/content/about/${lang}.mdx: no photo, so About shows the "[foto Anda]" frame`,
-      );
-    }
   }
   for (const [lang, exists] of Object.entries(inputs.cvExists)) {
     if (!exists) notes.push(`public/cv: no ${lang} CV; download buttons hidden`);

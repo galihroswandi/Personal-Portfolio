@@ -21,18 +21,17 @@
     "prepare": "simple-git-hooks",
     "check:content": "tsx scripts/check-content.ts",
     "check:seo": "tsx scripts/check-seo.ts",
-    "validate:schema": "tsx scripts/validate-schema.ts"
+    "validate:schema": "tsx scripts/validate-schema.ts",
+    "data:github": "tsx scripts/fetch-github.ts"
   },
   "dependencies": {
     "@astrojs/markdown-satteri": "^0.4.3",
     "@astrojs/mdx": "^8.0.3",
     "@astrojs/react": "^7.0.1",
-    "@react-three/fiber": "^9.8.1",
     "@vercel/analytics": "^2.0.1",
     "astro": "^7.3.8",
     "react": "^19.3.0",
-    "react-dom": "^19.3.0",
-    "three": "^0.186.1"
+    "react-dom": "^19.3.0"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.10",
@@ -42,7 +41,6 @@
     "@types/node": "^26.6.4",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
-    "@types/three": "^0.186.0",
     "eslint": "^10.12.0",
     "eslint-plugin-astro": "^3.2.1",
     "globals": "^17.13.0",

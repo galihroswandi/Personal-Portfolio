@@ -8,7 +8,6 @@ const ready: ContentInputs = {
   siteValues: { email: 'me@example.dev' },
   socialLinks: { github: 'https://github.com/me' },
   reviewedLangs: { id: true },
-  aboutHasPhoto: { id: true },
   cvExists: { id: true },
 };
 
@@ -17,7 +16,7 @@ describe('auditContent', () => {
     expect(auditContent(ready)).toEqual({ blocking: [], notes: [] });
   });
 
-  it('blocks unreviewed files and languages, placeholders and a missing photo', () => {
+  it('blocks unreviewed files and languages, and placeholders', () => {
     const { blocking } = auditContent({
       ...ready,
       files: [
@@ -28,14 +27,12 @@ describe('auditContent', () => {
       ],
       siteValues: { email: '[email Anda]' },
       reviewedLangs: { id: true, en: false },
-      aboutHasPhoto: { id: false },
     });
     expect(blocking).toEqual([
       'src/i18n/ui.ts: "en" strings are not reviewed (reviewedLangs)',
       'b.mdx: reviewed: false',
       'b.mdx: placeholders [isi hasil], [isi studi kasus lengkap]',
       'src/config/site.ts: email is "[email Anda]"',
-      'src/content/about/id.mdx: no photo, so About shows the "[foto Anda]" frame',
     ]);
   });
 

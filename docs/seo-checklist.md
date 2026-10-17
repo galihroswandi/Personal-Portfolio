@@ -6,11 +6,11 @@ mengenal situs ini dan nama Anda. Tidak ada jaminan peringkat. Hasilnya diukur d
 ## 0. Sebelum peluncuran
 
 - [ ] Isi semua placeholder: email dan tanggal tersedia (`src/config/site.ts`), hasil dan isi
-      studi kasus (`src/content/projects/`), foto (`src/content/about/`), PDF CV
+      studi kasus (`src/content/projects/`), PDF CV
       (`public/cv/galih-roswandi-id.pdf` dan `-en.pdf`). `pnpm check:content` menunjukkan sisanya.
 - [ ] Tinjau semua teks bahasa Inggris, lalu ubah `reviewed: false` menjadi `true` (dan
       `reviewedLangs.en` di `src/i18n/ui.ts`). Build produksi gagal sampai ini selesai.
-- [ ] Isi URL GitHub, LinkedIn, dan Instagram di `site.social`. Hanya URL asli yang ditampilkan dan
+- [x] Isi URL GitHub dan LinkedIn di `site.social` (Instagram masih kosong). Hanya URL asli yang ditampilkan dan
       masuk ke data terstruktur.
 - [ ] Putuskan apakah nama kantor boleh muncul di data terstruktur (`publishEmployer`, default mati).
 

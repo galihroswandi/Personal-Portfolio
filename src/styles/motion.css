@@ -203,6 +203,29 @@
     transform: scale(0);
   }
 
+  /* GitHub charts: bars grow from their baseline, one after another. */
+  [data-reveal] .chart-bar,
+  [data-reveal] .chart-col {
+    transition: transform var(--motion-slow) var(--motion-ease);
+    transition-delay: calc(var(--motion-base) + var(--i, 0) * var(--motion-stagger));
+  }
+
+  [data-reveal] .chart-bar {
+    transform-origin: left center;
+  }
+
+  [data-reveal] .chart-col {
+    transform-origin: center bottom;
+  }
+
+  .js [data-reveal]:not([data-revealed]) .chart-bar {
+    transform: scaleX(0);
+  }
+
+  .js [data-reveal]:not([data-revealed]) .chart-col {
+    transform: scaleY(0);
+  }
+
   /* Project illustrations: play once when their card is revealed ----------------------------- */
 
   /* Bars grow from the baseline. */

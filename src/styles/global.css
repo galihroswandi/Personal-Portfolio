@@ -24,6 +24,13 @@ html {
   scroll-padding-top: calc(var(--space-10) + var(--space-3));
 }
 
+/* Phones: only the navbar stays on screen (see Base.astro). */
+@media (max-width: 720px) {
+  html {
+    scroll-padding-top: var(--space-9);
+  }
+}
+
 /* Native controls, scrollbars and form fields follow the theme. Without JavaScript there is no
    data-theme, so the OS setting decides (same split as the light tokens in tokens.css). */
 :root {

@@ -8,5 +8,11 @@
       "headers": [{ "key": "X-Robots-Tag", "value": "noindex, nofollow" }]
     }
   ],
-  "redirects": []
+  "redirects": [
+    {
+      "source": "/:lang(id|en)/proyek/dasbor-pemantauan/",
+      "destination": "/:lang/proyek/command-center-maritim/",
+      "permanent": true
+    }
+  ]
 }

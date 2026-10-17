@@ -1,0 +1,452 @@
+---
+/**
+ * 05 · Public GitHub: stat tiles, a commit-graph illustration, two bar charts (main language per
+ * repo, new repos per year) and a few featured repositories. Data is the build-time snapshot in
+ * `src/data/github.json` (`pnpm data:github`); the charts are plain HTML, so every value is text.
+ */
+import GitGraph from '@/assets/illustrations/git.svg';
+import BentoTile from '@/components/cards/BentoTile.astro';
+import SectionHeader from '@/components/sections/SectionHeader.astro';
+import Button from '@/components/ui/Button.astro';
+import Chip from '@/components/ui/Chip.astro';
+import { GITHUB_TOP_LANGUAGES, featuredRepos } from '@/config/github';
+import { site } from '@/config/site';
+import github from '@/data/github.json';
+import type { Lang } from '@/i18n/ui';
+import { useTranslations } from '@/i18n/utils';
+import { languageRows, peakRow, yearRows } from '@/lib/github';
+import { isRealUrl } from '@/lib/placeholders';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const locale = lang === 'id' ? 'id-ID' : 'en-GB';
+const fetchedAt = new Date(github.fetchedAt).toLocaleDateString(locale, { dateStyle: 'long' });
+const since = new Date(github.memberSince);
+
+const languages = languageRows(github.languages, GITHUB_TOP_LANGUAGES, t('github.other'));
+const counted = Object.values(github.languages).reduce((sum, value) => sum + value, 0);
+const years = yearRows(github.reposPerYear, Number(github.fetchedAt.slice(0, 4)));
+const peak = peakRow(years);
+
+const repos = featuredRepos.flatMap((repo) => {
+  const data = (github.repos as Record<string, (typeof github.repos)[keyof typeof github.repos]>)[
+    repo.name
+  ];
+  if (!data) return [];
+  // A demo link only when it is a real site other than this one.
+  const demo =
+    data.homepage && isRealUrl(data.homepage) && !data.homepage.startsWith(site.url)
+      ? data.homepage
+      : undefined;
+  return [{ ...repo, ...data, demo, year: data.createdAt.slice(0, 4) }];
+});
+---
+
+<section id="github" class="container section" aria-labelledby="github-title">
+  <SectionHeader
+    titleId="github-title"
+    num={t('section.github.num')}
+    label={t('section.github.label')}
+    title={t('section.github.title')}
+    sub={t('section.github.sub', { date: fetchedAt })}
+  />
+
+  <div class="gh__top">
+    <BentoTile
+      index={0}
+      variant="accent"
+      large
+      label={t('github.stat.repos')}
+      value={String(github.publicRepos)}
+      note={t('github.stat.reposNote')}
+    />
+    <BentoTile
+      index={1}
+      large
+      label={t('github.stat.since')}
+      value={String(since.getFullYear())}
+      note={since.toLocaleDateString(locale, { month: 'long', year: 'numeric' })}
+    />
+    <BentoTile
+      index={2}
+      variant="sunken"
+      large
+      label={t('github.stat.languages')}
+      value={String(Object.keys(github.languages).length)}
+      note={t('github.stat.languagesNote')}
+    />
+    <div class="gh__art" aria-hidden="true" data-reveal>
+      <GitGraph width="100%" height="100%" />
+    </div>
+  </div>
+
+  <div class="gh__charts">
+    <figure class="chart" data-reveal="group">
+      <figcaption class="chart__title">{t('github.chart.languages')}</figcaption>
+      <ul class="hbars">
+        {languages.map((row, index) => (
+          <li class="hbars__row" title={t('github.unit', { count: row.value })}>
+            <span class="hbars__label">{row.label}</span>
+            <span class="hbars__track" aria-hidden="true">
+              <span
+                class:list={['hbars__bar', 'chart-bar', { 'hbars__bar--other': row.other }]}
+                style={`--ratio: ${row.ratio}; --i: ${index}`}
+              />
+            </span>
+            <span class="hbars__value">
+              {row.value}
+              <span class="visually-hidden">{t('github.unitSr')}</span>
+            </span>
+          </li>
+        ))}
+      </ul>
+      <p class="chart__note">
+        {t('github.chart.languagesNote', { count: github.publicRepos - counted })}
+      </p>
+    </figure>
+
+    <figure class="chart" data-reveal="group">
+      <figcaption class="chart__title">{t('github.chart.years')}</figcaption>
+      <ul class="cols">
+        {years.map((row, index) => (
+          <li class="cols__col" title={t('github.unit', { count: row.value })}>
+            <span class="cols__value">
+              {row.value}
+              <span class="visually-hidden">{t('github.unitSr')}</span>
+            </span>
+            <span class="cols__track" aria-hidden="true">
+              <span
+                class:list={['cols__bar', 'chart-col', { 'cols__bar--peak': row === peak }]}
+                style={`--ratio: ${row.ratio}; --i: ${index}`}
+              />
+            </span>
+            <span class="cols__label">{row.label}</span>
+          </li>
+        ))}
+      </ul>
+      {peak && (
+        <p class="chart__note">
+          {t('github.chart.yearsNote', { year: peak.label, count: peak.value })}
+        </p>
+      )}
+    </figure>
+  </div>
+
+  <h3 class="gh__subtitle">{t('github.featured')}</h3>
+  <ul class="gh__repos">
+    {repos.map((repo) => (
+      <li class="repo">
+        <p class="repo__meta">
+          {[repo.language, repo.year, repo.stars > 0 ? `★ ${repo.stars}` : '']
+            .filter(Boolean)
+            .join(' · ')}
+        </p>
+        <h4 class="repo__title">{repo.title}</h4>
+        <p class="repo__text">{repo.text[lang]}</p>
+        <ul class="repo__chips" aria-label={t('project.stack')}>
+          {repo.stack.map((item) => (
+            <li>
+              <Chip>{item}</Chip>
+            </li>
+          ))}
+        </ul>
+        <div class="repo__links">
+          <a
+            href={repo.url}
+            aria-label={t('github.codeLabel', { title: repo.title })}
+            data-event="repo_click"
+            data-event-label={repo.name}
+          >
+            {t('github.code')} <span aria-hidden="true">↗</span>
+          </a>
+          {repo.demo && (
+            <a
+              href={repo.demo}
+              aria-label={t('github.demoLabel', { title: repo.title })}
+              data-event="repo_click"
+              data-event-label={`${repo.name}-demo`}
+            >
+              {t('github.demo')} <span aria-hidden="true">↗</span>
+            </a>
+          )}
+        </div>
+      </li>
+    ))}
+  </ul>
+
+  <div class="gh__actions">
+    <Button href={github.profileUrl} arrow data-event="profile_click" data-event-label="github">
+      {t('github.profile')}
+    </Button>
+    {isRealUrl(site.social.linkedin) && (
+      <Button
+        href={site.social.linkedin}
+        variant="secondary"
+        data-event="profile_click"
+        data-event-label="linkedin"
+      >
+        {t('github.linkedin')}
+      </Button>
+    )}
+  </div>
+</section>
+
+<style>
+  .gh__top {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-3);
+    margin-bottom: var(--space-6);
+  }
+
+  /* Phones: three narrow tiles, so tighter padding and no note (the note is extra detail). */
+  @media (max-width: 720px) {
+    .gh__top :global(.tile) {
+      padding: var(--space-4);
+    }
+
+    .gh__top :global(.tile__note) {
+      display: none;
+    }
+  }
+
+  .gh__art {
+    grid-column: 1 / -1;
+    aspect-ratio: 16 / 7;
+    overflow: hidden;
+    border: var(--hairline-width) solid var(--hairline);
+    border-radius: var(--radius-lg);
+    background: var(--surface-sunken);
+  }
+
+  .gh__charts {
+    display: grid;
+    gap: var(--space-5);
+    margin-bottom: var(--space-7);
+  }
+
+  .chart {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-5);
+    margin: 0;
+    padding: var(--space-5);
+    border: var(--hairline-width) solid var(--hairline);
+    border-radius: var(--radius-lg);
+    background: var(--surface-raised);
+  }
+
+  .chart__title {
+    color: var(--ink);
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    font-weight: 500;
+    line-height: 1.2;
+  }
+
+  .chart__note {
+    margin-top: auto;
+    color: var(--ink-subtle);
+    font-size: 0.8125rem;
+    line-height: 1.5;
+  }
+
+  /* Horizontal bars: label, bar on a recessive track, value. Rounded data end only. */
+  .hbars {
+    display: grid;
+    gap: var(--space-3);
+    padding: 0;
+    list-style: none;
+  }
+
+  .hbars__row {
+    display: grid;
+    grid-template-columns: 6.5rem minmax(0, 1fr) 2rem;
+    align-items: center;
+    gap: var(--space-3);
+  }
+
+  .hbars__label,
+  .cols__label {
+    color: var(--ink-muted);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 500;
+  }
+
+  .hbars__value,
+  .cols__value {
+    color: var(--ink);
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    font-weight: 500;
+    text-align: right;
+  }
+
+  .hbars__track {
+    display: block;
+    height: 12px;
+    border-radius: 0 4px 4px 0;
+    background: var(--surface-sunken);
+  }
+
+  .hbars__bar {
+    display: block;
+    width: calc(var(--ratio) * 100%);
+    min-width: 2px;
+    height: 100%;
+    border-radius: 0 4px 4px 0;
+    background: var(--accent);
+  }
+
+  .hbars__bar--other {
+    background: var(--border-strong);
+  }
+
+  /* Columns: value on top, bar anchored to the baseline, year below. */
+  .cols {
+    display: grid;
+    grid-auto-columns: minmax(0, 1fr);
+    grid-auto-flow: column;
+    gap: var(--space-3);
+    padding: 0;
+    list-style: none;
+  }
+
+  .cols__col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-2);
+  }
+
+  .cols__value {
+    text-align: center;
+  }
+
+  .cols__track {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    width: 100%;
+    height: 9rem;
+    border-bottom: var(--hairline-width) solid var(--border-strong);
+  }
+
+  .cols__bar {
+    display: block;
+    width: min(100%, 2.5rem);
+    height: calc(var(--ratio) * 100%);
+    border-radius: 4px 4px 0 0;
+    background: var(--border-strong);
+  }
+
+  .cols__bar--peak {
+    background: var(--accent);
+  }
+
+  .gh__subtitle {
+    margin-bottom: var(--space-4);
+    font-size: 1.5rem;
+  }
+
+  .gh__repos {
+    display: grid;
+    gap: var(--space-3);
+    margin-bottom: var(--space-6);
+    padding: 0;
+    list-style: none;
+  }
+
+  .repo {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    padding: var(--space-5);
+    border: var(--hairline-width) solid var(--hairline);
+    border-radius: var(--radius-lg);
+    background: var(--surface-raised);
+  }
+
+  .repo__meta {
+    color: var(--ink-muted);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 500;
+  }
+
+  .repo__title {
+    font-family: var(--font-display);
+    font-size: 1.375rem;
+    font-weight: 500;
+    line-height: 1.2;
+  }
+
+  .repo__text {
+    color: var(--ink-muted);
+    font-size: 0.875rem;
+    line-height: 1.55;
+  }
+
+  .repo__chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    padding: 0;
+    list-style: none;
+  }
+
+  .repo__links {
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: var(--space-5);
+    margin-top: auto;
+  }
+
+  .repo__links a {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-1);
+    min-height: var(--touch-target);
+    color: var(--accent-ink);
+    font-size: 0.875rem;
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .repo__links a:hover {
+    text-decoration: underline;
+    text-underline-offset: var(--space-1);
+  }
+
+  .gh__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+  }
+
+  @media (min-width: 721px) {
+    .gh__repos {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .gh__top {
+      grid-template-columns: repeat(3, minmax(0, 1fr)) minmax(0, 1.6fr);
+    }
+
+    .gh__art {
+      grid-column: auto;
+      aspect-ratio: auto;
+    }
+
+    .gh__charts {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+</style>

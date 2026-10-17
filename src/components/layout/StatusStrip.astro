@@ -80,6 +80,18 @@ const [hours, minutes] = CLOCK_FALLBACK.split(':');
   sync(applyMotionState());
   onReducedMotionChange(() => sync(applyMotionState()));
 
+  // Strip height for the phone header, which scrolls the strip away (see Base.astro).
+  const strip = document.querySelector<HTMLElement>('.strip');
+  if (strip) {
+    new ResizeObserver(([entry]) => {
+      if (!entry) return;
+      document.documentElement.style.setProperty(
+        '--strip-height',
+        `${strip.getBoundingClientRect().height}px`,
+      );
+    }).observe(strip);
+  }
+
   // WIB clock, ticking on the full minute. Only the digits change; the width is fixed.
   const clock = document.querySelector<HTMLElement>('[data-clock]');
   const hours = clock?.querySelector('[data-clock-hours]');

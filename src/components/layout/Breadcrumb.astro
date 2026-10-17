@@ -43,6 +43,16 @@ const { label, crumbs } = Astro.props;
     content: '/';
   }
 
+  @media (max-width: 720px) {
+    .breadcrumb li:last-child {
+      flex-basis: 100%;
+    }
+
+    .breadcrumb li + li:last-child::before {
+      content: none;
+    }
+  }
+
   .breadcrumb a {
     display: inline-flex;
     align-items: center;

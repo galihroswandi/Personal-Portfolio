@@ -1,9 +1,10 @@
 ---
-/** Case-study card: generic illustration, meta, title, Problem / My role / Result, chips, link. */
+/** Case-study card: illustration, meta, title, Problem / My role / Result, chips, links. */
 import ProjectIllustration from '@/components/cards/ProjectIllustration.astro';
 import Chip from '@/components/ui/Chip.astro';
 import type { Lang } from '@/i18n/ui';
 import { localePath, useTranslations } from '@/i18n/utils';
+import { isRealUrl } from '@/lib/placeholders';
 import type { ProjectData } from '@/lib/schemas';
 
 interface Props {
@@ -17,10 +18,11 @@ const { lang, project, headingLevel: Heading = 'h3' } = Astro.props;
 const t = useTranslations(lang);
 const href = localePath(lang, `proyek/${project.slug}`);
 const rows = [
-  { label: t('project.problem'), value: project.problem, highlight: false },
-  { label: t('project.myRole'), value: project.myRole, highlight: false },
-  { label: t('project.result'), value: project.result, highlight: true },
+  { label: t('project.problem'), value: project.problem, highlight: false, detail: true },
+  { label: t('project.myRole'), value: project.myRole, highlight: false, detail: true },
+  { label: t('project.result'), value: project.result, highlight: true, detail: false },
 ];
+const appUrl = project.promo && isRealUrl(project.promo.url) ? project.promo.url : undefined;
 ---
 
 <article class="card motion-raise">
@@ -32,7 +34,7 @@ const rows = [
     <Heading class="card__title">{project.title}</Heading>
     <dl class="card__rows">
       {rows.map((row) => (
-        <div class="card__row">
+        <div class:list={['card__row', { 'card__row--detail': row.detail }]}>
           <dt class:list={['card__label', { 'card__label--highlight': row.highlight }]}>
             {row.label}
           </dt>
@@ -47,18 +49,34 @@ const rows = [
         </li>
       ))}
     </ul>
-    <a
-      class="card__link"
-      href={href}
-      aria-label={t('project.readLabel', { title: project.title })}
-      data-event="case_study_click"
-      data-event-label={project.slug}
-    >
-      {t('project.read')}{' '}
-      <span class="motion-nudge" aria-hidden="true">
-        →
-      </span>
-    </a>
+    <div class="card__links">
+      <a
+        class="card__link"
+        href={href}
+        aria-label={t('project.readLabel', { title: project.title })}
+        data-event="case_study_click"
+        data-event-label={project.slug}
+      >
+        {t('project.read')}{' '}
+        <span class="motion-nudge" aria-hidden="true">
+          →
+        </span>
+      </a>
+      {appUrl && project.promo && (
+        <a
+          class="card__link card__link--app"
+          href={appUrl}
+          aria-label={t('project.tryAppLabel', { name: project.promo.name })}
+          data-event="app_signup_click"
+          data-event-label={project.slug}
+        >
+          {t('project.tryApp')}{' '}
+          <span class="motion-nudge" aria-hidden="true">
+            ↗
+          </span>
+        </a>
+      )}
+    </div>
   </div>
 </article>
 
@@ -151,22 +169,38 @@ const rows = [
     list-style: none;
   }
 
+  .card__links {
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: var(--space-5);
+    margin-top: auto;
+  }
+
   .card__link {
     display: inline-flex;
     align-items: center;
     gap: var(--space-1);
-    align-self: flex-start;
     min-height: var(--touch-target);
-    margin-top: auto;
     color: var(--accent-ink);
     font-size: 0.875rem;
     font-weight: 600;
     text-decoration: none;
   }
 
+  .card__link--app {
+    color: var(--ink);
+  }
+
   .card__link:hover {
     text-decoration: underline;
     text-underline-offset: var(--space-1);
+  }
+
+  /* Phones: Problem and My role stay on the case study page, so three cards fit in fewer screens. */
+  @media (max-width: 720px) {
+    .card__row--detail {
+      display: none;
+    }
   }
 
   @media (min-width: 721px) {

@@ -19,7 +19,7 @@ import {
 } from '@/lib/jsonld';
 import { firstPublished, lastModified } from '@/lib/lastmod';
 import { hasPlaceholder } from '@/lib/placeholders';
-import { absoluteUrl, buildDescription, buildTitle, ogImagePath, type HeadMeta } from '@/lib/seo';
+import { buildDescription, buildTitle, ogImagePath, type HeadMeta } from '@/lib/seo';
 
 export interface OgCard {
   /** Mono line above the title (amber). */
@@ -159,16 +159,12 @@ export function breadcrumbs(page: SitePage): Crumb[] {
   ];
 }
 
-const person = (lang: Lang, photoSrc?: string) =>
-  personNode({
-    description: ui[lang]['meta.description'],
-    image: photoSrc ? absoluteUrl(photoSrc) : undefined,
-  });
+const person = (lang: Lang) => personNode({ description: ui[lang]['meta.description'] });
 
 /** Home: the person, the site, and the page as their profile. */
-export function homeJsonLd(page: SitePage, photoSrc?: string): Graph {
+export function homeJsonLd(page: SitePage): Graph {
   return graph([
-    person(page.lang, photoSrc),
+    person(page.lang),
     websiteNode(),
     profilePageNode({
       path: page.path,

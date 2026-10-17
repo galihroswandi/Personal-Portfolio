@@ -1,5 +1,10 @@
 ---
-/** Opening block: badge, the page's only h1, sub-line, actions, meta row and the radar. */
+/**
+ * Opening block: badge, the page's only h1, sub-line, actions, meta row, and a frame with three
+ * stacked windows standing for the work (command center radar, HMI panel, Flowvest dashboard).
+ */
+import Finance from '@/assets/illustrations/finance.svg';
+import Hmi from '@/assets/illustrations/hmi.svg';
 import RadarFallback from '@/components/islands/RadarFallback.astro';
 import Badge from '@/components/ui/Badge.astro';
 import Button from '@/components/ui/Button.astro';
@@ -67,12 +72,26 @@ const title = splitTitleWords(splitEmphasis(t('hero.title'))).map((token) =>
   </div>
 
   <Panel class="hero__radar motion-tilt" role="img" aria-label={t('hero.radarLabel')} data-tilt>
-    <div class="hero__scene" data-scene>
-      <RadarFallback />
+    <div class="hero__scene" data-scene aria-hidden="true">
+      <div class="hero__window hero__window--radar">
+        <span class="hero__window-bar">COMMAND CENTER</span>
+        <div class="hero__window-body">
+          <RadarFallback />
+        </div>
+      </div>
+      <div class="hero__window hero__window--hmi">
+        <span class="hero__window-bar">HMI · QT</span>
+        <div class="hero__window-body">
+          <Hmi width="100%" height="100%" />
+        </div>
+      </div>
+      <div class="hero__window hero__window--app">
+        <span class="hero__window-bar">FLOWVEST</span>
+        <div class="hero__window-body">
+          <Finance width="100%" height="100%" />
+        </div>
+      </div>
     </div>
-    <span class="hero__caption" aria-hidden="true">
-      {t('hero.radarCaption')}
-    </span>
   </Panel>
 </section>
 
@@ -138,15 +157,60 @@ const title = splitTitleWords(splitEmphasis(t('hero.title'))).map((token) =>
     border-radius: inherit;
   }
 
-  .hero__caption {
+  /* Three windows, positioned in % of the square frame so the collage scales with it. */
+  .hero__window {
     position: absolute;
-    bottom: var(--space-4);
-    left: var(--space-5);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border: var(--hairline-width) solid var(--hairline);
+    border-radius: var(--radius-md);
+    background: var(--surface-sunken);
+    box-shadow: var(--shadow-lift);
+  }
+
+  .hero__window-bar {
+    padding: var(--space-2) var(--space-3);
+    border-bottom: var(--hairline-width) solid var(--hairline);
+    background: var(--surface);
     color: var(--ink-subtle);
     font-family: var(--font-mono);
-    font-size: 0.75rem;
+    font-size: 0.625rem;
     font-weight: 500;
     line-height: 1;
+    letter-spacing: 0.08em;
+  }
+
+  .hero__window-body {
+    flex: 1;
+    min-height: 0;
+  }
+
+  .hero__window--radar {
+    top: 6%;
+    left: 6%;
+    width: 54%;
+  }
+
+  .hero__window--radar .hero__window-body {
+    aspect-ratio: 1;
+  }
+
+  .hero__window--hmi {
+    bottom: 6%;
+    left: 10%;
+    width: 52%;
+  }
+
+  .hero__window--app {
+    top: 30%;
+    right: 5%;
+    width: 58%;
+  }
+
+  .hero__window--hmi .hero__window-body,
+  .hero__window--app .hero__window-body {
+    aspect-ratio: 16 / 10;
   }
 
   @media (min-width: 1024px) {

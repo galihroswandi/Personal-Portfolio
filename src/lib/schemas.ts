@@ -11,10 +11,24 @@ export const projectSchema = z.object({
   problem: z.string(),
   myRole: z.string(),
   result: z.string(),
-  illustration: z.enum(['bars', 'gauge', 'grid']),
+  illustration: z.enum(['bars', 'gauge', 'grid', 'finance', 'maritime', 'hmi']),
   featured: z.boolean(),
   order: z.number().int(),
   reviewed: z.boolean(),
+  /**
+   * Invitation to try one of the owner's own public apps. Until `url` is a real link the button
+   * stays hidden, and a bracketed placeholder there blocks a production build.
+   */
+  promo: z
+    .object({
+      name: z.string(),
+      headline: z.string(),
+      text: z.string(),
+      points: z.array(z.string()).min(2).max(4),
+      cta: z.string(),
+      url: z.string(),
+    })
+    .optional(),
   /**
    * Search title, when `title` is too long for `<title>` (the site name is appended, so the whole
    * title stays within the limit). Falls back to `title`.

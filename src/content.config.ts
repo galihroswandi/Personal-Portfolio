@@ -14,12 +14,8 @@ const projects = defineCollection({
 
 const about = defineCollection({
   loader: glob({ base: './src/content/about', pattern: '*.mdx', generateId: idFromPath }),
-  schema: ({ image }) =>
-    z.object({
-      reviewed: z.boolean(),
-      /** Optional portrait, e.g. `photo: ./galih.jpg` next to the MDX file. */
-      photo: image().optional(),
-    }),
+  // No portrait by owner decision (decisions.md 039).
+  schema: z.object({ reviewed: z.boolean() }),
 });
 
 export const collections = { projects, about };

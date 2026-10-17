@@ -1,8 +1,14 @@
 ---
-/** Generic 16:10 project illustration. Never a screenshot or a real system layout. */
+/**
+ * 16:10 project illustration. Employer work gets a generic one, never a screenshot or a real system
+ * layout; the owner's own apps may show a simplified sketch of their real screen (decision 040).
+ */
 import Bars from '@/assets/illustrations/bars.svg';
+import Finance from '@/assets/illustrations/finance.svg';
 import Gauge from '@/assets/illustrations/gauge.svg';
 import Grid from '@/assets/illustrations/grid.svg';
+import Hmi from '@/assets/illustrations/hmi.svg';
+import Maritime from '@/assets/illustrations/maritime.svg';
 import type { Lang } from '@/i18n/ui';
 import { useTranslations } from '@/i18n/utils';
 import type { ProjectData } from '@/lib/schemas';
@@ -14,7 +20,14 @@ interface Props {
 
 const { lang, kind } = Astro.props;
 const t = useTranslations(lang);
-const illustrations = { bars: Bars, gauge: Gauge, grid: Grid } as const;
+const illustrations = {
+  bars: Bars,
+  gauge: Gauge,
+  grid: Grid,
+  finance: Finance,
+  maritime: Maritime,
+  hmi: Hmi,
+} as const;
 const Illustration = illustrations[kind];
 ---
 

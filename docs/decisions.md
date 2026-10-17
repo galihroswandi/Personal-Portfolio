@@ -298,3 +298,56 @@ system even when the strategy is `'dark'`.
   (`src/lib/contrast.test.ts`).
 - The color fade after a press uses `!important` in `motion.css` because scoped component rules are
   more specific; it is limited to the 250ms `theme-transition` class and to motion `full`.
+
+## 039 · No portrait: About shows a monogram plate
+
+The owner does not want a personal photo on the site. The About frame is a decorative nameplate
+instead: the `GR` monogram (same treatment as the navbar mark, larger) on a dot grid, with a mono
+caption like the hero radar frame. It is `aria-hidden` because the name is already in the heading
+and the prose. The `photo` field, `Person.image` in JSON-LD and the "no photo" content check are
+removed, so a photo is not a launch item. The plate is 3:2 on phones and 4:5 next to the text from
+1024px, so it does not push the copy a full screen down on mobile.
+
+## 040 · Three case studies; Flowvest gets a sketch of its own screen
+
+The monitoring dashboard was the same work as the maritime command center, so it is folded into
+that case study (its stack now lists the dashboard) and removed. The three are Flowvest, the
+command center and the Qt HMI, with Flowvest first because it is the only one with full copy. The
+section title moved from "operators" to "data interfaces that are easy to understand", which fits
+all three.
+
+Employer projects keep generic illustrations: no screenshots or real layouts of client systems.
+Flowvest is the owner's own app, so `finance.svg` is a simplified sketch of its real dashboard
+(sidebar, financial health banner, income/expense/difference cards with the dark third card, net
+worth area chart, recent transactions). It uses only theme tokens and the existing `ill-bar`,
+`ill-trace` and `ill-dot` reveal animations.
+
+## 041 · Hero shows the work; phones get a shorter page
+
+- The hero frame keeps its tilt, off-screen pause and radar loops, but now holds three stacked
+  windows: the radar as "command center", an HMI panel and the Flowvest dashboard. The old frame
+  said "abstract scene" and told visitors nothing about the work. `three`,
+  `@react-three/fiber` and `@types/three` were unused and are removed (`@astrojs/react` stays
+  for now, also unused).
+- New generic illustrations for the employer projects: `maritime.svg` (sea chart, vessel tracks,
+  status list) and `hmi.svg` (gauges, tank levels, trend, buttons). Still no real layouts.
+- Phones (max 720px): project cards show only Result (Problem and My role stay on the case study
+  page); the status strip scrolls away and only the navbar sticks (`--strip-height` is measured
+  by the StatusStrip script, without JavaScript the whole header sticks as before; the theme and
+  language controls are back at the top of the page); the breadcrumb puts the current page on its
+  own line; footer links use a smaller gap so they fit one line. Home went from about 8,100px to
+  about 7,500px at 390px.
+
+## 042 · Public GitHub section from a snapshot, LinkedIn as a link only
+
+- New section 05 "GitHub" (Services is now 06, Contact 07; not in the navbar). Stat tiles, a
+  decorative commit graph, two bar charts (main language per repo, new repos per year) and four
+  featured public repos with code and demo links.
+- Data comes from `src/data/github.json`, written by `pnpm data:github` (public API, no token). The
+  build never calls GitHub, so it stays offline-safe; rerun the script and commit to refresh. Only
+  own, non-fork repos count. Flowvest and office work are private and say so in the sub-line.
+- Charts are HTML lists, not images: every label and value is real text, bars are `aria-hidden`,
+  each row has a hover title. One series each, so one color: accent for the data, neutral gray for
+  the folded "other" row and for non-peak years. Value labels are direct, so no legend.
+- LinkedIn blocks automated reads (HTTP 999), so nothing is taken from it; the profile URL is set
+  in `site.social` and shows as a link (Contact, GitHub section, `sameAs`).

@@ -22,18 +22,11 @@ const files = readdirSync(CONTENT_DIR, { recursive: true, encoding: 'utf8' })
     return { path: full, text: readFileSync(full, 'utf8') };
   });
 
-const aboutHasPhoto = Object.fromEntries(
-  files
-    .filter((file) => file.path.startsWith(join(CONTENT_DIR, 'about')))
-    .map((file) => [file.path.replace(/.*\/(\w+)\.mdx$/, '$1'), /^photo:\s*\S/m.test(file.text)]),
-);
-
 const { blocking, notes } = auditContent({
   files,
   siteValues: { email: site.email, availableFrom: site.availableFrom },
   socialLinks: site.social,
   reviewedLangs,
-  aboutHasPhoto,
   cvExists: Object.fromEntries(langs.map((lang) => [lang, existsSync(cvFile(lang))])),
 });
 

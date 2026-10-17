@@ -1,6 +1,6 @@
 /**
  * Placeholder detection. Seeded copy marks missing facts as `[isi …]`, `[email Anda]`,
- * `[TANGGAL]`, `[foto Anda]`; unset links are `#`. None of it may reach a production build.
+ * `[TANGGAL]`; unset links are `#`. None of it may reach a production build.
  */
 
 /** Bracketed text that is not a Markdown link (`[text](url)`) and not the email's `[at]`. */

@@ -1,7 +1,6 @@
 ---
-/** 02 · About: photo, two paragraphs (MDX), three principles, bento summary. */
+/** 02 · About: monogram plate (no portrait), two paragraphs (MDX), three principles, bento summary. */
 import { render } from 'astro:content';
-import { Image } from 'astro:assets';
 import BentoTile from '@/components/cards/BentoTile.astro';
 import SectionHeader from '@/components/sections/SectionHeader.astro';
 import Panel from '@/components/ui/Panel.astro';
@@ -17,7 +16,6 @@ const { lang } = Astro.props;
 const t = useTranslations(lang);
 const about = await getAbout(lang);
 const { Content } = await render(about);
-const { photo } = about.data;
 
 const principles: { title: UIKey; text: UIKey }[] = [
   { title: 'about.principle1.title', text: 'about.principle1.text' },
@@ -35,14 +33,9 @@ const principles: { title: UIKey; text: UIKey }[] = [
   />
 
   <div class="about">
-    <Panel as="figure" class="about__photo">
-      {photo ? (
-        <Image src={photo} alt={t('about.photoAlt')} widths={[300, 600]} sizes="300px" />
-      ) : (
-        <div class="about__placeholder" role="img" aria-label={t('about.photoPlaceholderLabel')}>
-          <span aria-hidden="true">{t('about.photoPlaceholder')}</span>
-        </div>
-      )}
+    <Panel class="about__plate" aria-hidden="true">
+      <span class="about__monogram">GR</span>
+      <span class="about__caption">{t('about.plateCaption')}</span>
     </Panel>
 
     <div class="about__text">
@@ -98,33 +91,43 @@ const principles: { title: UIKey; text: UIKey }[] = [
     margin-bottom: var(--space-7);
   }
 
-  .about :global(.about__photo) {
-    width: 100%;
-    max-width: var(--photo-width);
-    aspect-ratio: 4 / 5;
-    overflow: visible;
-    border: var(--hairline-width) solid var(--hairline);
-    border-radius: var(--radius-lg);
-    background: var(--surface-sunken);
-  }
-
-  .about :global(.about__photo img),
-  .about__placeholder {
-    width: 100%;
-    height: 100%;
-    border-radius: inherit;
-  }
-
-  .about :global(.about__photo img) {
-    object-fit: cover;
-  }
-
-  .about__placeholder {
+  /* Decorative nameplate in place of a portrait: monogram on a dot grid, mono caption. */
+  .about :global(.about__plate) {
     display: grid;
     place-items: center;
+    width: 100%;
+    max-width: var(--plate-width);
+    aspect-ratio: 3 / 2;
+    border: var(--hairline-width) solid var(--hairline);
+    border-radius: var(--radius-lg);
+    background-color: var(--surface-sunken);
+    background-image: radial-gradient(var(--hairline) 1px, transparent 1px);
+    background-size: var(--space-4) var(--space-4);
+  }
+
+  .about__monogram {
+    display: grid;
+    place-items: center;
+    width: var(--plate-monogram-size);
+    height: var(--plate-monogram-size);
+    border-radius: 50%;
+    background: var(--ink);
+    color: var(--surface);
+    font-family: var(--font-display);
+    font-size: calc(var(--plate-monogram-size) * 0.4);
+    font-weight: 500;
+    letter-spacing: -0.02em;
+  }
+
+  .about__caption {
+    position: absolute;
+    bottom: var(--space-4);
+    left: var(--space-5);
     color: var(--ink-subtle);
     font-family: var(--font-mono);
-    font-size: 0.8125rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+    line-height: 1;
   }
 
   .about__text {
@@ -200,8 +203,9 @@ const principles: { title: UIKey; text: UIKey }[] = [
       gap: var(--space-7);
     }
 
-    .about :global(.about__photo) {
-      flex: 0 0 var(--photo-width);
+    .about :global(.about__plate) {
+      flex: 0 0 var(--plate-width);
+      aspect-ratio: 4 / 5;
     }
   }
 </style>

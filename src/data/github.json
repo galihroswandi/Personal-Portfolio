@@ -1,0 +1,344 @@
+{
+  "fetchedAt": "2026-10-17",
+  "profileUrl": "https://github.com/galihroswandi",
+  "memberSince": "2022-08-16",
+  "publicRepos": 45,
+  "languages": {
+    "Java": 1,
+    "PHP": 10,
+    "EJS": 1,
+    "JavaScript": 11,
+    "HTML": 5,
+    "SCSS": 1,
+    "C++": 2,
+    "TypeScript": 4,
+    "CSS": 2,
+    "Go": 1,
+    "Python": 1,
+    "Solidity": 1,
+    "Vue": 1
+  },
+  "reposPerYear": {
+    "2022": 9,
+    "2023": 24,
+    "2024": 7,
+    "2026": 5
+  },
+  "repos": {
+    "3D-Animated-Sphere": {
+      "url": "https://github.com/galihroswandi/3D-Animated-Sphere",
+      "homepage": null,
+      "language": null,
+      "stars": 0,
+      "createdAt": "2024-08-22"
+    },
+    "Belajar-Java": {
+      "url": "https://github.com/galihroswandi/Belajar-Java",
+      "homepage": null,
+      "language": "Java",
+      "stars": 0,
+      "createdAt": "2026-01-08"
+    },
+    "belajar-laravel-blade": {
+      "url": "https://github.com/galihroswandi/belajar-laravel-blade",
+      "homepage": null,
+      "language": "PHP",
+      "stars": 0,
+      "createdAt": "2023-09-06"
+    },
+    "belajar-laravel-collection": {
+      "url": "https://github.com/galihroswandi/belajar-laravel-collection",
+      "homepage": null,
+      "language": "PHP",
+      "stars": 0,
+      "createdAt": "2023-09-07"
+    },
+    "belajar-laravel-dasar": {
+      "url": "https://github.com/galihroswandi/belajar-laravel-dasar",
+      "homepage": null,
+      "language": "PHP",
+      "stars": 0,
+      "createdAt": "2023-08-30"
+    },
+    "belajar-laravel-logging": {
+      "url": "https://github.com/galihroswandi/belajar-laravel-logging",
+      "homepage": null,
+      "language": "PHP",
+      "stars": 0,
+      "createdAt": "2023-09-06"
+    },
+    "belajar-laravel-wpu": {
+      "url": "https://github.com/galihroswandi/belajar-laravel-wpu",
+      "homepage": null,
+      "language": "PHP",
+      "stars": 0,
+      "createdAt": "2023-09-08"
+    },
+    "belajar-midtrans": {
+      "url": "https://github.com/galihroswandi/belajar-midtrans",
+      "homepage": null,
+      "language": "PHP",
+      "stars": 0,
+      "createdAt": "2023-11-23"
+    },
+    "Belajar-nodejs": {
+      "url": "https://github.com/galihroswandi/Belajar-nodejs",
+      "homepage": null,
+      "language": "EJS",
+      "stars": 0,
+      "createdAt": "2023-02-01"
+    },
+    "Belajar-React-JS": {
+      "url": "https://github.com/galihroswandi/Belajar-React-JS",
+      "homepage": null,
+      "language": "JavaScript",
+      "stars": 1,
+      "createdAt": "2022-09-12"
+    },
+    "Belajar-React-JS-CDN": {
+      "url": "https://github.com/galihroswandi/Belajar-React-JS-CDN",
+      "homepage": null,
+      "language": "HTML",
+      "stars": 0,
+      "createdAt": "2022-09-12"
+    },
+    "Belajar-SASS": {
+      "url": "https://github.com/galihroswandi/Belajar-SASS",
+      "homepage": null,
+      "language": "SCSS",
+      "stars": 0,
+      "createdAt": "2023-01-15"
+    },
+    "Belajar-Tailwindcss": {
+      "url": "https://github.com/galihroswandi/Belajar-Tailwindcss",
+      "homepage": "https://galihroswandi.github.io/Belajar-Tailwindcss/",
+      "language": "HTML",
+      "stars": 0,
+      "createdAt": "2023-01-20"
+    },
+    "Catatan_perjalanan": {
+      "url": "https://github.com/galihroswandi/Catatan_perjalanan",
+      "homepage": null,
+      "language": "PHP",
+      "stars": 0,
+      "createdAt": "2022-12-02"
+    },
+    "Chat-Apps": {
+      "url": "https://github.com/galihroswandi/Chat-Apps",
+      "homepage": null,
+      "language": "PHP",
+      "stars": 0,
+      "createdAt": "2022-11-24"
+    },
+    "coba-gitignore": {
+      "url": "https://github.com/galihroswandi/coba-gitignore",
+      "homepage": null,
+      "language": null,
+      "stars": 0,
+      "createdAt": "2023-01-13"
+    },
+    "Coding_Test": {
+      "url": "https://github.com/galihroswandi/Coding_Test",
+      "homepage": "https://codingtest-mocha.vercel.app",
+      "language": "JavaScript",
+      "stars": 0,
+      "createdAt": "2023-05-27"
+    },
+    "Company-profile": {
+      "url": "https://github.com/galihroswandi/Company-profile",
+      "homepage": "https://company-profile-wine.vercel.app",
+      "language": "HTML",
+      "stars": 0,
+      "createdAt": "2023-01-02"
+    },
+    "cpp-learning-fasttrack": {
+      "url": "https://github.com/galihroswandi/cpp-learning-fasttrack",
+      "homepage": null,
+      "language": "C++",
+      "stars": 0,
+      "createdAt": "2026-05-06"
+    },
+    "Crud-barang": {
+      "url": "https://github.com/galihroswandi/Crud-barang",
+      "homepage": null,
+      "language": "JavaScript",
+      "stars": 1,
+      "createdAt": "2022-11-09"
+    },
+    "crud_barang_firebase": {
+      "url": "https://github.com/galihroswandi/crud_barang_firebase",
+      "homepage": "https://crud-barang-firebase.vercel.app",
+      "language": "JavaScript",
+      "stars": 1,
+      "createdAt": "2022-11-13"
+    },
+    "E-comerce": {
+      "url": "https://github.com/galihroswandi/E-comerce",
+      "homepage": "https://garudamarketplace.vercel.app/",
+      "language": "JavaScript",
+      "stars": 1,
+      "createdAt": "2023-03-24"
+    },
+    "embedded-learning-log": {
+      "url": "https://github.com/galihroswandi/embedded-learning-log",
+      "homepage": null,
+      "language": "C++",
+      "stars": 0,
+      "createdAt": "2026-08-17"
+    },
+    "galihroswandi": {
+      "url": "https://github.com/galihroswandi/galihroswandi",
+      "homepage": null,
+      "language": null,
+      "stars": 0,
+      "createdAt": "2026-08-18"
+    },
+    "hidayatul_mustafid": {
+      "url": "https://github.com/galihroswandi/hidayatul_mustafid",
+      "homepage": "https://hidayatul-mustafid.vercel.app",
+      "language": "TypeScript",
+      "stars": 0,
+      "createdAt": "2026-06-04"
+    },
+    "Invent2": {
+      "url": "https://github.com/galihroswandi/Invent2",
+      "homepage": null,
+      "language": "CSS",
+      "stars": 1,
+      "createdAt": "2022-09-28"
+    },
+    "Latihan-UKK": {
+      "url": "https://github.com/galihroswandi/Latihan-UKK",
+      "homepage": null,
+      "language": "PHP",
+      "stars": 0,
+      "createdAt": "2023-02-14"
+    },
+    "Learn-Angular": {
+      "url": "https://github.com/galihroswandi/Learn-Angular",
+      "homepage": null,
+      "language": "TypeScript",
+      "stars": 0,
+      "createdAt": "2023-07-10"
+    },
+    "Learn-Blockchain-Solidity-Development": {
+      "url": "https://github.com/galihroswandi/Learn-Blockchain-Solidity-Development",
+      "homepage": null,
+      "language": "JavaScript",
+      "stars": 0,
+      "createdAt": "2024-12-15"
+    },
+    "Learn-GoLang": {
+      "url": "https://github.com/galihroswandi/Learn-GoLang",
+      "homepage": null,
+      "language": "Go",
+      "stars": 0,
+      "createdAt": "2023-06-09"
+    },
+    "Learn-Python": {
+      "url": "https://github.com/galihroswandi/Learn-Python",
+      "homepage": null,
+      "language": "Python",
+      "stars": 1,
+      "createdAt": "2024-01-25"
+    },
+    "Learn-Solidity": {
+      "url": "https://github.com/galihroswandi/Learn-Solidity",
+      "homepage": null,
+      "language": "Solidity",
+      "stars": 0,
+      "createdAt": "2024-12-10"
+    },
+    "learn-vuejs": {
+      "url": "https://github.com/galihroswandi/learn-vuejs",
+      "homepage": null,
+      "language": "Vue",
+      "stars": 1,
+      "createdAt": "2023-07-24"
+    },
+    "Personal-Portfolio": {
+      "url": "https://github.com/galihroswandi/Personal-Portfolio",
+      "homepage": "https://galihroswandi.vercel.app",
+      "language": "TypeScript",
+      "stars": 15,
+      "createdAt": "2023-05-22"
+    },
+    "ppdb-2024": {
+      "url": "https://github.com/galihroswandi/ppdb-2024",
+      "homepage": "https://ppdb-2024-eight.vercel.app",
+      "language": "JavaScript",
+      "stars": 0,
+      "createdAt": "2024-03-11"
+    },
+    "QR-CODE.FrontendMentor": {
+      "url": "https://github.com/galihroswandi/QR-CODE.FrontendMentor",
+      "homepage": "https://qr-code-frontend-mentor-mu.vercel.app",
+      "language": "HTML",
+      "stars": 0,
+      "createdAt": "2023-07-24"
+    },
+    "rest-api-ecomerce": {
+      "url": "https://github.com/galihroswandi/rest-api-ecomerce",
+      "homepage": null,
+      "language": "JavaScript",
+      "stars": 1,
+      "createdAt": "2023-03-22"
+    },
+    "Service-worker": {
+      "url": "https://github.com/galihroswandi/Service-worker",
+      "homepage": "https://galihroswandi.github.io/Service-worker/",
+      "language": "CSS",
+      "stars": 0,
+      "createdAt": "2023-10-12"
+    },
+    "Service-Worker-Sederhana": {
+      "url": "https://github.com/galihroswandi/Service-Worker-Sederhana",
+      "homepage": null,
+      "language": "JavaScript",
+      "stars": 0,
+      "createdAt": "2023-10-11"
+    },
+    "Setting-IP-Statis": {
+      "url": "https://github.com/galihroswandi/Setting-IP-Statis",
+      "homepage": null,
+      "language": null,
+      "stars": 0,
+      "createdAt": "2024-06-20"
+    },
+    "simple.drag.and.drop": {
+      "url": "https://github.com/galihroswandi/simple.drag.and.drop",
+      "homepage": null,
+      "language": "HTML",
+      "stars": 0,
+      "createdAt": "2024-02-29"
+    },
+    "Study-Reactjs": {
+      "url": "https://github.com/galihroswandi/Study-Reactjs",
+      "homepage": null,
+      "language": "JavaScript",
+      "stars": 1,
+      "createdAt": "2022-10-07"
+    },
+    "Template-real-time-ajax-jquery": {
+      "url": "https://github.com/galihroswandi/Template-real-time-ajax-jquery",
+      "homepage": null,
+      "language": "JavaScript",
+      "stars": 0,
+      "createdAt": "2022-09-16"
+    },
+    "Todolist-Laravel": {
+      "url": "https://github.com/galihroswandi/Todolist-Laravel",
+      "homepage": null,
+      "language": "PHP",
+      "stars": 0,
+      "createdAt": "2023-09-28"
+    },
+    "TypeScript": {
+      "url": "https://github.com/galihroswandi/TypeScript",
+      "homepage": null,
+      "language": "TypeScript",
+      "stars": 0,
+      "createdAt": "2023-05-16"
+    }
+  }
+}

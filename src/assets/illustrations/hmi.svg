@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 225" aria-hidden="true" focusable="false">
+  <!-- Generic operator panel: status bar, gauges, tank levels, trend and controls. Not a real system layout. -->
+  <rect x="18" y="18" width="324" height="24" rx="5" style="fill: var(--surface); stroke: var(--hairline); stroke-width: 1" />
+  <rect x="28" y="28" width="56" height="4" rx="2" style="fill: var(--border-strong)" />
+  <circle cx="310" cy="30" r="4" style="fill: var(--success)" />
+  <circle class="ill-dot" cx="326" cy="30" r="4" style="fill: var(--danger); --i: 0" />
+
+  <path d="M36 118 A34 34 0 0 1 104 118" style="fill: none; stroke: var(--hairline); stroke-width: 7; stroke-linecap: round" />
+  <path class="ill-trace" d="M36 118 A34 34 0 0 1 90 90.5" pathLength="1" style="fill: none; stroke: var(--accent); stroke-width: 7; stroke-linecap: round; stroke-dasharray: 1" />
+  <rect x="56" y="110" width="28" height="7" rx="2" style="fill: var(--ink-subtle)" />
+  <path d="M126 118 A34 34 0 0 1 194 118" style="fill: none; stroke: var(--hairline); stroke-width: 7; stroke-linecap: round" />
+  <path class="ill-trace" d="M126 118 A34 34 0 0 1 154.7 84.4" pathLength="1" style="fill: none; stroke: var(--success); stroke-width: 7; stroke-linecap: round; stroke-dasharray: 1" />
+  <rect x="146" y="110" width="28" height="7" rx="2" style="fill: var(--ink-subtle)" />
+
+  <rect x="222" y="56" width="28" height="70" rx="4" style="fill: var(--surface); stroke: var(--hairline); stroke-width: 1" />
+  <rect class="ill-bar" x="225" y="76" width="22" height="47" rx="2" style="fill: var(--border-strong); --i: 0" />
+  <rect x="262" y="56" width="28" height="70" rx="4" style="fill: var(--surface); stroke: var(--hairline); stroke-width: 1" />
+  <rect class="ill-bar" x="265" y="100" width="22" height="23" rx="2" style="fill: var(--accent); --i: 1" />
+  <rect x="302" y="56" width="28" height="70" rx="4" style="fill: var(--surface); stroke: var(--hairline); stroke-width: 1" />
+  <rect class="ill-bar" x="305" y="68" width="22" height="55" rx="2" style="fill: var(--border-strong); --i: 2" />
+
+  <rect x="18" y="140" width="186" height="66" rx="5" style="fill: var(--surface); stroke: var(--hairline); stroke-width: 1" />
+  <polyline class="ill-trace" points="28,190 52,180 76,186 100,166 124,172 148,158 172,164 194,150" pathLength="1" style="fill: none; stroke: var(--success); stroke-width: 2; stroke-linejoin: round; stroke-dasharray: 1" />
+
+  <rect x="214" y="140" width="60" height="29" rx="5" style="fill: var(--accent)" />
+  <rect x="226" y="152" width="36" height="5" rx="2.5" style="fill: var(--on-accent)" />
+  <rect x="282" y="140" width="60" height="29" rx="5" style="fill: none; stroke: var(--border-strong); stroke-width: 1" />
+  <rect x="294" y="152" width="36" height="5" rx="2.5" style="fill: var(--border-strong)" />
+  <rect x="214" y="177" width="60" height="29" rx="5" style="fill: none; stroke: var(--border-strong); stroke-width: 1" />
+  <rect x="226" y="189" width="36" height="5" rx="2.5" style="fill: var(--border-strong)" />
+  <rect x="282" y="177" width="60" height="29" rx="5" style="fill: none; stroke: var(--border-strong); stroke-width: 1" />
+  <rect x="294" y="189" width="36" height="5" rx="2.5" style="fill: var(--border-strong)" />
+</svg>
