@@ -4,6 +4,7 @@
  */
 
 export const ANALYTICS_EVENTS = [
+  'cv_preview',
   'cv_download',
   'email_click',
   'case_study_click',

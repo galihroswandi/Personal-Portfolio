@@ -351,3 +351,15 @@ worth area chart, recent transactions). It uses only theme tokens and the existi
   the folded "other" row and for non-peak years. Value labels are direct, so no legend.
 - LinkedIn blocks automated reads (HTTP 999), so nothing is taken from it; the profile URL is set
   in `site.social` and shows as a link (Contact, GitHub section, `sameAs`).
+
+## 043 · CV: ATS-friendly layout and a preview before download
+
+- The CV is one column of real text (no tables, icons or text boxes), with standard section names,
+  plain "Month YYYY – Month YYYY" dates, contact as text, real bullets and a tagged PDF with a
+  title. No letter-spacing or text-transform: some parsers split such text into letters.
+  `pdftotext` is the quick check that the reading order is clean.
+- "View CV" (hero, contact) opens a modal `<dialog>` with a WebP image of the page and the PDF
+  download inside; without JavaScript the buttons are plain download links. The image comes from
+  `pnpm build:cv` together with the PDFs (rerun it, then commit all four files). Its `alt`
+  text points to the PDF for the full text; the scroll area is focusable and labelled for keyboard
+  users. The global reset zeroes margins, so the dialog sets `margin: auto` to stay centred.

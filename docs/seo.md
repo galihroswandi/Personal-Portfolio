@@ -62,7 +62,7 @@ Longer notes are in `decisions.md` (027–033).
 - **Unset things are hidden, not broken.** Social links without a real URL and CV buttons
   without a PDF are not rendered (`check:content` lists them).
 - **Analytics.** Vercel Web Analytics (cookieless), only on Vercel builds, loaded when the
-  browser is idle. Events: `cv_download`, `email_click`, `case_study_click`, `app_signup_click`, `repo_click`, `profile_click`
+  browser is idle. Events: `cv_preview`, `cv_download`, `email_click`, `case_study_click`, `app_signup_click`, `repo_click`, `profile_click`
   (label: `github` / `linkedin` / `instagram`), `lang_switch` (label: target language). Custom
   events need a Vercel plan that includes them.
 - **Search engine verification.** Set `PUBLIC_GSC_VERIFICATION` and/or `PUBLIC_BING_VERIFICATION`

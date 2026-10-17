@@ -1,6 +1,7 @@
 /**
- * `pnpm build:cv`: renders `public/cv/galih-roswandi-{id,en}.pdf` (A4) from the site's own data,
- * using the browser Playwright already ships for the e2e tests. Run it after changing the job,
+ * `pnpm build:cv`: renders `public/cv/galih-roswandi-{id,en}.pdf` (A4) and a `-preview.webp` of
+ * the page (shown in the site's preview dialog) from the site's own data, using the browser
+ * Playwright already ships for the e2e tests. Run it after changing the job,
  * skills, projects, education or contact details, then commit the PDFs.
  *
  * Built to be read by applicant tracking systems (ATS) as well as people: one column, no tables,
@@ -11,10 +12,11 @@
  */
 import { mkdirSync, readFileSync } from 'node:fs';
 import { chromium } from '@playwright/test';
+import sharp from 'sharp';
 import { site } from '../src/config/site';
 import { stackTiers } from '../src/config/stack';
 import { languages, ui, type Lang } from '../src/i18n/ui';
-import { cvFile } from '../src/lib/cv';
+import { cvFile, cvPreviewHref } from '../src/lib/cv';
 import { cvCopy } from './lib/cv-content';
 
 const font = (file: string) =>
@@ -112,7 +114,14 @@ for (const lang of Object.keys(languages) as Lang[]) {
     tagged: true,
     outline: true,
   });
+  // Same HTML as an A4-sized screenshot (96 dpi: 794 x 1123), shrunk to a light WebP.
+  await page.setViewportSize({ width: 794, height: 1123 });
+  const shot = await page.screenshot({ clip: { x: 0, y: 0, width: 794, height: 1123 } });
+  await sharp(shot)
+    .resize({ width: 1100 })
+    .webp({ quality: 88 })
+    .toFile(`public${cvPreviewHref(lang)}`);
   await page.close();
-  process.stdout.write(`build:cv: ${cvFile(lang)}\n`);
+  process.stdout.write(`build:cv: ${cvFile(lang)} + preview\n`);
 }
 await browser.close();

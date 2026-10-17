@@ -40,7 +40,14 @@ const socials = [
         {t('contact.email')}
       </Button>
       {hasCv(lang) && (
-        <Button href={cvHref(lang)} variant="secondary" download data-event="cv_download">
+        <Button
+          href={cvHref(lang)}
+          variant="secondary"
+          download
+          data-cv-open
+          data-event="cv_preview"
+          data-event-label="contact"
+        >
           {t('contact.cv')}
         </Button>
       )}

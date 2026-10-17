@@ -59,7 +59,14 @@ const title = splitTitleWords(splitEmphasis(t('hero.title'))).map((token) =>
         {t('hero.ctaCollab')}
       </Button>
       {hasCv(lang) && (
-        <Button href={cvHref(lang)} variant="ghost" download data-event="cv_download">
+        <Button
+          href={cvHref(lang)}
+          variant="ghost"
+          download
+          data-cv-open
+          data-event="cv_preview"
+          data-event-label="hero"
+        >
           {t('hero.ctaCv')}
         </Button>
       )}

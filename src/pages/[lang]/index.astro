@@ -1,5 +1,6 @@
 ---
 import type { GetStaticPaths } from 'astro';
+import CvPreview from '@/components/islands/CvPreview.astro';
 import About from '@/components/sections/About.astro';
 import CaseStudies from '@/components/sections/CaseStudies.astro';
 import Contact from '@/components/sections/Contact.astro';
@@ -29,4 +30,5 @@ const page = await getHomePage(lang);
   <GitHub lang={lang} />
   <Services lang={lang} />
   <Contact lang={lang} />
+  <CvPreview lang={lang} />
 </Base>

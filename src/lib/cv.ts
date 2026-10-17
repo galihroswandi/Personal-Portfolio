@@ -6,6 +6,11 @@ export function cvHref(lang: Lang): string {
   return `/cv/galih-roswandi-${lang}.pdf`;
 }
 
+/** Public path of the preview image shown before downloading (made by `pnpm build:cv`). */
+export function cvPreviewHref(lang: Lang): string {
+  return `/cv/galih-roswandi-${lang}-preview.webp`;
+}
+
 /** The CV's source file, relative to the project root. */
 export function cvFile(lang: Lang): string {
   return `public${cvHref(lang)}`;
