@@ -21,7 +21,7 @@ export const site = {
   social: {
     github: 'https://github.com/galihroswandi',
     linkedin: 'https://www.linkedin.com/in/galih-roswandi-55a8b5271',
-    instagram: '#',
+    instagram: 'https://www.instagram.com/galih_roswandi/',
   },
   /** Date the site was first published (first commit), for ProfilePage `dateCreated`. */
   createdAt: '2026-10-10',

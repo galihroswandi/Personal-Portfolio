@@ -22,7 +22,8 @@
     "check:content": "tsx scripts/check-content.ts",
     "check:seo": "tsx scripts/check-seo.ts",
     "validate:schema": "tsx scripts/validate-schema.ts",
-    "data:github": "tsx scripts/fetch-github.ts"
+    "data:github": "tsx scripts/fetch-github.ts",
+    "build:cv": "tsx scripts/build-cv.ts"
   },
   "dependencies": {
     "@astrojs/markdown-satteri": "^0.4.3",
