@@ -13,6 +13,7 @@ import {
   graph,
   personNode,
   profilePageNode,
+  webPageNode,
   websiteNode,
   type Crumb,
   type Graph,
@@ -32,7 +33,7 @@ export interface OgCard {
 }
 
 export interface SitePage {
-  kind: 'home' | 'case-study';
+  kind: 'home' | 'case-study' | 'learning';
   lang: Lang;
   /** Path with a trailing slash, e.g. `/id/proyek/hmi-qt/`. */
   path: string;
@@ -58,6 +59,9 @@ const homeSources = (lang: Lang) => [
   `src/content/about/${lang}.mdx`,
   `src/content/projects/${lang}`,
 ];
+
+/** Files whose edits change what the learning page shows. */
+const learningSources = ['src/i18n/ui.ts', 'src/config/learning.ts', 'src/data/learning.json'];
 
 const projectSource = (entry: Project) => `src/content/projects/${entry.id}.mdx`;
 
@@ -86,6 +90,24 @@ export async function getHomePage(lang: Lang): Promise<SitePage> {
     published: new Date(site.createdAt),
     modified: lastModified(homeSources(lang)),
     og: ogCard(lang, path, t['og.homeKicker'], t['og.homeTitle']),
+  };
+}
+
+export function getLearningPage(lang: Lang): SitePage {
+  const t = ui[lang];
+  const path = localePath(lang, 'belajar');
+  return {
+    kind: 'learning',
+    lang,
+    path,
+    heading: t['learning.title'],
+    title: buildTitle(t['learning.seoTitle'], lang),
+    description: t['learning.metaDescription'],
+    indexable: reviewedLangs[lang],
+    alternates: Object.fromEntries(langs.map((code) => [code, localePath(code, 'belajar')])),
+    published: firstPublished('src/config/learning.ts'),
+    modified: lastModified([...learningSources, 'src/pages/[lang]/belajar']),
+    og: ogCard(lang, path, t['og.learningKicker'], t['learning.title']),
   };
 }
 
@@ -124,7 +146,11 @@ export function getProjectPage(entry: Project, all: readonly Project[]): SitePag
 export async function getSitePages(): Promise<SitePage[]> {
   const projects = await getAllProjects();
   const homes = await Promise.all(langs.map(getHomePage));
-  return [...homes, ...projects.map((entry) => getProjectPage(entry, projects))];
+  return [
+    ...homes,
+    ...langs.map(getLearningPage),
+    ...projects.map((entry) => getProjectPage(entry, projects)),
+  ];
 }
 
 /** Head tags for a registry page. Case studies are articles with publication dates. */
@@ -148,15 +174,15 @@ export function headMeta(page: SitePage, jsonLd?: object): HeadMeta {
   };
 }
 
-/** Home > Projects > case study. Shown on the page and in the BreadcrumbList. */
+/**
+ * Home > Projects > case study, or Home > page. Shown on the page and in the BreadcrumbList.
+ */
 export function breadcrumbs(page: SitePage): Crumb[] {
   const t = ui[page.lang];
   const home = localePath(page.lang);
-  return [
-    { name: t['breadcrumb.home'], path: home },
-    { name: t['nav.projects'], path: `${home}#proyek` },
-    { name: page.heading, path: page.path },
-  ];
+  const trail: Crumb[] = [{ name: t['breadcrumb.home'], path: home }];
+  if (page.kind === 'case-study') trail.push({ name: t['nav.projects'], path: `${home}#proyek` });
+  return [...trail, { name: page.heading, path: page.path }];
 }
 
 const person = (lang: Lang) => personNode({ description: ui[lang]['meta.description'] });
@@ -189,6 +215,22 @@ export function caseStudyJsonLd(page: SitePage): Graph {
       lang: page.lang,
       image: page.og.image,
       published: page.published,
+      modified: page.modified,
+    }),
+  ]);
+}
+
+/** Learning page: a page about the person, with its breadcrumb trail. */
+export function learningJsonLd(page: SitePage): Graph {
+  return graph([
+    person(page.lang),
+    websiteNode(),
+    breadcrumbNode(page.path, breadcrumbs(page)),
+    webPageNode({
+      path: page.path,
+      title: page.title,
+      description: page.description,
+      lang: page.lang,
       modified: page.modified,
     }),
   ]);

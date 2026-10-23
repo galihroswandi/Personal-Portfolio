@@ -23,6 +23,7 @@
     "check:seo": "tsx scripts/check-seo.ts",
     "validate:schema": "tsx scripts/validate-schema.ts",
     "data:github": "tsx scripts/fetch-github.ts",
+    "data:learning": "tsx scripts/fetch-learning.ts",
     "build:cv": "tsx scripts/build-cv.ts"
   },
   "dependencies": {

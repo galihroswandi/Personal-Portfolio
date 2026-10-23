@@ -13,7 +13,7 @@ import { GITHUB_TOP_LANGUAGES, featuredRepos } from '@/config/github';
 import { site } from '@/config/site';
 import github from '@/data/github.json';
 import type { Lang } from '@/i18n/ui';
-import { useTranslations } from '@/i18n/utils';
+import { localePath, useTranslations } from '@/i18n/utils';
 import { languageRows, peakRow, yearRows } from '@/lib/github';
 import { isRealUrl } from '@/lib/placeholders';
 
@@ -181,6 +181,14 @@ const repos = featuredRepos.flatMap((repo) => {
   <div class="gh__actions">
     <Button href={github.profileUrl} arrow data-event="profile_click" data-event-label="github">
       {t('github.profile')}
+    </Button>
+    <Button
+      href={localePath(lang, 'belajar')}
+      variant="secondary"
+      data-event="learning_click"
+      data-event-label="github"
+    >
+      {t('github.learning')}
     </Button>
     {isRealUrl(site.social.linkedin) && (
       <Button

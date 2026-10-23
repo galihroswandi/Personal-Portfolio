@@ -11,6 +11,7 @@ export const ANALYTICS_EVENTS = [
   'app_signup_click',
   'repo_click',
   'profile_click',
+  'learning_click',
   'lang_switch',
 ] as const;
 

@@ -73,7 +73,19 @@ export interface ArticleNode extends Ref {
   dateModified: string;
 }
 
-export type GraphNode = PersonNode | WebSiteNode | ProfilePageNode | BreadcrumbNode | ArticleNode;
+export interface WebPageNode extends Ref {
+  '@type': 'WebPage';
+  url: string;
+  name: string;
+  description: string;
+  inLanguage: string;
+  isPartOf: Ref;
+  about: Ref;
+  dateModified: string;
+}
+
+export type GraphNode =
+  PersonNode | WebSiteNode | ProfilePageNode | BreadcrumbNode | ArticleNode | WebPageNode;
 
 export interface Graph {
   '@context': 'https://schema.org';
@@ -203,6 +215,30 @@ export function articleNode(input: ArticleInput): ArticleNode {
     publisher: { '@id': ids.person },
     isPartOf: { '@id': ids.website },
     datePublished: isoDateTime(input.published),
+    dateModified: isoDateTime(input.modified),
+  };
+}
+
+export interface WebPageInput {
+  path: string;
+  title: string;
+  description: string;
+  lang: Lang;
+  modified: Date;
+}
+
+/** A plain page about the person (the learning page). */
+export function webPageNode(input: WebPageInput): WebPageNode {
+  const url = absoluteUrl(input.path);
+  return {
+    '@type': 'WebPage',
+    '@id': `${url}#webpage`,
+    url,
+    name: input.title,
+    description: input.description,
+    inLanguage: input.lang,
+    isPartOf: { '@id': ids.website },
+    about: { '@id': ids.person },
     dateModified: isoDateTime(input.modified),
   };
 }
