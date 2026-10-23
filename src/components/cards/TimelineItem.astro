@@ -1,0 +1,83 @@
+---
+/** One entry of the vertical timeline. Render inside an <ol class="timeline">. */
+import { revealStyle } from '@/lib/reveal';
+
+interface Props {
+  period: string;
+  title: string;
+  place: string;
+  text: string;
+  /** The ongoing item: filled accent dot plus a screen-reader label. */
+  current?: boolean;
+  currentLabel?: string;
+  /** Position in the list, for the staggered reveal. */
+  index?: number;
+}
+
+const { period, title, place, text, current = false, currentLabel, index = 0 } = Astro.props;
+---
+
+<li class:list={['item', 'reveal-item', { 'item--current': current }]} style={revealStyle(index)}>
+  <span class:list={['item__dot', { 'reveal-ring': current }]} aria-hidden="true"></span>
+  <p class="item__period">
+    {period}
+    {current && currentLabel && <span class="visually-hidden"> ({currentLabel})</span>}
+  </p>
+  <h3 class="item__title">{title}</h3>
+  <p class="item__place">{place}</p>
+  <p class="item__text">{text}</p>
+</li>
+
+<style>
+  .item {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+  }
+
+  /* Centre the dot on the list's left line: list padding + half the dot, minus half the line. */
+  .item__dot {
+    position: absolute;
+    top: var(--space-1);
+    left: calc(-1 * (var(--space-6) + var(--timeline-dot) / 2 + var(--border-width-strong) / 2));
+    width: var(--timeline-dot);
+    height: var(--timeline-dot);
+    border: var(--timeline-dot-border) solid var(--accent);
+    border-radius: 50%;
+    background: var(--surface);
+  }
+
+  .item--current .item__dot {
+    background: var(--accent);
+  }
+
+  .item__period {
+    color: var(--accent-ink);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 500;
+    line-height: 1.2;
+  }
+
+  .item__title {
+    margin-top: var(--space-1);
+    font-size: 1.375rem;
+    line-height: 1.25;
+    letter-spacing: -0.01em;
+  }
+
+  .item__place {
+    color: var(--ink-muted);
+    font-size: 0.875rem;
+    line-height: 1.5;
+  }
+
+  .item__text {
+    margin-top: var(--space-2);
+    max-width: var(--measure-text);
+    color: var(--ink-muted);
+    font-size: 0.9375rem;
+    line-height: 1.6;
+  }
+</style>

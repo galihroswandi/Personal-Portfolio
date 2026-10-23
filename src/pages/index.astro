@@ -1,0 +1,71 @@
+---
+/**
+ * Language chooser at `/`, also the hreflang `x-default`. Crawlers and no-JS visitors get a real
+ * page (short intro in both languages, plain links); people with JavaScript are sent on to their
+ * stored or browser language by a small inline script (decision 008). No IP or Accept-Language
+ * redirects, no zero-delay meta refresh.
+ */
+import { site } from '@/config/site';
+import { languages, ui } from '@/i18n/ui';
+import { interpolate, langs, localePath } from '@/i18n/utils';
+import Minimal from '@/layouts/Minimal.astro';
+import { LANG_STORAGE_KEY } from '@/lib/lang-preference';
+import { DEFAULT_OG_IMAGE, type HeadMeta } from '@/lib/seo';
+
+const targets = Object.fromEntries(langs.map((lang) => [lang, localePath(lang)]));
+const meta: HeadMeta = {
+  lang: 'id',
+  path: '/',
+  title: `${site.name} · Portofolio / Portfolio`,
+  // Bilingual on purpose: this page serves both languages.
+  description: `Portofolio ${site.name}, fullstack developer di Tasikmalaya. Portfolio of ${site.name}, fullstack developer in Tasikmalaya, Indonesia.`,
+  indexable: true,
+  alternates: targets,
+  og: {
+    type: 'website',
+    image: DEFAULT_OG_IMAGE,
+    imageAlt: interpolate(ui.id['og.alt'], { title: ui.id['og.defaultTitle'] }),
+  },
+};
+---
+
+<Minimal meta={meta}>
+  <script
+    slot="head"
+    is:inline
+    define:vars={{ targets, storageKey: LANG_STORAGE_KEY, fallback: localePath('en') }}
+  >
+    // Inline on purpose: it must run before paint. Unknown languages go to English.
+    let stored = null;
+    try {
+      stored = localStorage.getItem(storageKey);
+    } catch {
+      // Storage can be blocked; fall back to the browser language.
+    }
+    const browser = (navigator.language || '').toLowerCase().split('-')[0];
+    location.replace(targets[stored] || targets[browser] || fallback);
+  </script>
+  <h1>{site.name}</h1>
+  {langs.map((lang) => (
+    <p lang={lang}>{ui[lang]['root.intro']}</p>
+  ))}
+  <h2 id="choose-language">
+    {langs.map((lang, index) => (
+      <>
+        {index > 0 && ' · '}
+        <span lang={lang}>{ui[lang]['root.choose']}</span>
+      </>
+    ))}
+  </h2>
+  <nav aria-labelledby="choose-language">
+    <ul>
+      {langs.map((lang) => (
+        <li>
+          <a href={localePath(lang)} hreflang={lang} lang={lang}>
+            {languages[lang]}
+          </a>
+        </li>
+      ))}
+    </ul>
+  </nav>
+</Minimal>

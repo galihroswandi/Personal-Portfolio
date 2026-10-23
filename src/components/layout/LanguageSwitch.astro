@@ -1,0 +1,83 @@
+---
+/** `ID | EN` links to the same page in each language. Remembers a manual choice. */
+import type { Lang } from '@/i18n/ui';
+import { getAlternateUrl, langs, useTranslations } from '@/i18n/utils';
+
+interface Props {
+  lang: Lang;
+  class?: string;
+}
+
+const { lang, class: className } = Astro.props;
+const t = useTranslations(lang);
+---
+
+<nav class:list={['lang', className]} aria-label={t('a11y.langSwitch')}>
+  {langs.map((code, index) => (
+    <>
+      {index > 0 && (
+        <span class="lang__sep" aria-hidden="true">
+          |
+        </span>
+      )}
+      <a
+        class="lang__link"
+        href={getAlternateUrl(Astro.url.pathname, code)}
+        hreflang={code}
+        lang={code}
+        aria-current={code === lang ? 'true' : undefined}
+        data-lang-choice={code}
+        data-event={code === lang ? undefined : 'lang_switch'}
+        data-event-label={code === lang ? undefined : code}
+      >
+        {code.toUpperCase()}
+      </a>
+    </>
+  ))}
+</nav>
+
+<script>
+  import { LANG_STORAGE_KEY } from '@/lib/lang-preference';
+
+  for (const link of document.querySelectorAll<HTMLAnchorElement>('[data-lang-choice]')) {
+    link.addEventListener('click', () => {
+      try {
+        localStorage.setItem(LANG_STORAGE_KEY, link.dataset.langChoice ?? '');
+      } catch {
+        // Storage can be blocked; the link still works.
+      }
+    });
+  }
+</script>
+
+<style>
+  .lang {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-1);
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    font-weight: 500;
+  }
+
+  .lang__sep {
+    color: var(--ink-subtle);
+  }
+
+  .lang__link {
+    display: inline-grid;
+    place-items: center;
+    min-width: var(--touch-target);
+    min-height: var(--touch-target);
+    color: var(--ink-muted);
+    text-decoration: none;
+  }
+
+  .lang__link:hover {
+    color: var(--ink);
+  }
+
+  .lang__link[aria-current='true'] {
+    color: var(--accent-ink);
+  }
+</style>

@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 225" aria-hidden="true" focusable="false">
+  <circle class="ill-dot" cx="80" cy="60" r="5" style="fill: var(--border-strong); --i: 0" />
+  <circle class="ill-dot" cx="130" cy="60" r="5" style="fill: var(--border-strong); --i: 1" />
+  <circle class="ill-dot" cx="180" cy="60" r="5" style="fill: var(--border-strong); --i: 2" />
+  <circle class="ill-dot" cx="230" cy="60" r="5" style="fill: var(--border-strong); --i: 3" />
+  <circle class="ill-dot" cx="280" cy="60" r="5" style="fill: var(--border-strong); --i: 4" />
+  <circle class="ill-dot" cx="80" cy="112" r="5" style="fill: var(--border-strong); --i: 5" />
+  <circle class="ill-dot" cx="130" cy="112" r="5" style="fill: var(--accent); --i: 6" />
+  <circle class="ill-dot" cx="180" cy="112" r="5" style="fill: var(--border-strong); --i: 7" />
+  <circle class="ill-dot" cx="230" cy="112" r="5" style="fill: var(--border-strong); --i: 8" />
+  <circle class="ill-dot" cx="280" cy="112" r="5" style="fill: var(--border-strong); --i: 9" />
+  <circle class="ill-dot" cx="80" cy="164" r="5" style="fill: var(--border-strong); --i: 10" />
+  <circle class="ill-dot" cx="130" cy="164" r="5" style="fill: var(--border-strong); --i: 11" />
+  <circle class="ill-dot" cx="180" cy="164" r="5" style="fill: var(--border-strong); --i: 12" />
+  <circle class="ill-dot" cx="230" cy="164" r="5" style="fill: var(--accent); --i: 13" />
+  <circle class="ill-dot" cx="280" cy="164" r="5" style="fill: var(--border-strong); --i: 14" />
+  <line class="ill-trace" x1="130" y1="112" x2="230" y2="164" pathLength="1" style="stroke: var(--accent); stroke-width: 1.5; stroke-dasharray: 1" />
+</svg>

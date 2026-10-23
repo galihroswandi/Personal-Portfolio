@@ -1,0 +1,87 @@
+---
+/**
+ * Every SEO tag in the head: title, description, robots, canonical, hreflang, Open Graph, Twitter,
+ * icons, manifest, theme-color, search-engine verification and JSON-LD. Values come from
+ * `src/lib/seo.ts` and the page registry (`src/lib/pages.ts`).
+ */
+import { site } from '@/config/site';
+import { langs } from '@/i18n/utils';
+import { themeColors } from '@/lib/design';
+import {
+  absoluteUrl,
+  buildAlternates,
+  OG_IMAGE_HEIGHT,
+  OG_IMAGE_WIDTH,
+  ogLocales,
+  robotsContent,
+  serializeJsonLd,
+  type HeadMeta,
+} from '@/lib/seo';
+
+interface Props {
+  meta: HeadMeta;
+}
+
+const { meta } = Astro.props;
+const url = absoluteUrl(meta.path);
+const alternates = meta.alternates ? buildAlternates(meta.alternates) : [];
+const otherLocales = langs
+  .filter((lang) => lang !== meta.lang && meta.alternates?.[lang])
+  .map((lang) => ogLocales[lang]);
+const image = absoluteUrl(meta.og.image);
+const googleVerification = import.meta.env.PUBLIC_GSC_VERIFICATION;
+const bingVerification = import.meta.env.PUBLIC_BING_VERIFICATION;
+---
+
+<title>{meta.title}</title>
+<meta name="description" content={meta.description} />
+<meta name="robots" content={robotsContent(meta.indexable)} />
+{meta.canonical !== false && <link rel="canonical" href={url} />}
+{alternates.map((alt) => (
+  <link rel="alternate" hreflang={alt.hreflang} href={alt.href} />
+))}
+
+<meta property="og:type" content={meta.og.type} />
+<meta property="og:site_name" content={site.name} />
+<meta property="og:title" content={meta.title} />
+<meta property="og:description" content={meta.description} />
+{meta.canonical !== false && <meta property="og:url" content={url} />}
+<meta property="og:locale" content={ogLocales[meta.lang]} />
+{otherLocales.map((locale) => (
+  <meta property="og:locale:alternate" content={locale} />
+))}
+<meta property="og:image" content={image} />
+<meta property="og:image:type" content="image/png" />
+<meta property="og:image:width" content={String(OG_IMAGE_WIDTH)} />
+<meta property="og:image:height" content={String(OG_IMAGE_HEIGHT)} />
+<meta property="og:image:alt" content={meta.og.imageAlt} />
+{meta.og.published && (
+  <meta property="article:published_time" content={meta.og.published.toISOString()} />
+)}
+{meta.og.modified && (
+  <meta property="article:modified_time" content={meta.og.modified.toISOString()} />
+)}
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={meta.title} />
+<meta name="twitter:description" content={meta.description} />
+<meta name="twitter:image" content={image} />
+<meta name="twitter:image:alt" content={meta.og.imageAlt} />
+
+<link rel="icon" href="/favicon.ico" sizes="32x32" />
+<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+<link rel="manifest" href="/site.webmanifest" />
+<!-- Baseline without JavaScript; the theme module collapses these into one tag (theme.ts). -->
+<meta name="theme-color" content={themeColors.dark.surface} />
+<meta
+  name="theme-color"
+  content={themeColors.light.surface}
+  media="(prefers-color-scheme: light)"
+/>
+
+{googleVerification && <meta name="google-site-verification" content={googleVerification} />}
+{bingVerification && <meta name="msvalidate.01" content={bingVerification} />}
+
+{meta.jsonLd && (
+  <script is:inline type="application/ld+json" set:html={serializeJsonLd(meta.jsonLd)} />
+)}

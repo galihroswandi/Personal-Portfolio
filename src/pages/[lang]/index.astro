@@ -1,0 +1,34 @@
+---
+import type { GetStaticPaths } from 'astro';
+import CvPreview from '@/components/islands/CvPreview.astro';
+import About from '@/components/sections/About.astro';
+import CaseStudies from '@/components/sections/CaseStudies.astro';
+import Contact from '@/components/sections/Contact.astro';
+import Experience from '@/components/sections/Experience.astro';
+import GitHub from '@/components/sections/GitHub.astro';
+import Hero from '@/components/sections/Hero.astro';
+import Services from '@/components/sections/Services.astro';
+import type { Lang } from '@/i18n/ui';
+import { langs } from '@/i18n/utils';
+import Base from '@/layouts/Base.astro';
+import { getProjects } from '@/lib/content';
+import { getHomePage, headMeta, homeJsonLd } from '@/lib/pages';
+
+export const getStaticPaths = (() =>
+  langs.map((lang) => ({ params: { lang } }))) satisfies GetStaticPaths;
+
+const lang = Astro.params.lang as Lang;
+const projects = await getProjects(lang, { featuredOnly: true });
+const page = await getHomePage(lang);
+---
+
+<Base meta={headMeta(page, homeJsonLd(page))}>
+  <Hero lang={lang} />
+  <CaseStudies lang={lang} projects={projects} />
+  <About lang={lang} />
+  <Experience lang={lang} />
+  <GitHub lang={lang} />
+  <Services lang={lang} />
+  <Contact lang={lang} />
+  <CvPreview lang={lang} />
+</Base>

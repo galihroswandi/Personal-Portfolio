@@ -1,0 +1,40 @@
+---
+/** Numbered section marker, e.g. `01 ── STUDI KASUS`. */
+interface Props {
+  num: string;
+  label: string;
+}
+
+const { num, label } = Astro.props;
+---
+
+<p class="tag">
+  <span class="tag__num">{num}</span>
+  <span class="tag__rule reveal-draw-x" aria-hidden="true"></span>
+  <span>{label}</span>
+</p>
+
+<style>
+  .tag {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    color: var(--ink-muted);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 500;
+    line-height: 1.2;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .tag__num {
+    color: var(--accent-ink);
+  }
+
+  .tag__rule {
+    width: var(--tag-rule-width);
+    height: var(--hairline-width);
+    background: var(--border-strong);
+  }
+</style>

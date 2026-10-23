@@ -1,0 +1,98 @@
+---
+/** "Try it" panel on a case study of one of the owner's own apps: pitch, benefits, sign-up button. */
+import Button from '@/components/ui/Button.astro';
+import type { Lang } from '@/i18n/ui';
+import { useTranslations } from '@/i18n/utils';
+import { isRealUrl } from '@/lib/placeholders';
+import type { ProjectData } from '@/lib/schemas';
+
+interface Props {
+  lang: Lang;
+  slug: string;
+  promo: NonNullable<ProjectData['promo']>;
+}
+
+const { lang, slug, promo } = Astro.props;
+const t = useTranslations(lang);
+---
+
+<aside class="promo" aria-labelledby="promo-title">
+  <p class="promo__kicker">{t('promo.kicker', { name: promo.name })}</p>
+  <h2 class="promo__title" id="promo-title">
+    {promo.headline}
+  </h2>
+  <p class="promo__text">{promo.text}</p>
+  <ul class="promo__points">
+    {promo.points.map((point) => (
+      <li>{point}</li>
+    ))}
+  </ul>
+  {isRealUrl(promo.url) && (
+    <div>
+      <Button href={promo.url} arrow data-event="app_signup_click" data-event-label={slug}>
+        {promo.cta}
+      </Button>
+    </div>
+  )}
+</aside>
+
+<style>
+  .promo {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    padding: var(--space-6) var(--space-5);
+    border: var(--hairline-width) solid var(--accent);
+    border-radius: var(--radius-lg);
+    background: var(--accent-soft);
+  }
+
+  .promo__kicker {
+    color: var(--accent-ink);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .promo__title {
+    font-size: 1.75rem;
+    line-height: 1.2;
+  }
+
+  .promo__text {
+    color: var(--ink-muted);
+  }
+
+  .promo__points {
+    display: grid;
+    gap: var(--space-3);
+    padding: 0;
+    list-style: none;
+  }
+
+  .promo__points li {
+    position: relative;
+    padding-left: var(--space-5);
+  }
+
+  /* Check mark drawn with borders so it follows the theme's accent. */
+  .promo__points li::before {
+    content: '';
+    position: absolute;
+    top: 0.45em;
+    left: 2px;
+    width: 6px;
+    height: 11px;
+    border: solid var(--accent-ink);
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+  }
+
+  @media (min-width: 721px) {
+    .promo {
+      padding: var(--space-6);
+    }
+  }
+</style>

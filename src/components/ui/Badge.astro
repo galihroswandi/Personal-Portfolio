@@ -1,0 +1,39 @@
+---
+/** Small status pill with a hairline border and an optional success lamp. */
+interface Props {
+  /** Shows a green lamp before the text. The text must carry the meaning on its own. */
+  lamp?: boolean;
+  class?: string;
+}
+
+const { lamp = false, class: className } = Astro.props;
+---
+
+<p class:list={['badge', className]}>
+  {lamp && <span class="badge__lamp" aria-hidden="true" />}
+  <slot />
+</p>
+
+<style>
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--badge-pad-y) var(--badge-pad-x);
+    border: var(--hairline-width) solid var(--hairline);
+    border-radius: var(--radius-pill);
+    background: var(--surface-raised);
+    color: var(--ink);
+    font-size: 0.8125rem;
+    font-weight: 600;
+    line-height: 1.3;
+  }
+
+  .badge__lamp {
+    flex: none;
+    width: var(--lamp-size);
+    height: var(--lamp-size);
+    border-radius: 50%;
+    background: var(--success);
+  }
+</style>

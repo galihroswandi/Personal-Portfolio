@@ -1,0 +1,164 @@
+---
+/**
+ * CV preview dialog, opened by the "View CV" buttons (`[data-cv-open]`). Shows the one-page CV as
+ * an image, with the PDF download inside. Without JavaScript those buttons are plain links that
+ * download the PDF. The image is lazy, so it loads only when the dialog is first opened.
+ */
+import Button from '@/components/ui/Button.astro';
+import type { Lang } from '@/i18n/ui';
+import { useTranslations } from '@/i18n/utils';
+import { cvHref, cvPreviewHref, hasCv } from '@/lib/cv';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+---
+
+{hasCv(lang) && (
+  <dialog class="cv" id="cv-preview" aria-labelledby="cv-title" data-cv-dialog>
+    <div class="cv__bar">
+      <h2 class="cv__title" id="cv-title">
+        {t('cv.title')}
+      </h2>
+      <button type="button" class="cv__x" data-cv-close aria-label={t('cv.closeLabel')}>
+        <span aria-hidden="true">×</span>
+      </button>
+    </div>
+    <div class="cv__body" tabindex="0" role="region" aria-labelledby="cv-title">
+      <img
+        class="cv__page"
+        src={cvPreviewHref(lang)}
+        alt={t('cv.alt')}
+        width="1100"
+        height="1556"
+        loading="lazy"
+        decoding="async"
+      />
+    </div>
+    <div class="cv__actions">
+      <Button href={cvHref(lang)} download arrow data-event="cv_download" data-event-label="dialog">
+        {t('cv.download')}
+      </Button>
+      <Button variant="secondary" data-cv-close>
+        {t('cv.close')}
+      </Button>
+    </div>
+  </dialog>
+)}
+
+<script>
+  const dialog = document.querySelector<HTMLDialogElement>('[data-cv-dialog]');
+  if (dialog) {
+    // Intercept only with JavaScript; the links still download the PDF without it.
+    for (const opener of document.querySelectorAll<HTMLElement>('[data-cv-open]')) {
+      opener.addEventListener('click', (event) => {
+        event.preventDefault();
+        dialog.showModal();
+      });
+    }
+    for (const closer of dialog.querySelectorAll('[data-cv-close]')) {
+      closer.addEventListener('click', () => dialog.close());
+    }
+    // A click on the backdrop lands on the dialog element itself.
+    dialog.addEventListener('click', (event) => {
+      if (event.target === dialog) dialog.close();
+    });
+  }
+</script>
+
+<style>
+  .cv {
+    /* The global reset zeroes margins; auto is what centers a modal dialog. */
+    margin: auto;
+    width: min(94vw, 46rem);
+    max-height: 92dvh;
+    padding: 0;
+    overflow: hidden;
+    border: var(--hairline-width) solid var(--hairline);
+    border-radius: var(--radius-lg);
+    background: var(--surface-raised);
+    color: var(--ink);
+    box-shadow: var(--shadow-lift);
+  }
+
+  .cv[open] {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .cv::backdrop {
+    background: var(--surface-sunken);
+    opacity: 0.8;
+  }
+
+  /* No page scroll behind the open dialog. */
+  :global(html:has(.cv[open])) {
+    overflow: hidden;
+  }
+
+  .cv__bar,
+  .cv__actions {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding: var(--space-3) var(--space-4);
+  }
+
+  .cv__bar {
+    justify-content: space-between;
+    border-bottom: var(--hairline-width) solid var(--hairline);
+  }
+
+  .cv__actions {
+    flex-wrap: wrap;
+    border-top: var(--hairline-width) solid var(--hairline);
+  }
+
+  .cv__title {
+    font-size: 1.25rem;
+  }
+
+  .cv__x {
+    display: grid;
+    place-items: center;
+    width: var(--touch-target);
+    height: var(--touch-target);
+    border: var(--hairline-width) solid var(--hairline);
+    border-radius: 50%;
+    background: transparent;
+    color: var(--ink);
+    font-size: 1.5rem;
+    line-height: 1;
+    cursor: pointer;
+  }
+
+  .cv__x:hover {
+    background: var(--surface-sunken);
+  }
+
+  .cv__body {
+    flex: 1;
+    min-height: 0;
+    padding: var(--space-4);
+    overflow-y: auto;
+    background: var(--surface-sunken);
+  }
+
+  .cv__body:focus-visible {
+    outline: var(--focus-ring-width) solid var(--focus-ring);
+    outline-offset: calc(-1 * var(--focus-ring-width));
+  }
+
+  /* The CV is a light "sheet of paper" in both themes, as it is in the PDF. */
+  .cv__page {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: var(--radius-sm);
+    background: #fff;
+    box-shadow: var(--shadow-lift);
+  }
+</style>

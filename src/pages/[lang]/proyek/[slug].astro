@@ -1,0 +1,170 @@
+---
+/** Case study page: same tokens as the home page, a simple single-column layout. */
+import type { GetStaticPaths } from 'astro';
+import { render } from 'astro:content';
+import ProjectIllustration from '@/components/cards/ProjectIllustration.astro';
+import ProjectPromo from '@/components/cards/ProjectPromo.astro';
+import Breadcrumb from '@/components/layout/Breadcrumb.astro';
+import Button from '@/components/ui/Button.astro';
+import Chip from '@/components/ui/Chip.astro';
+import type { Lang } from '@/i18n/ui';
+import { localePath, useTranslations } from '@/i18n/utils';
+import Base from '@/layouts/Base.astro';
+import { getAllProjects, projectLang, type Project } from '@/lib/content';
+import { breadcrumbs, caseStudyJsonLd, getProjectPage, headMeta, type SitePage } from '@/lib/pages';
+
+export const getStaticPaths = (async () => {
+  const projects = await getAllProjects();
+  return projects.map((project) => ({
+    params: { lang: projectLang(project), slug: project.data.slug },
+    props: { project, page: getProjectPage(project, projects) },
+  }));
+}) satisfies GetStaticPaths;
+
+interface Props {
+  project: Project;
+  page: SitePage;
+}
+
+const { project, page } = Astro.props;
+const lang = Astro.params.lang as Lang;
+const t = useTranslations(lang);
+const { Content } = await render(project);
+const data = project.data;
+const rows = [
+  { label: t('project.problem'), value: data.problem, highlight: false },
+  { label: t('project.myRole'), value: data.myRole, highlight: false },
+  { label: t('project.result'), value: data.result, highlight: true },
+];
+---
+
+<Base meta={headMeta(page, caseStudyJsonLd(page))}>
+  <article class="container section section--last case">
+    <Breadcrumb label={t('breadcrumb.label')} crumbs={breadcrumbs(page)} />
+    <header class="case__header">
+      <p class="case__meta">
+        {data.role} · {data.company}
+      </p>
+      <h1>{data.title}</h1>
+    </header>
+    <div class="case__media">
+      <ProjectIllustration lang={lang} kind={data.illustration} />
+    </div>
+    <dl class="case__rows">
+      {rows.map((row) => (
+        <div class="case__row">
+          <dt class:list={['case__label', { 'case__label--highlight': row.highlight }]}>
+            {row.label}
+          </dt>
+          <dd>{row.value}</dd>
+        </div>
+      ))}
+    </dl>
+    <ul class="case__chips" aria-label={t('project.stack')}>
+      {data.stack.map((item) => (
+        <li>
+          <Chip>{item}</Chip>
+        </li>
+      ))}
+    </ul>
+    {data.promo && <ProjectPromo lang={lang} slug={data.slug} promo={data.promo} />}
+    <div class="case__body">
+      <Content />
+    </div>
+    <footer class="case__footer">
+      <p>{t('project.ctaText')}</p>
+      <div class="case__actions">
+        <Button href={`${localePath(lang)}#kontak`} arrow>
+          {t('hero.ctaCollab')}
+        </Button>
+        <Button href={`${localePath(lang)}#proyek`} variant="secondary">
+          {t('project.back')}
+        </Button>
+      </div>
+    </footer>
+  </article>
+</Base>
+
+<style>
+  .case {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+    max-width: calc(var(--measure-heading) + 2 * var(--gutter));
+  }
+
+  .case__header {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  .case__meta {
+    color: var(--ink-muted);
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+  }
+
+  .case__media {
+    overflow: hidden;
+    border: var(--hairline-width) solid var(--hairline);
+    border-radius: var(--radius-lg);
+  }
+
+  .case__rows {
+    display: grid;
+    gap: var(--space-5);
+  }
+
+  .case__row dd {
+    margin: var(--space-1) 0 0;
+    color: var(--ink-muted);
+  }
+
+  .case__label {
+    color: var(--ink-muted);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 500;
+  }
+
+  .case__label--highlight {
+    color: var(--accent-ink);
+  }
+
+  .case__chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    padding: 0;
+    list-style: none;
+  }
+
+  .case__body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    padding-top: var(--space-6);
+    border-top: var(--hairline-width) solid var(--hairline);
+  }
+
+  .case__footer {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    padding-top: var(--space-6);
+    border-top: var(--hairline-width) solid var(--hairline);
+    color: var(--ink-muted);
+  }
+
+  .case__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+  }
+
+  .case__body :global(h2) {
+    margin-top: var(--space-5);
+    font-size: 1.75rem;
+  }
+</style>

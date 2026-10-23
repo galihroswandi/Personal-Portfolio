@@ -1,0 +1,211 @@
+---
+/** 02 · About: monogram plate (no portrait), two paragraphs (MDX), three principles, bento summary. */
+import { render } from 'astro:content';
+import BentoTile from '@/components/cards/BentoTile.astro';
+import SectionHeader from '@/components/sections/SectionHeader.astro';
+import Panel from '@/components/ui/Panel.astro';
+import type { Lang, UIKey } from '@/i18n/ui';
+import { useTranslations } from '@/i18n/utils';
+import { getAbout } from '@/lib/content';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const about = await getAbout(lang);
+const { Content } = await render(about);
+
+const principles: { title: UIKey; text: UIKey }[] = [
+  { title: 'about.principle1.title', text: 'about.principle1.text' },
+  { title: 'about.principle2.title', text: 'about.principle2.text' },
+  { title: 'about.principle3.title', text: 'about.principle3.text' },
+];
+---
+
+<section id="tentang" class="container section" aria-labelledby="tentang-title">
+  <SectionHeader
+    titleId="tentang-title"
+    num={t('section.about.num')}
+    label={t('section.about.label')}
+    title={t('section.about.title')}
+  />
+
+  <div class="about">
+    <Panel class="about__plate" aria-hidden="true">
+      <span class="about__monogram">GR</span>
+      <span class="about__caption">{t('about.plateCaption')}</span>
+    </Panel>
+
+    <div class="about__text">
+      <div class="about__prose">
+        <Content />
+      </div>
+      <ul class="about__principles">
+        {principles.map((principle) => (
+          <li>
+            <p class="about__principle-title">{t(principle.title)}</p>
+            <p class="about__principle-text">{t(principle.text)}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
+
+  <div class="bento">
+    <BentoTile
+      index={0}
+      variant="accent"
+      cols={2}
+      rows={2}
+      large
+      label={t('bento.experience.label')}
+      value={t('bento.experience.value')}
+      note={t('bento.experience.note')}
+    />
+    <BentoTile index={1} label={t('bento.stack.label')} value={t('bento.stack.value')} />
+    <BentoTile
+      index={2}
+      variant="sunken"
+      label={t('bento.location.label')}
+      value={t('bento.location.value')}
+      note={t('bento.location.note')}
+    />
+    <BentoTile
+      index={3}
+      variant="inverse"
+      cols={2}
+      label={t('bento.learning.label')}
+      value={t('bento.learning.value')}
+      note={t('bento.learning.note')}
+    />
+  </div>
+</section>
+
+<style>
+  .about {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+    margin-bottom: var(--space-7);
+  }
+
+  /* Decorative nameplate in place of a portrait: monogram on a dot grid, mono caption. */
+  .about :global(.about__plate) {
+    display: grid;
+    place-items: center;
+    width: 100%;
+    max-width: var(--plate-width);
+    aspect-ratio: 3 / 2;
+    border: var(--hairline-width) solid var(--hairline);
+    border-radius: var(--radius-lg);
+    background-color: var(--surface-sunken);
+    background-image: radial-gradient(var(--hairline) 1px, transparent 1px);
+    background-size: var(--space-4) var(--space-4);
+  }
+
+  .about__monogram {
+    display: grid;
+    place-items: center;
+    width: var(--plate-monogram-size);
+    height: var(--plate-monogram-size);
+    border-radius: 50%;
+    background: var(--ink);
+    color: var(--surface);
+    font-family: var(--font-display);
+    font-size: calc(var(--plate-monogram-size) * 0.4);
+    font-weight: 500;
+    letter-spacing: -0.02em;
+  }
+
+  .about__caption {
+    position: absolute;
+    bottom: var(--space-4);
+    left: var(--space-5);
+    color: var(--ink-subtle);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 500;
+    line-height: 1;
+  }
+
+  .about__text {
+    display: flex;
+    flex: 1 1 0;
+    flex-direction: column;
+    gap: var(--space-6);
+    min-width: 0;
+  }
+
+  .about__prose {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    max-width: var(--measure-text);
+  }
+
+  .about__prose :global(p:first-child) {
+    color: var(--ink);
+    font-size: 1.125rem;
+    line-height: 1.65;
+  }
+
+  .about__prose :global(p + p) {
+    color: var(--ink-muted);
+  }
+
+  .about__principles {
+    display: grid;
+    gap: var(--space-5);
+    padding: var(--space-5) 0 0;
+    border-top: var(--hairline-width) solid var(--hairline);
+    list-style: none;
+  }
+
+  .about__principle-title {
+    color: var(--accent-ink);
+    font-size: 0.75rem;
+    font-weight: 600;
+    line-height: 1.2;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .about__principle-text {
+    margin-top: var(--space-2);
+    color: var(--ink-muted);
+    font-size: 0.875rem;
+    line-height: 1.5;
+  }
+
+  .bento {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-3);
+  }
+
+  @media (min-width: 721px) {
+    .about__principles {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .bento {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      grid-auto-rows: minmax(var(--bento-row), auto);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .about {
+      flex-direction: row;
+      align-items: flex-start;
+      gap: var(--space-7);
+    }
+
+    .about :global(.about__plate) {
+      flex: 0 0 var(--plate-width);
+      aspect-ratio: 4 / 5;
+    }
+  }
+</style>

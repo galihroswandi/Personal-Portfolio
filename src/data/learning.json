@@ -1,0 +1,29 @@
+{
+  "fetchedAt": "2026-10-23",
+  "tracks": [
+    {
+      "key": "cpp",
+      "percent": 58,
+      "done": 30,
+      "doing": 1,
+      "todo": 21,
+      "total": 52
+    },
+    {
+      "key": "python",
+      "percent": 0,
+      "done": 0,
+      "doing": 0,
+      "todo": 42,
+      "total": 42
+    },
+    {
+      "key": "rust",
+      "percent": 0,
+      "done": 0,
+      "doing": 0,
+      "todo": 37,
+      "total": 37
+    }
+  ]
+}

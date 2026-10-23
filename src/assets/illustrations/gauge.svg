@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 225" aria-hidden="true" focusable="false">
+  <path d="M 100 150 A 80 80 0 0 1 260 150" style="fill: none; stroke: var(--border-strong); stroke-width: 12; stroke-linecap: round" />
+  <path d="M 100 150 A 80 80 0 0 1 144 78" style="fill: none; stroke: var(--accent); stroke-width: 12; stroke-linecap: round" />
+  <line class="ill-needle" x1="180" y1="150" x2="226" y2="104" style="stroke: var(--ink); stroke-width: 3; stroke-linecap: round; transform-origin: 180px 150px; --needle-from: -135deg" />
+  <circle cx="180" cy="150" r="7" style="fill: var(--ink)" />
+  <rect x="110" y="180" width="140" height="8" rx="4" style="fill: var(--border-strong)" />
+</svg>

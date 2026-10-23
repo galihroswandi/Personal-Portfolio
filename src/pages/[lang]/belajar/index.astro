@@ -1,0 +1,302 @@
+---
+/**
+ * Learning page: how the C++/Qt learning went, plus progress and plans per track. Percentages come
+ * from the build-time snapshot of the public learning repo (`pnpm data:learning`); the plans and
+ * phase names live in `src/config/learning.ts`.
+ */
+import type { GetStaticPaths } from 'astro';
+import Breadcrumb from '@/components/layout/Breadcrumb.astro';
+import Badge from '@/components/ui/Badge.astro';
+import Button from '@/components/ui/Button.astro';
+import SectionTag from '@/components/ui/SectionTag.astro';
+import { learningRepoUrl, learningTracks } from '@/config/learning';
+import learning from '@/data/learning.json';
+import type { Lang, UIKey } from '@/i18n/ui';
+import { langs, localePath, useTranslations } from '@/i18n/utils';
+import Base from '@/layouts/Base.astro';
+import { breadcrumbs, getLearningPage, headMeta, learningJsonLd } from '@/lib/pages';
+
+export const getStaticPaths = (() =>
+  langs.map((lang) => ({ params: { lang } }))) satisfies GetStaticPaths;
+
+const lang = Astro.params.lang as Lang;
+const t = useTranslations(lang);
+const page = getLearningPage(lang);
+const fetchedAt = new Date(learning.fetchedAt).toLocaleDateString(
+  lang === 'id' ? 'id-ID' : 'en-GB',
+  {
+    dateStyle: 'long',
+  },
+);
+
+const steps = [1, 2, 3, 4, 5, 6, 7].map((n) => ({
+  name: t(`learning.step.${n}.name` as UIKey),
+  text: t(`learning.step.${n}.text` as UIKey),
+}));
+
+const tracks = learningTracks.map((track) => {
+  const progress = learning.tracks.find((row) => row.key === track.key);
+  if (!progress) throw new Error(`No progress for track "${track.key}"; run pnpm data:learning`);
+  return { ...track, ...progress };
+});
+---
+
+<Base meta={headMeta(page, learningJsonLd(page))}>
+  <div class="container section section--last learn">
+    <Breadcrumb label={t('breadcrumb.label')} crumbs={breadcrumbs(page)} />
+
+    <header class="learn__header" data-reveal="group">
+      <SectionTag num="→" label={t('learning.label')} />
+      <h1 class="reveal-item" style="--i: 3">
+        {page.heading}
+      </h1>
+      <p class="learn__sub reveal-item" style="--i: 4">
+        {t('learning.sub', { date: fetchedAt })}
+      </p>
+    </header>
+
+    <section aria-labelledby="method-title" class="learn__block">
+      <h2 id="method-title">{t('learning.method.title')}</h2>
+      <p class="learn__text">{t('learning.method.intro')}</p>
+      <ol class="steps" aria-label={t('learning.method.stepsLabel')}>
+        {steps.map((step) => (
+          <li class="step">
+            <h3 class="step__name">{step.name}</h3>
+            <p class="step__text">{step.text}</p>
+          </li>
+        ))}
+      </ol>
+      <p class="learn__principle">{t('learning.method.principle')}</p>
+    </section>
+
+    <section aria-labelledby="tracks-title" class="learn__block">
+      <h2 id="tracks-title">{t('learning.tracks.title')}</h2>
+      <ul class="tracks">
+        {tracks.map((track) => (
+          <li class:list={['track', `track--${track.status}`]}>
+            <div class="track__head">
+              <h3 class="track__name">{track.name}</h3>
+              <Badge lamp={track.status === 'active'}>{t(`learning.status.${track.status}`)}</Badge>
+            </div>
+
+            <div class="track__progress">
+              <span class="track__percent">{track.percent}%</span>
+              <span
+                class="track__bar"
+                role="img"
+                aria-label={t('learning.progressLabel', {
+                  name: track.name,
+                  percent: track.percent,
+                })}
+              >
+                <span class="track__fill" style={`--ratio: ${track.percent / 100}`}></span>
+              </span>
+            </div>
+            <p class="track__count">
+              {t('learning.count', { done: track.done, total: track.total })}
+              {track.doing > 0 && ` · ${t('learning.doing', { count: track.doing })}`}
+            </p>
+
+            <p class="track__label">{t(`learning.focus.${track.status}`)}</p>
+            <p class="track__focus">{track.focus[lang]}</p>
+
+            <p class="track__label">{t(`learning.phases.${track.status}`)}</p>
+            <ol class="track__phases">
+              {track.phases.map((phase) => (
+                <li>{phase[lang]}</li>
+              ))}
+            </ol>
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    <footer class="learn__footer">
+      <Button href={learningRepoUrl} arrow data-event="repo_click" data-event-label="learning">
+        {t('learning.repo')}
+      </Button>
+      <Button href={localePath(lang)} variant="secondary">
+        {t('project.back')}
+      </Button>
+    </footer>
+  </div>
+</Base>
+
+<style>
+  .learn {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-7);
+    max-width: calc(var(--measure-heading) + 2 * var(--gutter));
+  }
+
+  .learn__header,
+  .learn__block {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  .learn__sub,
+  .learn__text {
+    color: var(--ink-muted);
+  }
+
+  .learn__principle {
+    padding-left: var(--space-4);
+    border-left: 2px solid var(--accent);
+    color: var(--ink);
+  }
+
+  .steps {
+    display: grid;
+    gap: var(--space-3);
+    padding: 0;
+    list-style: none;
+    counter-reset: step;
+  }
+
+  .step {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+    padding: var(--space-4) var(--space-5);
+    border: var(--hairline-width) solid var(--hairline);
+    border-radius: var(--radius-lg);
+    background: var(--surface-raised);
+    counter-increment: step;
+  }
+
+  .step__name {
+    font-family: var(--font-display);
+    font-size: 1.125rem;
+    font-weight: 500;
+  }
+
+  .step__name::before {
+    content: counter(step, decimal-leading-zero) ' ';
+    color: var(--accent-ink);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+  }
+
+  .step__text {
+    color: var(--ink-muted);
+    font-size: 0.875rem;
+    line-height: 1.55;
+  }
+
+  .tracks {
+    display: grid;
+    gap: var(--space-4);
+    padding: 0;
+    list-style: none;
+  }
+
+  .track {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    padding: var(--space-5);
+    border: var(--hairline-width) solid var(--hairline);
+    border-radius: var(--radius-lg);
+    background: var(--surface-raised);
+  }
+
+  .track--next {
+    background: var(--surface-sunken);
+  }
+
+  .track__head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+  }
+
+  .track__name {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    font-weight: 500;
+    line-height: 1.2;
+  }
+
+  .track__progress {
+    display: grid;
+    grid-template-columns: 4rem minmax(0, 1fr);
+    align-items: center;
+    gap: var(--space-3);
+  }
+
+  .track__percent {
+    color: var(--ink);
+    font-family: var(--font-mono);
+    font-size: 1.25rem;
+    font-weight: 500;
+  }
+
+  .track__bar {
+    display: block;
+    height: 12px;
+    border-radius: 0 4px 4px 0;
+    background: var(--surface-sunken);
+  }
+
+  .track--next .track__bar {
+    background: var(--surface-raised);
+  }
+
+  .track__fill {
+    display: block;
+    width: calc(var(--ratio) * 100%);
+    min-width: 2px;
+    height: 100%;
+    border-radius: 0 4px 4px 0;
+    background: var(--accent);
+  }
+
+  .track__count {
+    color: var(--ink-muted);
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+  }
+
+  .track__label {
+    margin-top: var(--space-2);
+    color: var(--ink-muted);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 500;
+  }
+
+  .track__focus {
+    color: var(--ink);
+    font-size: 0.9375rem;
+    line-height: 1.55;
+  }
+
+  .track__phases {
+    display: grid;
+    gap: var(--space-1);
+    margin: 0;
+    padding-left: var(--space-5);
+    color: var(--ink-muted);
+    font-size: 0.875rem;
+    line-height: 1.5;
+  }
+
+  .learn__footer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    padding-top: var(--space-6);
+    border-top: var(--hairline-width) solid var(--hairline);
+  }
+
+  @media (min-width: 721px) {
+    .steps {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+</style>

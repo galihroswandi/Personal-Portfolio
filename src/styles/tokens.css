@@ -1,0 +1,156 @@
+/* Design tokens. The only place where raw colors, spacing, radii and durations are defined. */
+
+:root,
+[data-theme='dark'] {
+  --surface: #0e1318;
+  --surface-raised: #151c24;
+  --surface-sunken: #090d11;
+  --ink: #e9eef3;
+  --ink-muted: #a9b4c0;
+  --ink-subtle: #8794a2;
+  --hairline: #263140;
+  --border-strong: #5d6b7b;
+  --accent: #f2b23a;
+  --accent-hover: #f7c765;
+  --on-accent: #1a1305;
+  --accent-ink: #f5bf50;
+  --accent-soft: #2b2412;
+  --focus-ring: #7cc4ff;
+  --success: #4fd1c5;
+  --success-soft: #0f2f2f;
+  --danger: #ff8c7a;
+  --danger-soft: #3a1a17;
+  --shadow-lift: 0 12px 32px rgba(0, 0, 0, 0.6);
+  --radar-wedge-opacity: 0.16;
+}
+
+[data-theme='light'] {
+  --surface: #f5f7fa;
+  --surface-raised: #ffffff;
+  --surface-sunken: #e8ecf1;
+  --ink: #11161c;
+  --ink-muted: #4a5663;
+  --ink-subtle: #5f6b78;
+  --hairline: #d5dce4;
+  --border-strong: #7a8795;
+  --accent: #b25e00;
+  --accent-hover: #8f4a00;
+  --on-accent: #ffffff;
+  --accent-ink: #9a5200;
+  --accent-soft: #fbe7c7;
+  --focus-ring: #0b5fc2;
+  --success: #0b6e6e;
+  --success-soft: #d4efee;
+  --danger: #b3261e;
+  --danger-soft: #f7dcd8;
+  --shadow-lift: 0 12px 32px rgba(17, 22, 28, 0.12);
+  --radar-wedge-opacity: 0.11;
+}
+
+/*
+ * Without JavaScript <html> has no data-theme, so the light tokens apply through the OS setting.
+ * This block repeats [data-theme='light'] on purpose (CSS cannot share a rule between a media
+ * query and an attribute selector); src/lib/theme-tokens.test.ts fails if the two differ.
+ */
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme]) {
+    --surface: #f5f7fa;
+    --surface-raised: #ffffff;
+    --surface-sunken: #e8ecf1;
+    --ink: #11161c;
+    --ink-muted: #4a5663;
+    --ink-subtle: #5f6b78;
+    --hairline: #d5dce4;
+    --border-strong: #7a8795;
+    --accent: #b25e00;
+    --accent-hover: #8f4a00;
+    --on-accent: #ffffff;
+    --accent-ink: #9a5200;
+    --accent-soft: #fbe7c7;
+    --focus-ring: #0b5fc2;
+    --success: #0b6e6e;
+    --success-soft: #d4efee;
+    --danger: #b3261e;
+    --danger-soft: #f7dcd8;
+    --shadow-lift: 0 12px 32px rgba(17, 22, 28, 0.12);
+    --radar-wedge-opacity: 0.11;
+  }
+}
+
+:root {
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+  --space-8: 64px;
+  --space-9: 96px;
+  --space-10: 128px;
+
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
+  --radius-pill: 999px;
+
+  /*
+   * --font-fraunces / --font-jakarta / --font-jetbrains are emitted by Astro's Fonts API
+   * (self-hosted files + size-adjusted fallback face). The var() fallback is the stack from
+   * the design spec, used if the generated variable is missing. See docs/decisions.md.
+   */
+  --font-display: var(--font-fraunces, 'Fraunces', 'Iowan Old Style', Georgia, serif);
+  --font-sans: var(--font-jakarta, 'Plus Jakarta Sans', system-ui, sans-serif);
+  --font-mono: var(--font-jetbrains, 'JetBrains Mono', ui-monospace, monospace);
+
+  --motion-fast: 120ms;
+  --motion-base: 200ms;
+  --motion-slow: 320ms;
+  --motion-draw: 600ms;
+  --motion-ease: cubic-bezier(0, 0, 0.2, 1);
+  --motion-stagger: 60ms;
+  --reveal-distance: 12px;
+
+  --content-max: 1120px;
+  --gutter: 24px;
+
+  /* Derived tokens: named values used by components, built only from the scale above. */
+  --section-space: var(--space-9);
+  --touch-target: 44px;
+  --hairline-width: 1px;
+  --border-width-strong: 1.5px;
+  --focus-ring-width: 2px;
+  --focus-ring-offset: 3px;
+
+  /* Component sizes from the design (off the 4px scale on purpose; named so nothing is magic). */
+  --btn-pad-y: 14px;
+  --btn-pad-x: var(--space-5);
+  --btn-sm-pad-y: 10px;
+  --btn-sm-pad-x: 18px;
+  --badge-pad-y: 6px;
+  --badge-pad-x: 14px;
+  --chip-pad-y: 7px;
+  --chip-pad-x: 14px;
+  --lamp-size: 8px;
+  --monogram-size: 36px;
+  --icon-size: 20px;
+  --tag-rule-width: 32px;
+  --bracket-size: 14px;
+  --timeline-dot: 11px;
+  --timeline-dot-border: 2px;
+  --radar-size: 420px;
+  --plate-width: 300px;
+  --plate-monogram-size: 112px;
+  --bento-row: 160px;
+  --measure-text: 620px;
+  --measure-heading: 720px;
+}
+
+/* 720px is the mobile breakpoint from the design. Media queries cannot read custom properties. */
+@media (max-width: 720px) {
+  :root {
+    --gutter: 16px;
+    --section-space: var(--space-8);
+  }
+}

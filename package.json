@@ -1,36 +1,71 @@
 {
-  "name": "personal-site",
-  "version": "2.0.2",
+  "name": "galih-roswandi-portfolio",
   "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "packageManager": "pnpm@12.10.1",
+  "engines": {
+    "node": ">=24"
+  },
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "eslint"
+    "dev": "astro dev",
+    "build": "pnpm check:content && astro build && pnpm check:seo",
+    "preview": "astro preview",
+    "astro": "astro",
+    "lint": "eslint . && prettier --check .",
+    "format": "prettier --write . && eslint . --fix",
+    "typecheck": "astro check",
+    "test": "vitest run",
+    "test:e2e": "playwright test",
+    "check": "pnpm lint && pnpm typecheck && pnpm test && pnpm build",
+    "prepare": "simple-git-hooks",
+    "check:content": "tsx scripts/check-content.ts",
+    "check:seo": "tsx scripts/check-seo.ts",
+    "validate:schema": "tsx scripts/validate-schema.ts",
+    "data:github": "tsx scripts/fetch-github.ts",
+    "data:learning": "tsx scripts/fetch-learning.ts",
+    "build:cv": "tsx scripts/build-cv.ts"
   },
   "dependencies": {
-    "@bprogress/next": "^3.2.12",
-    "@tsparticles/react": "^3.0.0",
-    "framer-motion": "^12.23.24",
-    "lucide-react": "^0.561.0",
-    "next": "^16.0.10",
-    "next-themes": "^0.4.6",
-    "react": "^19.2.1",
-    "react-dom": "^19.2.1",
-    "react-markdown": "^10.1.0",
-    "react-simple-typewriter": "^5.0.1",
-    "react-toastify": "^11.0.5",
-    "remark-gfm": "^4.0.1",
-    "tsparticles": "^3.9.1"
+    "@astrojs/markdown-satteri": "^0.4.3",
+    "@astrojs/mdx": "^8.0.3",
+    "@astrojs/react": "^7.0.1",
+    "@vercel/analytics": "^2.0.1",
+    "astro": "^7.3.8",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0"
   },
   "devDependencies": {
-    "@tailwindcss/postcss": "^4",
-    "@types/node": "^24.10.1",
-    "@types/react": "^19.2.7",
-    "@types/react-dom": "^19",
-    "eslint": "^9",
-    "eslint-config-next": "16.0.1",
-    "tailwindcss": "^4",
-    "typescript": "^5.9.3"
+    "@astrojs/check": "^0.9.10",
+    "@axe-core/playwright": "^4.13.0",
+    "@eslint/js": "^10.0.1",
+    "@playwright/test": "^1.64.0",
+    "@types/node": "^26.6.4",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "eslint": "^10.12.0",
+    "eslint-plugin-astro": "^3.2.1",
+    "globals": "^17.13.0",
+    "lint-staged": "^17.6.0",
+    "node-html-parser": "9.0.4",
+    "opentype.js": "2.0.0",
+    "prettier": "^3.9.9",
+    "prettier-plugin-astro": "^1.1.0",
+    "sharp": "0.35.5",
+    "simple-git-hooks": "^2.14.0",
+    "tsx": "^4.23.15",
+    "typescript": "~6.0.3",
+    "typescript-eslint": "^8.71.1",
+    "vitest": "^5.0.3"
+  },
+  "simple-git-hooks": {
+    "pre-commit": "pnpm exec lint-staged"
+  },
+  "lint-staged": {
+    "*.{js,mjs,ts,tsx,astro}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{css,md,mdx,json,yml,yaml}": "prettier --write"
   }
 }

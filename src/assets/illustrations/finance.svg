@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 225" aria-hidden="true" focusable="false">
+  <!-- Simplified Flowvest dashboard: sidebar, health banner, three metric cards, net worth chart, recent transactions. -->
+  <rect x="24" y="20" width="312" height="185" rx="8" style="fill: var(--surface-raised); stroke: var(--hairline); stroke-width: 1" />
+  <path d="M32 20 H72 V205 H32 A8 8 0 0 1 24 197 V28 A8 8 0 0 1 32 20 Z" style="fill: var(--surface)" />
+  <line x1="72" y1="20" x2="72" y2="205" style="stroke: var(--hairline); stroke-width: 1" />
+  <circle cx="48" cy="38" r="6" style="fill: var(--accent)" />
+  <rect x="32" y="55" width="32" height="15" rx="3" style="fill: var(--accent-soft)" />
+  <rect x="36" y="60" width="24" height="5" rx="2.5" style="fill: var(--accent)" />
+  <rect x="36" y="78" width="24" height="5" rx="2.5" style="fill: var(--border-strong)" />
+  <rect x="36" y="93" width="20" height="5" rx="2.5" style="fill: var(--border-strong)" />
+  <rect x="36" y="108" width="24" height="5" rx="2.5" style="fill: var(--border-strong)" />
+  <rect x="36" y="123" width="18" height="5" rx="2.5" style="fill: var(--border-strong)" />
+
+  <rect x="84" y="32" width="240" height="18" rx="4" style="fill: var(--success-soft)" />
+  <circle cx="94" cy="41" r="3" style="fill: var(--success)" />
+  <rect x="102" y="39" width="80" height="4" rx="2" style="fill: var(--success)" />
+
+  <rect x="84" y="58" width="74" height="40" rx="5" style="fill: var(--surface); stroke: var(--hairline); stroke-width: 1" />
+  <rect x="92" y="66" width="30" height="4" rx="2" style="fill: var(--border-strong)" />
+  <rect class="ill-bar" x="92" y="76" width="46" height="7" rx="2" style="fill: var(--success); --i: 0" />
+  <rect x="92" y="88" width="22" height="3" rx="1.5" style="fill: var(--hairline)" />
+  <rect x="167" y="58" width="74" height="40" rx="5" style="fill: var(--surface); stroke: var(--hairline); stroke-width: 1" />
+  <rect x="175" y="66" width="34" height="4" rx="2" style="fill: var(--border-strong)" />
+  <rect class="ill-bar" x="175" y="76" width="40" height="7" rx="2" style="fill: var(--danger); --i: 1" />
+  <rect x="175" y="88" width="26" height="3" rx="1.5" style="fill: var(--hairline)" />
+  <rect x="250" y="58" width="74" height="40" rx="5" style="fill: var(--ink)" />
+  <rect x="258" y="66" width="24" height="4" rx="2" style="fill: var(--border-strong)" />
+  <rect class="ill-bar" x="258" y="76" width="44" height="7" rx="2" style="fill: var(--surface-raised); --i: 2" />
+  <rect x="258" y="88" width="30" height="3" rx="1.5" style="fill: var(--border-strong)" />
+
+  <rect x="84" y="106" width="150" height="91" rx="5" style="fill: var(--surface); stroke: var(--hairline); stroke-width: 1" />
+  <rect x="92" y="114" width="40" height="4" rx="2" style="fill: var(--border-strong)" />
+  <line x1="92" y1="188" x2="226" y2="188" style="stroke: var(--hairline); stroke-width: 1" />
+  <path d="M92 170 L114 164 L136 167 L158 152 L180 155 L202 140 L226 132 V188 H92 Z" style="fill: var(--accent-soft)" />
+  <path class="ill-trace" d="M92 170 L114 164 L136 167 L158 152 L180 155 L202 140 L226 132" pathLength="1" style="fill: none; stroke: var(--accent); stroke-width: 2; stroke-linejoin: round; stroke-dasharray: 1" />
+  <circle class="ill-dot" cx="226" cy="132" r="3.5" style="fill: var(--accent); --i: 6" />
+
+  <rect x="242" y="106" width="82" height="91" rx="5" style="fill: var(--surface); stroke: var(--hairline); stroke-width: 1" />
+  <rect x="250" y="114" width="36" height="4" rx="2" style="fill: var(--border-strong)" />
+  <circle class="ill-dot" cx="255" cy="132" r="5" style="fill: var(--surface-sunken); stroke: var(--hairline); --i: 0" />
+  <rect x="264" y="130" width="28" height="4" rx="2" style="fill: var(--border-strong)" />
+  <rect x="298" y="130" width="18" height="4" rx="2" style="fill: var(--danger)" />
+  <circle class="ill-dot" cx="255" cy="149" r="5" style="fill: var(--surface-sunken); stroke: var(--hairline); --i: 1" />
+  <rect x="264" y="147" width="22" height="4" rx="2" style="fill: var(--border-strong)" />
+  <rect x="298" y="147" width="18" height="4" rx="2" style="fill: var(--success)" />
+  <circle class="ill-dot" cx="255" cy="166" r="5" style="fill: var(--surface-sunken); stroke: var(--hairline); --i: 2" />
+  <rect x="264" y="164" width="26" height="4" rx="2" style="fill: var(--border-strong)" />
+  <rect x="298" y="164" width="18" height="4" rx="2" style="fill: var(--danger)" />
+  <circle class="ill-dot" cx="255" cy="183" r="5" style="fill: var(--surface-sunken); stroke: var(--hairline); --i: 3" />
+  <rect x="264" y="181" width="20" height="4" rx="2" style="fill: var(--border-strong)" />
+  <rect x="298" y="181" width="18" height="4" rx="2" style="fill: var(--danger)" />
+</svg>

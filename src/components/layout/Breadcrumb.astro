@@ -1,0 +1,69 @@
+---
+/** Visible breadcrumb trail; the same crumbs feed the BreadcrumbList JSON-LD. */
+import type { Crumb } from '@/lib/jsonld';
+
+interface Props {
+  label: string;
+  crumbs: Crumb[];
+}
+
+const { label, crumbs } = Astro.props;
+---
+
+<nav class="breadcrumb" aria-label={label}>
+  <ol>
+    {crumbs.map((crumb, index) => (
+      <li>
+        {index === crumbs.length - 1 ? (
+          <span aria-current="page">{crumb.name}</span>
+        ) : (
+          <a href={crumb.path}>{crumb.name}</a>
+        )}
+      </li>
+    ))}
+  </ol>
+</nav>
+
+<style>
+  .breadcrumb ol {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0 var(--space-2);
+    padding: 0;
+    color: var(--ink-muted);
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    list-style: none;
+  }
+
+  .breadcrumb li + li::before {
+    margin-right: var(--space-2);
+    color: var(--ink-subtle);
+    content: '/';
+  }
+
+  @media (max-width: 720px) {
+    .breadcrumb li:last-child {
+      flex-basis: 100%;
+    }
+
+    .breadcrumb li + li:last-child::before {
+      content: none;
+    }
+  }
+
+  .breadcrumb a {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--touch-target);
+    color: var(--accent-ink);
+    font-weight: 500;
+    text-decoration: none;
+  }
+
+  .breadcrumb a:hover {
+    text-decoration: underline;
+    text-underline-offset: var(--space-1);
+  }
+</style>

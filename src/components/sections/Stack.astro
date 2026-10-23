@@ -1,0 +1,71 @@
+---
+/** 04 · Tech stack in three tiers (daily, have used, learning). Rendered inside Experience. */
+import SectionHeader from '@/components/sections/SectionHeader.astro';
+import Chip from '@/components/ui/Chip.astro';
+import { stackTiers } from '@/config/stack';
+import type { Lang } from '@/i18n/ui';
+import { useTranslations } from '@/i18n/utils';
+import { CHIP_MAX_STEPS, revealStyle } from '@/lib/reveal';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+---
+
+<SectionHeader
+  titleId="stack-title"
+  num={t('section.stack.num')}
+  label={t('section.stack.label')}
+  title={t('section.stack.title')}
+/>
+<div class="tiers">
+  {stackTiers.map((tier) => (
+    <div class="tier">
+      <h3 class="tier__label" id={`stack-${tier.variant}`}>
+        {t(tier.labelKey)}
+      </h3>
+      <ul class="tier__chips" aria-labelledby={`stack-${tier.variant}`} data-reveal="group">
+        {tier.items.map((item, index) => (
+          <li class="reveal-pop" style={revealStyle(index, CHIP_MAX_STEPS)}>
+            <Chip variant={tier.variant}>{item}</Chip>
+          </li>
+        ))}
+      </ul>
+    </div>
+  ))}
+</div>
+
+<style>
+  .tiers {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-5);
+  }
+
+  .tier {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  .tier__label {
+    color: var(--ink-muted);
+    font-family: var(--font-sans);
+    font-size: 0.75rem;
+    font-weight: 600;
+    line-height: 1.2;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .tier__chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    padding: 0;
+    list-style: none;
+  }
+</style>

@@ -1,0 +1,48 @@
+---
+# TODO(review): English translation, owner to review, then set reviewed: true.
+slug: flowvest
+title: 'Flowvest: a personal finance app'
+role: Fullstack developer
+company: Personal project
+stack: [Next.js, React, TypeScript, Supabase, PostgreSQL, Tailwind CSS]
+problem: Personal finances usually end up spread across notes, spreadsheets, and banking apps that do not talk to each other.
+myRole: Designing and building the whole app on my own, from the database schema and its security to the web interface.
+result: Eleven feature areas running on real data in about two months (130 commits, 57 pull requests), with Row Level Security on every user data table.
+illustration: finance
+featured: true
+order: 1
+reviewed: false
+promo:
+  name: Flowvest
+  headline: Manage your money in one place, for free.
+  text: Record every income and expense, stay on budget, and see how close you are to your savings goals. Sign up with email or a Google account and start right away. The app is in Indonesian.
+  points:
+    - Record income, expenses, and transfers across all your bank accounts and e-wallets.
+    - Monthly budgets per category, marked safe, warning, or over.
+    - Savings and emergency fund goals, with an estimate of when you will reach them.
+    - Privacy mode to blur numbers when you open the app in public.
+  cta: Sign up free
+  url: https://flowvest.vercel.app/register
+seoTitle: 'Flowvest: a personal finance app'
+seoDescription: Case study of Flowvest, a multi-user personal finance app built with Next.js and Supabase, from transactions and budgets to net worth.
+---
+
+Flowvest is an Indonesian-language personal finance app for many users. One place to record income, expenses, and transfers, keep an eye on budgets, and then see the bigger picture: every account balance, net worth, savings goals, and a long-term life plan.
+
+## What I built
+
+The app has eleven areas: a home view with balances and financial health, transactions, cash-flow statistics, accounts and assets, Indonesian stock tracking with a watchlist, net worth, monthly budgets per category, savings goals, debts and receivables with payment proofs, categories, and a life roadmap.
+
+Users sign in with email or a Google account. Sensitive numbers can be blurred with privacy mode, there is a dark mode, and the layout moves from a sidebar on desktop to bottom navigation on phones.
+
+## Technical decisions
+
+Data is fetched in Server Components and handed to client components that only deal with interaction. Every change goes through a Server Action that refreshes the affected pages when it is done.
+
+Security lives in the database, not only in application code. Every user data table in PostgreSQL is protected by Row Level Security, so a person can only read and change their own rows even if a query is written wrong. Payment proofs are stored in a private bucket.
+
+Stock market data comes from a public source with no service guarantee, so results are cached for an hour to keep pages fast and stay under rate limits.
+
+## In progress
+
+A Telegram bot for recording transactions in plain chat, such as "kopi 18rb" (coffee, 18k rupiah). Messages are parsed by a local parser first; an AI model is only an extra layer, with validated output and protection against instructions slipped into a message. This feature is not released yet.

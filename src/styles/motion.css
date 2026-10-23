@@ -1,0 +1,502 @@
+/*
+ * Motion. All keyframes and motion utility classes live here; components only add classes and
+ * an index (`--i`). Durations, easings and distances come from the motion tokens in tokens.css.
+ *
+ * Global switches (every effect respects them):
+ * - Movement only exists inside `@media (prefers-reduced-motion: no-preference)`. Under
+ *   `reduce` nothing below applies, so the page shows its final, static state.
+ * - `<html data-motion="paused">` (the pause control) freezes every `.motion-loop` element.
+ * - `[data-offscreen]` (set by a script on a looping region) freezes loops inside it.
+ * - Content waiting to be revealed is only hidden while `<html>` has the `js` class.
+ */
+
+/*
+ * Motion constants: values used only by the effects below, built from the tokens where they
+ * can be. Radar timing is not here: it comes from src/lib/radar.ts as inline custom properties.
+ */
+:root {
+  --word-stagger: 30ms;
+  --word-rise: 0.4em;
+  --chip-stagger: 25ms;
+  --chip-scale-from: 0.96;
+  --ring-scale-to: 2.4;
+  --ring-opacity-from: 0.6;
+  --nudge-distance: var(--space-1);
+  --lift-button: 1px;
+  --lift-card: 2px;
+  --progress-height: 2px;
+  --page-fade: 150ms;
+  --pulse-period: 2.4s;
+  --pulse-opacity: 0.35;
+  --blink-period: 1s;
+  /* Text never goes below this opacity in a loop, so its contrast stays readable. */
+  --blink-opacity: 0.6;
+  --radar-blip-opacity: 0.35;
+  --radar-ping-opacity: 0.6;
+  --radar-ping-scale: 3;
+  --tilt-perspective: 1200px;
+}
+
+/* Global switches ------------------------------------------------------------------------- */
+
+:root[data-motion='paused'] .motion-loop,
+[data-offscreen] .motion-loop {
+  animation-play-state: paused;
+}
+
+/*
+ * Theme change: toggleTheme() (src/lib/theme.ts) puts `theme-transition` on <html> for
+ * THEME_TRANSITION_MS after a button press, never on load. Only with motion 'full' (not reduced,
+ * not paused). !important because component rules are more specific and set their own transitions.
+ */
+:root[data-motion='full'].theme-transition,
+:root[data-motion='full'].theme-transition *,
+:root[data-motion='full'].theme-transition *::before,
+:root[data-motion='full'].theme-transition *::after {
+  transition-property: background-color, color, border-color, fill, stroke !important;
+  transition-duration: var(--motion-base) !important;
+  transition-timing-function: var(--motion-ease) !important;
+}
+
+/* State-only utilities (they work without motion; the movement is added further down) ------ */
+
+/* An underline drawn by ::after. Components set the custom properties and the shown state. */
+.motion-underline {
+  position: relative;
+}
+
+.motion-underline::after {
+  content: '';
+  position: absolute;
+  right: var(--underline-inset, 0);
+  bottom: var(--underline-bottom, 0);
+  left: var(--underline-inset, 0);
+  height: var(--underline-thickness, var(--hairline-width));
+  background: var(--underline-color, currentColor);
+  transform: scaleX(0);
+  transform-origin: left center;
+  pointer-events: none;
+}
+
+/* A hover/focus shadow on a ::after, so only its opacity changes. */
+.motion-raise {
+  position: relative;
+}
+
+.motion-raise::after {
+  content: '';
+  position: absolute;
+  inset: calc(-1 * var(--hairline-width));
+  border-radius: inherit;
+  box-shadow: var(--shadow-lift);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.motion-raise:focus-within::after {
+  opacity: 1;
+}
+
+@media (hover: hover) {
+  .motion-raise:hover::after {
+    opacity: 1;
+  }
+}
+
+/* Radar pings are only visible while their animation runs. */
+.radar-ping {
+  opacity: 0;
+}
+
+/* Scroll progress: a 2px accent line on the sticky header, only where CSS can drive it. */
+.motion-progress::after {
+  content: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  /* Scroll reveal ------------------------------------------------------------------------- */
+
+  /*
+   * `data-reveal` on an element: it fades up once when it enters the viewport.
+   * `data-reveal="group"`: the element stays put and its `.reveal-*` children animate.
+   * Siblings set `--i` (see src/lib/reveal.ts) to stagger by `--motion-stagger`.
+   */
+  [data-reveal]:not([data-reveal='group']),
+  [data-reveal] .reveal-item {
+    transition:
+      opacity var(--motion-slow) var(--motion-ease),
+      transform var(--motion-slow) var(--motion-ease);
+    transition-delay: calc(var(--i, 0) * var(--motion-stagger));
+  }
+
+  .js [data-reveal]:not([data-reveal='group'], [data-revealed]),
+  .js [data-reveal]:not([data-revealed]) .reveal-item {
+    opacity: 0;
+    transform: translateY(var(--reveal-distance));
+  }
+
+  /* A short rule that draws left to right (section tag). */
+  [data-reveal] .reveal-draw-x {
+    transform-origin: left center;
+    transition: transform var(--motion-draw) var(--motion-ease);
+  }
+
+  .js [data-reveal]:not([data-revealed]) .reveal-draw-x {
+    transform: scaleX(0);
+  }
+
+  /* A vertical line drawn by the element's ::before, top to bottom (timeline). */
+  .reveal-rail::before {
+    transform-origin: center top;
+    transition: transform var(--motion-draw) var(--motion-ease);
+  }
+
+  .js .reveal-rail[data-reveal]:not([data-revealed])::before {
+    transform: scaleY(0);
+  }
+
+  /* A one-time soft ring around a dot (the current timeline item). */
+  .reveal-ring::after {
+    content: '';
+    position: absolute;
+    inset: calc(-1 * var(--timeline-dot-border));
+    border: var(--timeline-dot-border) solid var(--accent);
+    border-radius: 50%;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  [data-revealed] .reveal-ring::after {
+    animation: ring-once var(--motion-draw) var(--motion-ease) both;
+    animation-delay: calc(var(--i, 0) * var(--motion-stagger) + var(--motion-slow));
+  }
+
+  /* Chips: a quick fade and scale cascade within one list. */
+  [data-reveal] .reveal-pop {
+    transition:
+      opacity var(--motion-base) var(--motion-ease),
+      transform var(--motion-base) var(--motion-ease);
+    transition-delay: calc(var(--i, 0) * var(--chip-stagger));
+  }
+
+  .js [data-reveal]:not([data-revealed]) .reveal-pop {
+    opacity: 0;
+    transform: scale(var(--chip-scale-from));
+  }
+
+  /* Panel corner brackets snap in from their corner after the panel has risen. */
+  .reveal-brackets::before,
+  .reveal-brackets::after {
+    transition: transform var(--motion-base) var(--motion-ease) var(--motion-slow);
+  }
+
+  .reveal-brackets::before {
+    transform-origin: left top;
+  }
+
+  .reveal-brackets::after {
+    transform-origin: right bottom;
+  }
+
+  .js .reveal-brackets[data-reveal]:not([data-revealed])::before,
+  .js .reveal-brackets[data-reveal]:not([data-revealed])::after {
+    transform: scale(0);
+  }
+
+  /* GitHub charts: bars grow from their baseline, one after another. */
+  [data-reveal] .chart-bar,
+  [data-reveal] .chart-col {
+    transition: transform var(--motion-slow) var(--motion-ease);
+    transition-delay: calc(var(--motion-base) + var(--i, 0) * var(--motion-stagger));
+  }
+
+  [data-reveal] .chart-bar {
+    transform-origin: left center;
+  }
+
+  [data-reveal] .chart-col {
+    transform-origin: center bottom;
+  }
+
+  .js [data-reveal]:not([data-revealed]) .chart-bar {
+    transform: scaleX(0);
+  }
+
+  .js [data-reveal]:not([data-revealed]) .chart-col {
+    transform: scaleY(0);
+  }
+
+  /* Project illustrations: play once when their card is revealed ----------------------------- */
+
+  /* Bars grow from the baseline. */
+  [data-reveal] .ill-bar {
+    transform-box: fill-box;
+    transform-origin: center bottom;
+    transition: transform var(--motion-slow) var(--motion-ease);
+    transition-delay: calc(var(--motion-slow) + var(--i, 0) * var(--motion-stagger));
+  }
+
+  .js [data-reveal]:not([data-revealed]) .ill-bar {
+    transform: scaleY(0);
+  }
+
+  /* The needle sweeps from the start of the arc to its resting angle (pivot set in the SVG). */
+  [data-reveal] .ill-needle {
+    transform-box: view-box;
+    transition: transform var(--motion-draw) var(--motion-ease) var(--motion-slow);
+  }
+
+  .js [data-reveal]:not([data-revealed]) .ill-needle {
+    transform: rotate(var(--needle-from));
+  }
+
+  /* Dots pop in sequence, then the path between the two lit dots draws. */
+  [data-reveal] .ill-dot {
+    transform-box: fill-box;
+    transform-origin: center;
+    transition: transform var(--motion-base) var(--motion-ease);
+    transition-delay: calc(var(--motion-slow) + var(--i, 0) * var(--chip-stagger));
+  }
+
+  .js [data-reveal]:not([data-revealed]) .ill-dot {
+    transform: scale(0);
+  }
+
+  [data-reveal] .ill-trace {
+    transition: stroke-dashoffset var(--motion-draw) var(--motion-ease);
+    transition-delay: calc(var(--motion-slow) + var(--motion-draw));
+  }
+
+  .js [data-reveal]:not([data-revealed]) .ill-trace {
+    stroke-dashoffset: 1;
+  }
+
+  /* Micro-interactions --------------------------------------------------------------------- */
+
+  /* Arrow glyphs nudge right when their link or button is hovered or focused. */
+  .motion-nudge {
+    display: inline-block;
+    transition: transform var(--motion-fast) var(--motion-ease);
+  }
+
+  :is(a, button):focus-visible .motion-nudge {
+    transform: translateX(var(--nudge-distance));
+  }
+
+  .motion-lift {
+    transition:
+      transform var(--motion-fast) var(--motion-ease),
+      background-color var(--motion-fast) var(--motion-ease);
+  }
+
+  .motion-lift:focus-visible {
+    transform: translateY(calc(-1 * var(--lift-button)));
+  }
+
+  .motion-underline::after {
+    transition: transform var(--motion-base) var(--motion-ease);
+  }
+
+  .motion-raise {
+    transition: transform var(--motion-base) var(--motion-ease);
+  }
+
+  .motion-raise::after {
+    transition: opacity var(--motion-base) var(--motion-ease);
+  }
+
+  .motion-raise:focus-within {
+    transform: translateY(calc(-1 * var(--lift-card)));
+  }
+
+  @media (hover: hover) {
+    :is(a, button):hover .motion-nudge {
+      transform: translateX(var(--nudge-distance));
+    }
+
+    .motion-lift:hover {
+      transform: translateY(calc(-1 * var(--lift-button)));
+    }
+
+    .motion-raise:hover {
+      transform: translateY(calc(-1 * var(--lift-card)));
+    }
+  }
+
+  @supports (animation-timeline: scroll()) {
+    .motion-progress::after {
+      content: '';
+      position: absolute;
+      right: 0;
+      bottom: calc(-1 * var(--hairline-width));
+      left: 0;
+      height: var(--progress-height);
+      background: var(--accent);
+      transform-origin: left center;
+      animation: progress linear both;
+      pointer-events: none;
+    }
+
+    /* Separate rule on purpose: the CSS minifier folds a timeline written next to the shorthand
+       into `animation: … scroll(root)`, which browsers reject. */
+    :root .motion-progress::after {
+      animation-timeline: scroll(root block);
+    }
+  }
+
+  /* Status strip: the lamp pulses, the clock colon blinks once a second once the clock runs. */
+  .motion-pulse {
+    animation: pulse var(--pulse-period) ease-in-out infinite;
+  }
+
+  [data-clock-live] .motion-blink {
+    animation: blink var(--blink-period) steps(1, end) infinite;
+  }
+
+  /* Page navigation (language switch, case studies): a short root cross-fade; the sticky
+     header has its own view-transition-name (Base.astro) so it stays put. */
+  @view-transition {
+    navigation: auto;
+  }
+
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation-duration: var(--page-fade);
+  }
+
+  /* Radar (SVG fallback) ---------------------------------------------------------------------- */
+
+  /* Timing comes from src/lib/radar.ts as inline custom properties on the <svg>. */
+  .radar-sweep {
+    transform-box: view-box;
+    transform-origin: 50% 50%;
+    animation: radar-spin var(--radar-period) linear infinite;
+  }
+
+  .radar-blip {
+    animation: radar-blink var(--radar-blink) ease-in-out infinite;
+  }
+
+  /* Same period as the sweep; the delay is when the sweep line reaches the blip. */
+  .radar-ping {
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: radar-ping var(--radar-period) var(--motion-ease) infinite;
+    animation-delay: var(--ping-delay, 0ms);
+  }
+
+  .radar-ring {
+    animation: fade-in var(--motion-slow) var(--motion-ease) both;
+    animation-delay: calc(var(--i, 0) * var(--radar-ring-stagger));
+  }
+
+  /* Pointer tilt: --tilt-x / --tilt-y are written by src/scripts/hero-radar.ts. Only with a
+     fine pointer and full motion, so it is off on touch, under reduced motion and when paused. */
+  @media (hover: hover) and (pointer: fine) {
+    :root[data-motion='full'] .motion-tilt {
+      transform: perspective(var(--tilt-perspective)) rotateX(var(--tilt-x, 0deg))
+        rotateY(var(--tilt-y, 0deg));
+    }
+  }
+
+  /* Hero entrance (first load, CSS only) ----------------------------------------------------- */
+
+  /*
+   * Order: badge (0), h1 words (1), sub (2), actions (3), meta (4); `--i` is set inline.
+   * Last item ends at 4 × 60 + 320 = 560ms. The h1 words start at one step and stagger by
+   * 30ms, capped at 7 steps: 60 + 210 + 200 = 470ms.
+   */
+  .motion-enter {
+    animation: rise var(--motion-slow) var(--motion-ease) both;
+    animation-delay: calc(var(--i, 0) * var(--motion-stagger));
+  }
+
+  .motion-word {
+    display: inline-block;
+    animation: word-rise var(--motion-base) var(--motion-ease) both;
+    animation-delay: calc(var(--motion-stagger) + var(--i, 0) * var(--word-stagger));
+  }
+}
+
+/* Keyframes ------------------------------------------------------------------------------- */
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(var(--reveal-distance));
+  }
+}
+
+@keyframes word-rise {
+  from {
+    opacity: 0;
+    transform: translateY(var(--word-rise));
+  }
+}
+
+@keyframes progress {
+  from {
+    transform: scaleX(0);
+  }
+
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@keyframes pulse {
+  50% {
+    opacity: var(--pulse-opacity);
+  }
+}
+
+@keyframes blink {
+  50% {
+    opacity: var(--blink-opacity);
+  }
+}
+
+@keyframes radar-spin {
+  to {
+    transform: rotate(1turn);
+  }
+}
+
+@keyframes radar-blink {
+  50% {
+    opacity: var(--radar-blip-opacity);
+  }
+}
+
+/* 15% = RADAR_PING_MS / RADAR_PERIOD_MS (1.2s of 8s, src/lib/radar.ts; a unit test checks). */
+@keyframes radar-ping {
+  0% {
+    opacity: var(--radar-ping-opacity);
+    transform: scale(1);
+  }
+
+  15%,
+  100% {
+    opacity: 0;
+    transform: scale(var(--radar-ping-scale));
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes ring-once {
+  from {
+    opacity: var(--ring-opacity-from);
+    transform: scale(1);
+  }
+
+  to {
+    opacity: 0;
+    transform: scale(var(--ring-scale-to));
+  }
+}

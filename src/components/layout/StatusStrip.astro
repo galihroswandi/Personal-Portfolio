@@ -1,0 +1,267 @@
+---
+/**
+ * Console status line above the navbar: availability, WIB clock, position, start date, and the
+ * "pause motion" control (WCAG 2.2.2: the lamp and the radar loop for longer than 5 seconds).
+ */
+import LanguageSwitch from '@/components/layout/LanguageSwitch.astro';
+import ThemeToggle from '@/components/ui/ThemeToggle.astro';
+import { site } from '@/config/site';
+import type { Lang } from '@/i18n/ui';
+import { useTranslations } from '@/i18n/utils';
+import { formatCoordinates } from '@/lib/geo';
+import { CLOCK_FALLBACK } from '@/lib/time';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const { lat, lng } = site.location;
+const [hours, minutes] = CLOCK_FALLBACK.split(':');
+---
+
+<div class="strip">
+  <div class="container strip__inner">
+    <ul class="strip__items" aria-label={t('a11y.statusStrip')}>
+      <li class="strip__item">
+        <span class="strip__lamp motion-pulse motion-loop" aria-hidden="true"></span>
+        <span class="strip__label">{t('status.status')}</span>
+        <span class="strip__value">{t('status.available')}</span>
+      </li>
+      <li class="strip__item">
+        <span class="strip__label">{t('status.wib')}</span>
+        <span class="strip__value strip__clock" data-clock data-timezone={site.location.timezone}>
+          <span data-clock-hours>{hours}</span>
+          <span class="motion-blink motion-loop">:</span>
+          <span data-clock-minutes>{minutes}</span>
+        </span>
+      </li>
+      <li class="strip__item strip__item--wide">
+        <span class="strip__label">{t('status.pos')}</span>
+        <span class="strip__value">{formatCoordinates(lat, lng)}</span>
+      </li>
+      <li class="strip__item strip__item--wide">
+        <span class="strip__label">{t('status.from')}</span>
+        <span class="strip__value">{site.availableFrom}</span>
+      </li>
+    </ul>
+    <div class="strip__controls">
+      <button class="strip__pause" type="button" aria-pressed="false" data-motion-toggle>
+        <span class="strip__pause-box" aria-hidden="true"></span>
+        <span class="strip__pause-label">{t('status.pauseMotion')}</span>
+      </button>
+      <ThemeToggle lang={lang} class="strip__theme" />
+      <LanguageSwitch lang={lang} class="strip__lang" />
+    </div>
+  </div>
+</div>
+
+<script>
+  import {
+    applyMotionState,
+    getMotionState,
+    onReducedMotionChange,
+    setMotionPaused,
+  } from '@/lib/motion';
+  import { formatClock, msUntilNextMinute } from '@/lib/time';
+
+  // Pause control. CSS hides it without JavaScript (it could not do anything; shown via the
+  // `js` class before first paint, so the strip does not grow later) and under reduced motion.
+  const toggles = [...document.querySelectorAll<HTMLButtonElement>('[data-motion-toggle]')];
+  const sync = (state = getMotionState()) => {
+    for (const toggle of toggles) toggle.setAttribute('aria-pressed', String(state !== 'full'));
+  };
+  for (const toggle of toggles) {
+    toggle.addEventListener('click', () => {
+      sync(setMotionPaused(toggle.getAttribute('aria-pressed') !== 'true'));
+    });
+  }
+  sync(applyMotionState());
+  onReducedMotionChange(() => sync(applyMotionState()));
+
+  // Strip height for the phone header, which scrolls the strip away (see Base.astro).
+  const strip = document.querySelector<HTMLElement>('.strip');
+  if (strip) {
+    new ResizeObserver(([entry]) => {
+      if (!entry) return;
+      document.documentElement.style.setProperty(
+        '--strip-height',
+        `${strip.getBoundingClientRect().height}px`,
+      );
+    }).observe(strip);
+  }
+
+  // WIB clock, ticking on the full minute. Only the digits change; the width is fixed.
+  const clock = document.querySelector<HTMLElement>('[data-clock]');
+  const hours = clock?.querySelector('[data-clock-hours]');
+  const minutes = clock?.querySelector('[data-clock-minutes]');
+  const timeZone = clock?.dataset.timezone;
+  if (clock && hours && minutes && timeZone) {
+    const tick = () => {
+      const now = new Date();
+      const [hh = '--', mm = '--'] = formatClock(now, timeZone).split(':');
+      hours.textContent = hh;
+      minutes.textContent = mm;
+      clock.dataset.clockLive = 'true';
+      window.setTimeout(tick, msUntilNextMinute(now));
+    };
+    tick();
+  }
+</script>
+
+<style>
+  .strip {
+    border-bottom: var(--hairline-width) solid var(--hairline);
+    background: var(--surface-sunken);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 500;
+    line-height: 1.4;
+    letter-spacing: 0.04em;
+  }
+
+  .strip__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4);
+  }
+
+  .strip__items {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-1) var(--space-5);
+    padding: var(--space-2) 0;
+    list-style: none;
+    padding-inline-start: 0;
+  }
+
+  .strip__item {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    white-space: nowrap;
+  }
+
+  .strip__item--wide {
+    display: none;
+  }
+
+  .strip__label {
+    color: var(--ink-subtle);
+  }
+
+  .strip__value {
+    color: var(--ink);
+  }
+
+  /* Flex drops the whitespace between the digit and colon spans. */
+  .strip__clock {
+    display: inline-flex;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .strip__controls {
+    display: flex;
+    flex: none;
+    align-items: center;
+    gap: var(--space-4);
+  }
+
+  /* Small visible label; the ::before extends the hit area to the 44px touch target. */
+  .strip__pause {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: var(--ink-muted);
+    font: inherit;
+    letter-spacing: inherit;
+    white-space: nowrap;
+    cursor: pointer;
+  }
+
+  .strip__pause::before {
+    content: '';
+    position: absolute;
+    inset: 50% 0 auto;
+    min-height: var(--touch-target);
+    transform: translateY(-50%);
+  }
+
+  :global(html:not(.js)) .strip__pause {
+    display: none;
+  }
+
+  .strip__pause:hover,
+  .strip__pause[aria-pressed='true'] {
+    color: var(--ink);
+  }
+
+  /* Outline when off, filled when on: the state does not rely on color alone. */
+  .strip__pause-box {
+    width: var(--lamp-size);
+    height: var(--lamp-size);
+    border: var(--hairline-width) solid currentColor;
+  }
+
+  .strip__pause[aria-pressed='true'] .strip__pause-box {
+    border-color: var(--accent);
+    background: var(--accent);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .strip__pause {
+      display: none;
+    }
+  }
+
+  /*
+   * On phones the strip has no room for the pause label next to the theme toggle and ID | EN
+   * (decision 036): the label stays for assistive tech, the square keeps a 44px hit area.
+   */
+  @media (max-width: 720px) {
+    .strip__controls {
+      gap: var(--space-1);
+    }
+
+    .strip__pause {
+      justify-content: center;
+      min-width: var(--touch-target);
+    }
+
+    .strip__pause-label {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip-path: inset(50%);
+      white-space: nowrap;
+    }
+  }
+
+  .strip__lamp {
+    width: var(--lamp-size);
+    height: var(--lamp-size);
+    border-radius: 50%;
+    background: var(--success);
+  }
+
+  @media (min-width: 721px) {
+    .strip__item--wide {
+      display: inline-flex;
+    }
+  }
+
+  /* From desktop up the language switch lives in the navbar. */
+  @media (min-width: 1024px) {
+    .strip__inner :global(.strip__lang),
+    .strip__inner :global(.strip__theme) {
+      display: none;
+    }
+  }
+</style>

@@ -1,0 +1,142 @@
+---
+/** Page shell: <html lang>, head metadata, fonts, theme, skip link, header, main and footer. */
+import { Font } from 'astro:assets';
+import Footer from '@/components/layout/Footer.astro';
+import Navbar from '@/components/layout/Navbar.astro';
+import StatusStrip from '@/components/layout/StatusStrip.astro';
+import SEO from '@/components/seo/SEO.astro';
+import ThemeScript from '@/components/seo/ThemeScript.astro';
+import { analyticsEnabled } from '@/config/env';
+import { useTranslations } from '@/i18n/utils';
+import { MOTION_PAUSED_VALUE, MOTION_STORAGE_KEY } from '@/lib/motion';
+import type { HeadMeta } from '@/lib/seo';
+import '@/styles/tokens.css';
+import '@/styles/global.css';
+import '@/styles/motion.css';
+
+interface Props {
+  meta: HeadMeta;
+}
+
+const { meta } = Astro.props;
+const { lang } = meta;
+const t = useTranslations(lang);
+---
+
+<!doctype html>
+<html lang={lang} data-analytics={analyticsEnabled ? 'on' : undefined}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <ThemeScript />
+    <SEO meta={meta} />
+    <meta name="color-scheme" content="dark light" />
+    <script
+      is:inline
+      define:vars={{ storageKey: MOTION_STORAGE_KEY, pausedValue: MOTION_PAUSED_VALUE }}
+    >
+      // Inline on purpose: runs before first paint. `js` lets CSS hide content that is about to
+      // be revealed (without it everything stays visible). The motion state mirrors
+      // resolveMotionState() in src/lib/motion.ts: the OS setting wins over the pause control.
+      const root = document.documentElement;
+      root.classList.add('js');
+      let paused = false;
+      try {
+        paused = localStorage.getItem(storageKey) === pausedValue;
+      } catch {
+        // Storage can be blocked; motion then follows the OS setting.
+      }
+      const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+      root.dataset.motion = reduced ? 'reduced' : paused ? 'paused' : 'full';
+    </script>
+    <Font
+      cssVariable="--font-fraunces"
+      preload={[
+        { weight: 400, style: 'normal' },
+        { weight: 400, style: 'italic' },
+      ]}
+    />
+    <Font cssVariable="--font-jakarta" preload={[{ weight: 400, style: 'normal' }]} />
+    <Font cssVariable="--font-jetbrains" />
+    <slot name="head" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">
+      {t('a11y.skip')}
+    </a>
+    <!-- Announces the theme after the toggle is pressed (ThemeToggle script). -->
+    <div class="visually-hidden" role="status" data-theme-status></div>
+    <header class="site-header motion-progress">
+      <StatusStrip lang={lang} />
+      <Navbar lang={lang} />
+    </header>
+    <!-- Dims the page behind the open mobile menu; shown and hidden by the Navbar script. -->
+    <div class="nav-backdrop" data-nav-backdrop hidden></div>
+    <main id="main" tabindex="-1">
+      <slot />
+    </main>
+    <Footer lang={lang} />
+    <script>
+      import '@/scripts/reveal';
+    </script>
+    <!-- Separate tag: it lazy-loads a chunk, which would stop the reveal script being inlined. -->
+    <script>
+      import '@/scripts/analytics';
+    </script>
+  </body>
+</html>
+
+<style>
+  /* The view-transition name keeps the header in place while the page cross-fades. */
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    border-bottom: var(--hairline-width) solid var(--hairline);
+    background: var(--surface);
+    view-transition-name: site-header;
+  }
+
+  /* Phones: the strip scrolls away and only the navbar stays (--strip-height is measured by the
+     StatusStrip script; without JavaScript the whole header stays, as before). */
+  @media (max-width: 720px) {
+    .site-header {
+      top: calc(-1 * var(--strip-height, 0px));
+    }
+  }
+
+  /* Below the header (z-index 10), above the page. */
+  .nav-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 9;
+    background: var(--surface-sunken);
+    opacity: 0.7;
+  }
+
+  .nav-backdrop[hidden] {
+    display: none;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .nav-backdrop {
+      transition:
+        opacity var(--motion-base) var(--motion-ease),
+        display var(--motion-base) allow-discrete;
+    }
+
+    .nav-backdrop[hidden] {
+      opacity: 0;
+    }
+
+    @starting-style {
+      .nav-backdrop {
+        opacity: 0;
+      }
+    }
+  }
+
+  main:focus {
+    outline: none;
+  }
+</style>

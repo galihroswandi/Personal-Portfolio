@@ -1,0 +1,239 @@
+---
+/**
+ * Opening block: badge, the page's only h1, sub-line, actions, meta row, and a frame with three
+ * stacked windows standing for the work (command center radar, HMI panel, Flowvest dashboard).
+ */
+import Finance from '@/assets/illustrations/finance.svg';
+import Hmi from '@/assets/illustrations/hmi.svg';
+import RadarFallback from '@/components/islands/RadarFallback.astro';
+import Badge from '@/components/ui/Badge.astro';
+import Button from '@/components/ui/Button.astro';
+import Panel from '@/components/ui/Panel.astro';
+import { site } from '@/config/site';
+import type { Lang } from '@/i18n/ui';
+import { splitEmphasis, useTranslations } from '@/i18n/utils';
+import { cvHref, hasCv } from '@/lib/cv';
+import { WORD_MAX_STEPS, revealStyle, splitTitleWords } from '@/lib/reveal';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+// Words are split at build time so each can rise on load (see splitTitleWords). Spaces stay
+// plain text, so the heading still reads as one sentence. The emphasised phrase becomes one
+// <em> per word, which keeps its accent color.
+let wordIndex = 0;
+const title = splitTitleWords(splitEmphasis(t('hero.title'))).map((token) =>
+  token.space ? token : { ...token, style: revealStyle(wordIndex++, WORD_MAX_STEPS) },
+);
+---
+
+<section class="container hero" aria-labelledby="hero-title" data-tilt-area>
+  <div class="hero__text">
+    <Badge lamp class="motion-enter">
+      {t('hero.badge')}
+    </Badge>
+    <h1 id="hero-title" class="hero__title">
+      {title.map((token) =>
+        token.space ? (
+          token.text
+        ) : (
+          <span class="motion-word" style={token.style}>
+            {token.pieces.map((piece) =>
+              piece.emphasis ? <em set:text={piece.text} /> : <Fragment set:text={piece.text} />,
+            )}
+          </span>
+        ),
+      )}
+    </h1>
+    <p class="hero__sub motion-enter" style="--i: 2">
+      {t('hero.sub')}
+    </p>
+    <div class="hero__actions motion-enter" style="--i: 3">
+      <Button href="#proyek" arrow>
+        {t('hero.ctaProjects')}
+      </Button>
+      <Button href="#kontak" variant="secondary">
+        {t('hero.ctaCollab')}
+      </Button>
+      {hasCv(lang) && (
+        <Button
+          href={cvHref(lang)}
+          variant="ghost"
+          download
+          data-cv-open
+          data-event="cv_preview"
+          data-event-label="hero"
+        >
+          {t('hero.ctaCv')}
+        </Button>
+      )}
+    </div>
+    <ul class="hero__meta motion-enter" style="--i: 4">
+      <li>{t('hero.metaLocation')}</li>
+      <li>{t('hero.metaSince')}</li>
+      <li>{t('hero.metaAvailable', { date: site.availableFrom })}</li>
+    </ul>
+  </div>
+
+  <Panel class="hero__radar motion-tilt" role="img" aria-label={t('hero.radarLabel')} data-tilt>
+    <div class="hero__scene" data-scene aria-hidden="true">
+      <div class="hero__window hero__window--radar">
+        <span class="hero__window-bar">COMMAND CENTER</span>
+        <div class="hero__window-body">
+          <RadarFallback />
+        </div>
+      </div>
+      <div class="hero__window hero__window--hmi">
+        <span class="hero__window-bar">HMI · QT</span>
+        <div class="hero__window-body">
+          <Hmi width="100%" height="100%" />
+        </div>
+      </div>
+      <div class="hero__window hero__window--app">
+        <span class="hero__window-bar">FLOWVEST</span>
+        <div class="hero__window-body">
+          <Finance width="100%" height="100%" />
+        </div>
+      </div>
+    </div>
+  </Panel>
+</section>
+
+<script>
+  import '@/scripts/hero-radar';
+</script>
+
+<style>
+  .hero {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-7);
+    padding-block: var(--space-7) 0;
+  }
+
+  .hero__text {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-5);
+    min-width: 0;
+  }
+
+  .hero__sub {
+    max-width: var(--measure-text);
+    color: var(--ink-muted);
+    font-size: 1.125rem;
+    line-height: 1.65;
+  }
+
+  .hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-3);
+  }
+
+  .hero__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2) var(--space-5);
+    padding: 0;
+    list-style: none;
+    color: var(--ink-muted);
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    font-weight: 500;
+    line-height: 1.4;
+  }
+
+  .hero :global(.hero__radar) {
+    width: 100%;
+    aspect-ratio: 1;
+    border: var(--hairline-width) solid var(--hairline);
+    border-radius: var(--radius-xl);
+    background: var(--surface-raised);
+  }
+
+  .hero__scene {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    border-radius: inherit;
+  }
+
+  /* Three windows, positioned in % of the square frame so the collage scales with it. */
+  .hero__window {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border: var(--hairline-width) solid var(--hairline);
+    border-radius: var(--radius-md);
+    background: var(--surface-sunken);
+    box-shadow: var(--shadow-lift);
+  }
+
+  .hero__window-bar {
+    padding: var(--space-2) var(--space-3);
+    border-bottom: var(--hairline-width) solid var(--hairline);
+    background: var(--surface);
+    color: var(--ink-subtle);
+    font-family: var(--font-mono);
+    font-size: 0.625rem;
+    font-weight: 500;
+    line-height: 1;
+    letter-spacing: 0.08em;
+  }
+
+  .hero__window-body {
+    flex: 1;
+    min-height: 0;
+  }
+
+  .hero__window--radar {
+    top: 6%;
+    left: 6%;
+    width: 54%;
+  }
+
+  .hero__window--radar .hero__window-body {
+    aspect-ratio: 1;
+  }
+
+  .hero__window--hmi {
+    bottom: 6%;
+    left: 10%;
+    width: 52%;
+  }
+
+  .hero__window--app {
+    top: 30%;
+    right: 5%;
+    width: 58%;
+  }
+
+  .hero__window--hmi .hero__window-body,
+  .hero__window--app .hero__window-body {
+    aspect-ratio: 16 / 10;
+  }
+
+  @media (min-width: 1024px) {
+    .hero {
+      flex-direction: row;
+      align-items: center;
+      padding-block: var(--space-9);
+    }
+
+    .hero__text {
+      flex: 1 1 0;
+    }
+
+    .hero :global(.hero__radar) {
+      flex: 0 0 var(--radar-size);
+      width: var(--radar-size);
+    }
+  }
+</style>

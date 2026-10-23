@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 225" aria-hidden="true" focusable="false">
+  <!-- Decorative commit graph: a main line, two feature branches, an accent merge. -->
+  <g style="fill: none; stroke-width: 3; stroke-linecap: round">
+    <line x1="24" y1="150" x2="336" y2="150" style="stroke: var(--border-strong)" />
+    <path class="ill-trace" d="M84 150 C108 150 108 86 132 86 H212 C236 86 236 150 260 150" pathLength="1" style="stroke: var(--accent); stroke-dasharray: 1" />
+    <path d="M160 150 C178 150 178 196 196 196 H236 C254 196 254 150 272 150" style="stroke: var(--hairline)" />
+  </g>
+  <circle class="ill-dot" cx="44" cy="150" r="7" style="fill: var(--surface-raised); stroke: var(--border-strong); stroke-width: 3; --i: 0" />
+  <circle class="ill-dot" cx="84" cy="150" r="7" style="fill: var(--surface-raised); stroke: var(--border-strong); stroke-width: 3; --i: 1" />
+  <circle class="ill-dot" cx="132" cy="86" r="7" style="fill: var(--surface-raised); stroke: var(--accent); stroke-width: 3; --i: 2" />
+  <circle class="ill-dot" cx="172" cy="86" r="7" style="fill: var(--surface-raised); stroke: var(--accent); stroke-width: 3; --i: 3" />
+  <circle class="ill-dot" cx="212" cy="86" r="7" style="fill: var(--surface-raised); stroke: var(--accent); stroke-width: 3; --i: 4" />
+  <circle class="ill-dot" cx="160" cy="150" r="7" style="fill: var(--surface-raised); stroke: var(--border-strong); stroke-width: 3; --i: 5" />
+  <circle class="ill-dot" cx="216" cy="196" r="6" style="fill: var(--surface-raised); stroke: var(--border-strong); stroke-width: 2; --i: 6" />
+  <circle class="ill-dot" cx="260" cy="150" r="10" style="fill: var(--accent); --i: 7" />
+  <circle class="ill-dot" cx="300" cy="150" r="7" style="fill: var(--surface-raised); stroke: var(--border-strong); stroke-width: 3; --i: 8" />
+  <g style="fill: var(--border-strong)">
+    <rect x="132" y="48" width="64" height="5" rx="2.5" />
+    <rect x="244" y="112" width="44" height="5" rx="2.5" style="fill: var(--accent)" />
+    <rect x="28" y="112" width="36" height="5" rx="2.5" />
+  </g>
+</svg>

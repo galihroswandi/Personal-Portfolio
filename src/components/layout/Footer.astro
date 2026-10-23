@@ -1,0 +1,75 @@
+---
+/** Site footer: primary links, copyright (year computed at build) and location. */
+import { navLinks } from '@/config/nav';
+import type { Lang } from '@/i18n/ui';
+import { localePath, useTranslations } from '@/i18n/utils';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const year = new Date().getFullYear();
+const home = localePath(lang);
+---
+
+<footer class="footer">
+  <div class="container footer__inner">
+    <nav class="footer__nav" aria-label={t('footer.nav')}>
+      <ul>
+        {navLinks.map(({ id, key }) => (
+          <li>
+            <a href={`${home}#${id}`}>{t(key)}</a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+    <p>{t('footer.copyright', { year })}</p>
+    <p class="mono">{t('footer.location')}</p>
+  </div>
+</footer>
+
+<style>
+  .footer__nav {
+    flex-basis: 100%;
+  }
+
+  .footer__nav ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 var(--space-4);
+    padding: 0;
+    list-style: none;
+  }
+
+  .footer__nav a {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--touch-target);
+    color: var(--ink-muted);
+    text-decoration: none;
+  }
+
+  .footer__nav a:hover {
+    color: var(--ink);
+    text-decoration: underline;
+    text-underline-offset: var(--space-1);
+  }
+
+  .footer {
+    border-top: var(--hairline-width) solid var(--hairline);
+    color: var(--ink-muted);
+    font-size: 0.875rem;
+    line-height: 1.4;
+  }
+
+  .footer__inner {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-2) var(--space-5);
+    padding-block: var(--space-6);
+  }
+</style>

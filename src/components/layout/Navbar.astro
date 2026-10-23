@@ -1,0 +1,332 @@
+---
+/** Main navigation: monogram, section links, language switch, "Hire me", mobile disclosure menu. */
+import LanguageSwitch from '@/components/layout/LanguageSwitch.astro';
+import Button from '@/components/ui/Button.astro';
+import ThemeToggle from '@/components/ui/ThemeToggle.astro';
+import { navLinks as links } from '@/config/nav';
+import type { Lang } from '@/i18n/ui';
+import { localePath, useTranslations } from '@/i18n/utils';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const home = localePath(lang);
+---
+
+<div class="container nav" data-nav>
+  <a class="nav__brand" href={home} aria-label={t('a11y.home')}>
+    <span class="nav__monogram" aria-hidden="true">
+      GR
+    </span>
+    <span aria-hidden="true">Galih Roswandi</span>
+  </a>
+
+  <nav class="nav__menu" id="site-menu" aria-label={t('a11y.mainNav')} data-nav-menu>
+    <ul class="nav__links">
+      {links.map(({ id, key }) => (
+        <li>
+          <a class="nav__link motion-underline" href={`${home}#${id}`} data-nav-link={id}>
+            {t(key)}
+          </a>
+        </li>
+      ))}
+    </ul>
+  </nav>
+
+  <div class="nav__actions">
+    <LanguageSwitch lang={lang} class="nav__lang" />
+    <ThemeToggle lang={lang} class="nav__theme" />
+    <Button href={`${home}#kontak`} size="sm">
+      {t('nav.hire')}
+    </Button>
+    <button
+      class="nav__toggle"
+      type="button"
+      aria-expanded="false"
+      aria-controls="site-menu"
+      data-nav-toggle
+      data-label-open={t('a11y.menuOpen')}
+      data-label-close={t('a11y.menuClose')}
+      aria-label={t('a11y.menuOpen')}
+    >
+      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <line x1="4" y1="7" x2="20" y2="7"></line>
+        <line x1="4" y1="12" x2="20" y2="12"></line>
+        <line x1="4" y1="17" x2="20" y2="17"></line>
+      </svg>
+    </button>
+  </div>
+</div>
+
+<script>
+  /*
+   * Progressive enhancement. Without JavaScript the toggle is hidden and the links are always
+   * visible (wrapped under the brand on small screens). The collapsed layout keys off the `js`
+   * class, which the inline script in Base sets before first paint, so it does not shift when
+   * this script runs.
+   */
+  const root = document.querySelector<HTMLElement>('[data-nav]');
+  const menu = root?.querySelector<HTMLElement>('[data-nav-menu]');
+  const toggle = root?.querySelector<HTMLButtonElement>('[data-nav-toggle]');
+
+  if (root && menu && toggle) {
+    const backdrop = document.querySelector<HTMLElement>('[data-nav-backdrop]');
+    const isOpen = () => toggle.getAttribute('aria-expanded') === 'true';
+
+    const setOpen = (open: boolean, { restoreFocus = false } = {}) => {
+      toggle.setAttribute('aria-expanded', String(open));
+      toggle.setAttribute(
+        'aria-label',
+        (open ? toggle.dataset.labelClose : toggle.dataset.labelOpen) ?? '',
+      );
+      root.classList.toggle('nav--open', open);
+      if (backdrop) backdrop.hidden = !open;
+      if (restoreFocus) toggle.focus();
+    };
+
+    toggle.addEventListener('click', () => {
+      setOpen(!isOpen());
+    });
+
+    menu.addEventListener('click', (event) => {
+      if (event.target instanceof HTMLAnchorElement) setOpen(false);
+    });
+
+    backdrop?.addEventListener('click', () => setOpen(false, { restoreFocus: true }));
+
+    // While open, Tab cycles through the toggle and the menu links only. Focus is moved by
+    // hand on every Tab because the toggle comes after the links in the DOM.
+    document.addEventListener('keydown', (event) => {
+      if (!isOpen()) return;
+      if (event.key === 'Escape') {
+        setOpen(false, { restoreFocus: true });
+        return;
+      }
+      if (event.key !== 'Tab') return;
+      event.preventDefault();
+      const cycle: HTMLElement[] = [toggle, ...menu.querySelectorAll<HTMLElement>('a[href]')];
+      const current = cycle.findIndex((element) => element === document.activeElement);
+      const step = event.shiftKey ? -1 : 1;
+      const next = current === -1 ? 0 : (current + step + cycle.length) % cycle.length;
+      cycle[next]?.focus();
+    });
+
+    // From desktop width the links are always visible; a menu left open would trap focus.
+    window.matchMedia('(min-width: 1024px)').addEventListener('change', (event) => {
+      if (event.matches && isOpen()) setOpen(false);
+    });
+  }
+
+  // Highlight the link of the section currently in view.
+  const navLinks = new Map(
+    [...document.querySelectorAll<HTMLAnchorElement>('[data-nav-link]')].map((link) => [
+      link.dataset.navLink,
+      link,
+    ]),
+  );
+  const sections = [...navLinks.keys()]
+    .map((id) => (id ? document.getElementById(id) : null))
+    .filter((section): section is HTMLElement => section !== null);
+
+  if (sections.length > 0) {
+    // A section counts as active while it crosses a thin band 40% down the viewport.
+    const ACTIVE_BAND = '-40% 0px -59% 0px';
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (!entry.isIntersecting) continue;
+          for (const [id, link] of navLinks) {
+            if (id === entry.target.id) link.setAttribute('aria-current', 'true');
+            else link.removeAttribute('aria-current');
+          }
+        }
+      },
+      { rootMargin: ACTIVE_BAND },
+    );
+    sections.forEach((section) => observer.observe(section));
+  }
+</script>
+
+<style>
+  .nav {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3) var(--space-5);
+    padding-block: var(--space-3);
+  }
+
+  .nav__brand {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-3);
+    min-height: var(--touch-target);
+    color: var(--ink);
+    font-size: 0.9375rem;
+    font-weight: 600;
+    line-height: 1;
+    text-decoration: none;
+  }
+
+  .nav__monogram {
+    display: grid;
+    place-items: center;
+    width: var(--monogram-size);
+    height: var(--monogram-size);
+    border-radius: 50%;
+    background: var(--ink);
+    color: var(--surface);
+    font-family: var(--font-display);
+    font-weight: 500;
+    letter-spacing: -0.02em;
+  }
+
+  .nav__actions {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+  }
+
+  .nav__menu {
+    order: 3;
+    flex-basis: 100%;
+  }
+
+  .nav__links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 var(--space-5);
+    padding: 0;
+    list-style: none;
+  }
+
+  .nav__link {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--touch-target);
+    color: var(--ink-muted);
+    font-size: 0.9375rem;
+    font-weight: 500;
+    text-decoration: none;
+  }
+
+  .nav__link:hover,
+  .nav__link[aria-current='true'] {
+    color: var(--ink);
+  }
+
+  /* The active underline grows from the left (.motion-underline). */
+  .nav__link {
+    --underline-bottom: var(--space-1);
+    --underline-thickness: var(--border-width-strong);
+    --underline-color: var(--accent);
+  }
+
+  .nav__link[aria-current='true']::after {
+    transform: none;
+  }
+
+  .nav__toggle {
+    display: grid;
+    place-items: center;
+    width: var(--touch-target);
+    height: var(--touch-target);
+    padding: 0;
+    border: var(--border-width-strong) solid var(--border-strong);
+    border-radius: var(--radius-md);
+    background: transparent;
+    cursor: pointer;
+  }
+
+  :global(html:not(.js)) .nav__toggle {
+    display: none;
+  }
+
+  .nav__toggle svg {
+    width: var(--icon-size);
+    height: var(--icon-size);
+    stroke: var(--ink);
+    stroke-width: 1.5;
+    stroke-linecap: round;
+  }
+
+  .nav__actions :global(.nav__lang),
+  .nav__actions :global(.nav__theme) {
+    display: none;
+  }
+
+  /* With JS on small screens: links collapse into a disclosure panel. */
+  :global(.js) .nav__menu {
+    display: none;
+  }
+
+  :global(.js) .nav--open .nav__menu {
+    display: block;
+    padding-block: var(--space-2);
+    border-top: var(--hairline-width) solid var(--hairline);
+  }
+
+  /* The panel slides and fades in and out (display is animated discretely). */
+  @media (prefers-reduced-motion: no-preference) and (max-width: 1023px) {
+    :global(.js) .nav__menu {
+      opacity: 0;
+      transform: translateY(calc(-1 * var(--space-2)));
+      transition:
+        opacity var(--motion-base) var(--motion-ease),
+        transform var(--motion-base) var(--motion-ease),
+        display var(--motion-base) allow-discrete;
+    }
+
+    :global(.js) .nav--open .nav__menu {
+      opacity: 1;
+      transform: none;
+    }
+
+    @starting-style {
+      :global(.js) .nav--open .nav__menu {
+        opacity: 0;
+        transform: translateY(calc(-1 * var(--space-2)));
+      }
+    }
+  }
+
+  :global(.js) .nav--open .nav__links {
+    flex-direction: column;
+  }
+
+  @media (min-width: 1024px) {
+    .nav {
+      flex-wrap: nowrap;
+    }
+
+    .nav__menu,
+    :global(.js) .nav__menu {
+      display: block;
+      order: 0;
+      flex-basis: auto;
+      padding: 0;
+      border: 0;
+    }
+
+    .nav__links,
+    :global(.js) .nav--open .nav__links {
+      flex-direction: row;
+    }
+
+    .nav__toggle {
+      display: none;
+    }
+
+    .nav__actions :global(.nav__lang) {
+      display: inline-flex;
+    }
+
+    .nav__actions :global(.nav__theme) {
+      display: inline-grid;
+    }
+  }
+</style>
