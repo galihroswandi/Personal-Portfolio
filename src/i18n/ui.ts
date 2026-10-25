@@ -17,7 +17,7 @@ export const defaultLang: Lang = 'id';
  * Has the owner reviewed this dictionary? Unreviewed languages stay `noindex`, out of the sitemap,
  * and fail the production content gate (`pnpm check:content`).
  */
-export const reviewedLangs: Record<Lang, boolean> = { id: true, en: false };
+export const reviewedLangs: Record<Lang, boolean> = { id: true, en: true };
 
 /** BCP 47 tags used for date formatting. (`hreflang` and `og:locale` live in `src/lib/seo.ts`.) */
 export const langTags: Record<Lang, string> = {
