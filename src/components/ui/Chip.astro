@@ -4,7 +4,7 @@
  * an optional single-colour logo (SVG path, 24x24); the name stays as text, the logo is decoration.
  */
 interface Props {
-  variant?: 'daily' | 'used' | 'learning';
+  variant?: 'daily' | 'used';
   icon?: string;
 }
 
@@ -49,10 +49,6 @@ const { variant = 'used', icon } = Astro.props;
   .chip--used {
     border-color: var(--hairline);
     background: var(--surface-raised);
-  }
-
-  .chip--learning {
-    border: var(--border-width-strong) dashed var(--border-strong);
   }
 
   /* Hover only raises the border; chips are not interactive, so nothing moves. */

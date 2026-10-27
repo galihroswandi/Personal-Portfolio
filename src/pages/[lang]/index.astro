@@ -7,6 +7,7 @@ import Contact from '@/components/sections/Contact.astro';
 import Experience from '@/components/sections/Experience.astro';
 import GitHub from '@/components/sections/GitHub.astro';
 import Hero from '@/components/sections/Hero.astro';
+import Learning from '@/components/sections/Learning.astro';
 import Services from '@/components/sections/Services.astro';
 import type { Lang } from '@/i18n/ui';
 import { langs } from '@/i18n/utils';
@@ -27,6 +28,7 @@ const page = await getHomePage(lang);
   <CaseStudies lang={lang} projects={projects} />
   <About lang={lang} />
   <Experience lang={lang} />
+  <Learning lang={lang} />
   <GitHub lang={lang} />
   <Services lang={lang} />
   <Contact lang={lang} />

@@ -92,7 +92,12 @@ const id = {
   'section.stack.num': '04',
   'section.stack.label': 'Stack',
   'section.stack.title': 'Yang saya pakai.',
-  'section.github.num': '05',
+  'section.learning.num': '05',
+  'section.learning.label': 'Belajar',
+  'section.learning.title': 'Yang sedang saya pelajari.',
+  'section.learning.sub':
+    'Progres dari repo belajar saya yang publik, data per {date}. Hanya topik yang saya tandai selesai yang dihitung.',
+  'section.github.num': '06',
   'section.github.label': 'GitHub',
   'section.github.title': 'Belajar di tempat terbuka.',
   'section.github.sub':
@@ -117,16 +122,16 @@ const id = {
   'github.profile': 'Lihat profil GitHub',
   'github.linkedin': 'Profil LinkedIn',
   'github.learning': 'Lihat progres belajar',
-  'learning.title': 'Dari web ke C++ dan Qt, dibantu AI.',
-  'learning.seoTitle': 'Progres Belajar C++, Qt, Python, Rust',
+  'learning.title': 'Cara saya belajar dan apa yang sedang saya pelajari.',
+  'learning.seoTitle': 'Cara Belajar dan Progres: C++, Qt, Python, Rust',
   'learning.metaDescription':
-    'Progres belajar C++ dan Qt dari seorang web developer: persentase per track, cara belajar bersama AI, dan rencana Python dan Rust berikutnya.',
+    'Cara saya belajar bersama AI dan progres belajar saya per jalur: C++ dan Qt yang sedang berjalan, lalu Python dan Rust yang berikutnya.',
   'learning.label': 'Belajar',
   'learning.sub':
-    'Data per {date}, dari repo publik learning-fasttrack. Hanya topik yang saya tandai selesai yang dihitung.',
+    'Cara belajar saya, apa saja yang saya pelajari, dan progresnya. Data per {date} dari repo publik learning-fasttrack; hanya topik yang saya tandai selesai yang dihitung.',
   'learning.method.title': 'Cara belajarnya',
   'learning.method.intro':
-    'Sekitar dua bulan dari web ke C++ dan Qt. Setiap topik memakai siklus yang sama, dan AI menjadi pendamping, bukan pengganti latihan.',
+    'Setiap topik memakai siklus yang sama, dan AI menjadi pendamping yang menyesuaikan gaya belajar saya, bukan pengganti latihan. Saya berusaha memahami setiap kode yang dihasilkan. Dengan cara ini saya beralih dari web ke C++ dan Qt dalam sekitar dua bulan.',
   'learning.method.stepsLabel': 'Langkah belajar per topik',
   'learning.step.1.name': 'Konsep',
   'learning.step.1.text':
@@ -144,8 +149,8 @@ const id = {
   'learning.step.7.name': 'Cek paham',
   'learning.step.7.text': 'Pertanyaan penutup. Kalau belum bisa menjawab, topik belum selesai.',
   'learning.method.principle':
-    'AI membantu menjelaskan dan menyusun urutan. Kode dijalankan, dirusak, dan dicatat sendiri, dengan contoh dari domain kapal dan ECDIS yang dekat dengan pekerjaan saya.',
-  'learning.tracks.title': 'Progres per track',
+    'AI membantu menjelaskan dan menyusun urutan. Kode dijalankan, dirusak, dan dicatat sendiri, dengan contoh dari domain maritim yang dekat dengan pekerjaan saya.',
+  'learning.tracks.title': 'Yang saya pelajari dan progresnya',
   'learning.status.active': 'Sedang dijalankan',
   'learning.status.next': 'Berikutnya',
   'learning.progressLabel': 'Progres {name}: {percent} persen',
@@ -156,11 +161,11 @@ const id = {
   'learning.phases.active': 'Fase berikutnya',
   'learning.phases.next': 'Peta fase',
   'learning.repo': 'Lihat repo belajar',
-  'section.services.num': '06',
+  'section.services.num': '07',
   'section.services.label': 'Layanan',
   'section.services.title': 'Masalah yang bisa saya bantu selesaikan.',
   'section.services.sub': 'Estimasi waktu dan biaya saya tentukan setelah kita berdiskusi.',
-  'section.contact.num': '07',
+  'section.contact.num': '08',
   'section.contact.label': 'Kontak',
   'section.contact.title': 'Mari ngobrol soal proyek atau peluang kerja.',
   'section.contact.sub': 'Ceritakan singkat kebutuhan Anda, lalu saya hubungi kembali.',
@@ -235,7 +240,6 @@ const id = {
 
   'stack.daily': 'Sehari-hari',
   'stack.used': 'Pernah dipakai',
-  'stack.learning': 'Sedang dipelajari',
 
   'service.dashboard.title': 'Dasbor data',
   'service.dashboard.text':
@@ -343,7 +347,12 @@ const en: Record<UIKey, string> = {
   'section.stack.num': '04',
   'section.stack.label': 'Stack',
   'section.stack.title': 'What I use.',
-  'section.github.num': '05',
+  'section.learning.num': '05',
+  'section.learning.label': 'Learning',
+  'section.learning.title': 'What I am learning now.',
+  'section.learning.sub':
+    'Progress from my public learning repo, data as of {date}. Only topics I mark as finished are counted.',
+  'section.github.num': '06',
   'section.github.label': 'GitHub',
   'section.github.title': 'Learning in the open.',
   'section.github.sub':
@@ -368,16 +377,16 @@ const en: Record<UIKey, string> = {
   'github.profile': 'View GitHub profile',
   'github.linkedin': 'LinkedIn profile',
   'github.learning': 'See learning progress',
-  'learning.title': 'From web to C++ and Qt, with AI.',
-  'learning.seoTitle': 'Learning Progress: C++, Qt, Python, Rust',
+  'learning.title': 'How I learn, and what I am learning.',
+  'learning.seoTitle': 'How I Learn and Progress: C++, Qt, Python, Rust',
   'learning.metaDescription':
-    "A web developer's progress learning C++ and Qt: percentage per track, how I learn with AI, and the Python and Rust plans that come next.",
+    'How I learn with AI and my progress on each track: C++ and Qt in progress, with Python and Rust coming next.',
   'learning.label': 'Learning',
   'learning.sub':
-    'Data as of {date}, from the public learning-fasttrack repository. Only topics I marked as finished count.',
+    'How I learn, what I study, and my progress. Data as of {date} from the public learning-fasttrack repository; only topics I marked as finished count.',
   'learning.method.title': 'How I learn',
   'learning.method.intro':
-    'About two months from web to C++ and Qt. Every topic follows the same cycle, and AI is a companion, not a replacement for practice.',
+    'Every topic follows the same cycle, and AI is a companion that adapts to my learning style, not a replacement for practice. I try to understand every piece of generated code. This is how I moved from web to C++ and Qt in about two months.',
   'learning.method.stepsLabel': 'Learning steps per topic',
   'learning.step.1.name': 'Concept',
   'learning.step.1.text':
@@ -395,8 +404,8 @@ const en: Record<UIKey, string> = {
   'learning.step.7.name': 'Check',
   'learning.step.7.text': 'Closing questions. If I cannot answer them, the topic is not done.',
   'learning.method.principle':
-    'AI helps explain and order the topics. The code is run, broken and written up by me, with examples from the vessel and ECDIS domain that sits close to my work.',
-  'learning.tracks.title': 'Progress per track',
+    'AI helps explain and order the topics. The code is run, broken and written up by me, with examples from the maritime domain that sits close to my work.',
+  'learning.tracks.title': 'What I study and my progress',
   'learning.status.active': 'In progress',
   'learning.status.next': 'Up next',
   'learning.progressLabel': '{name} progress: {percent} percent',
@@ -407,11 +416,11 @@ const en: Record<UIKey, string> = {
   'learning.phases.active': 'Next phases',
   'learning.phases.next': 'Phase map',
   'learning.repo': 'View the learning repo',
-  'section.services.num': '06',
+  'section.services.num': '07',
   'section.services.label': 'Services',
   'section.services.title': 'Problems I can help you solve.',
   'section.services.sub': 'I estimate time and cost after we have talked it through.',
-  'section.contact.num': '07',
+  'section.contact.num': '08',
   'section.contact.label': 'Contact',
   'section.contact.title': "Let's talk about a project or a job opportunity.",
   'section.contact.sub': 'Tell me briefly what you need, and I will get back to you.',
@@ -485,7 +494,6 @@ const en: Record<UIKey, string> = {
 
   'stack.daily': 'Daily',
   'stack.used': 'Have used',
-  'stack.learning': 'Learning now',
 
   'service.dashboard.title': 'Data dashboards',
   'service.dashboard.text':
