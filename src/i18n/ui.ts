@@ -210,15 +210,27 @@ const id = {
   'bento.learning.value': 'Dari C++ ke proyek Qt dalam sekitar dua bulan.',
   'bento.learning.note': 'Dibantu AI, setiap hasilnya saya review lewat pull request.',
 
-  'timeline.job.period': 'Agu 2023 sampai sekarang',
   'timeline.job.title': 'Developer website internal, command center, dan HMI',
   'timeline.job.place': 'Solusi 247, Yogyakarta',
-  'timeline.job.text':
-    'Awalnya membuat website untuk kebutuhan internal kantor. Sejak 2025 menampilkan data sistem di aplikasi web dan desktop (Qt) untuk operator, memastikan data sesuai dan antarmuka mudah dipahami.',
+  'timeline.now.period': 'Sejak 2025',
+  'timeline.now.title': 'Antarmuka untuk operator',
+  'timeline.now.place': 'Solusi 247, Yogyakarta',
+  'timeline.now.text':
+    'Aplikasi command center berbasis web dan aplikasi desktop dengan C++ dan Qt. Memastikan data yang tampil sesuai sumbernya dan tampilan tidak membingungkan operator.',
   'timeline.learn.period': 'Sekitar dua bulan',
   'timeline.learn.title': 'Belajar C++ dan Qt sampai membuat proyek',
   'timeline.learn.place': 'Perjalanan belajar',
-  'timeline.learn.text': 'Dibantu AI, dengan aturan kode yang mudah dirawat dan praktik terbaik.',
+  'timeline.learn.text':
+    'Dibantu AI. Karena teknologinya baru, saya berusaha memahami setiap kode yang dihasilkan: pekerjaan berjalan lewat issue dan pull request, dan saya sendiri yang mereview sebelum digabungkan.',
+  'timeline.early.period': 'Agu 2023 sampai 2024',
+  'timeline.early.title': 'Website untuk kebutuhan internal kantor',
+  'timeline.early.place': 'Solusi 247, Yogyakarta',
+  'timeline.early.text': 'Membangun website yang dipakai untuk keperluan internal kantor.',
+  'timeline.own.period': 'Di luar pekerjaan',
+  'timeline.own.title': 'Proyek untuk masalah saya sendiri',
+  'timeline.own.place': 'Proyek pribadi',
+  'timeline.own.text':
+    'Flowvest untuk mengatur keuangan pribadi dan Rentang untuk memantau jadwal pekerjaan. Ada juga Baywira, toko online untuk UMKM.',
   'timeline.current': 'Saat ini',
 
   'stack.daily': 'Sehari-hari',
@@ -448,16 +460,27 @@ const en: Record<UIKey, string> = {
   'bento.learning.value': 'From C++ to a Qt project in about two months.',
   'bento.learning.note': 'With AI assistance, every result reviewed by me through pull requests.',
 
-  'timeline.job.period': 'Aug 2023 to present',
   'timeline.job.title': 'Developer, internal websites, command center, and HMI',
   'timeline.job.place': 'Solusi 247, Yogyakarta',
-  'timeline.job.text':
-    "Started with websites for the company's internal needs. Since 2025, displaying system data in web and desktop (Qt) apps for operators, making sure the data is correct and the interface is easy to understand.",
+  'timeline.now.period': 'Since 2025',
+  'timeline.now.title': 'Interfaces for operators',
+  'timeline.now.place': 'Solusi 247, Yogyakarta',
+  'timeline.now.text':
+    'A web command center application and a desktop application in C++ and Qt. Making sure the data on screen matches its source and the interface does not confuse operators.',
   'timeline.learn.period': 'About two months',
   'timeline.learn.title': 'Learning C++ and Qt through to a working project',
   'timeline.learn.place': 'Learning journey',
   'timeline.learn.text':
-    'With AI assistance, following maintainable-code rules and best practices.',
+    'With AI assistance. Because the technology was new, I tried to understand every piece of generated code: work goes through issues and pull requests, and I review them myself before they are merged.',
+  'timeline.early.period': 'Aug 2023 to 2024',
+  'timeline.early.title': "Websites for the company's internal needs",
+  'timeline.early.place': 'Solusi 247, Yogyakarta',
+  'timeline.early.text': "Building websites used for the company's internal needs.",
+  'timeline.own.period': 'Outside work',
+  'timeline.own.title': 'Projects for my own problems',
+  'timeline.own.place': 'Personal projects',
+  'timeline.own.text':
+    'Flowvest to manage my personal finances and Rentang to track my work schedule. There is also Baywira, an online shop for small businesses.',
   'timeline.current': 'Current',
 
   'stack.daily': 'Daily',

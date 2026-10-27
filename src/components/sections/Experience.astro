@@ -12,6 +12,8 @@ interface Props {
 
 const { lang } = Astro.props;
 const t = useTranslations(lang);
+/** Newest first; the learning stint sits between the two jobs because it happened on the way to Qt. */
+const entries = ['now', 'learn', 'early', 'own'] as const;
 ---
 
 <section id="pengalaman" class="container section experience" aria-labelledby="pengalaman-title">
@@ -23,22 +25,17 @@ const t = useTranslations(lang);
       title={t('section.experience.title')}
     />
     <ol class="timeline reveal-rail" data-reveal="group">
-      <TimelineItem
-        index={0}
-        current
-        currentLabel={t('timeline.current')}
-        period={t('timeline.job.period')}
-        title={t('timeline.job.title')}
-        place={t('timeline.job.place')}
-        text={t('timeline.job.text')}
-      />
-      <TimelineItem
-        index={1}
-        period={t('timeline.learn.period')}
-        title={t('timeline.learn.title')}
-        place={t('timeline.learn.place')}
-        text={t('timeline.learn.text')}
-      />
+      {entries.map((entry, index) => (
+        <TimelineItem
+          index={index}
+          current={index === 0}
+          currentLabel={t('timeline.current')}
+          period={t(`timeline.${entry}.period`)}
+          title={t(`timeline.${entry}.title`)}
+          place={t(`timeline.${entry}.place`)}
+          text={t(`timeline.${entry}.text`)}
+        />
+      ))}
     </ol>
   </div>
   <div class="experience__col">
