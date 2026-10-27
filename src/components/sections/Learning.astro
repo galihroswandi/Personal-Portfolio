@@ -1,0 +1,195 @@
+---
+/**
+ * 05 · What is being learned now: progress per track from the public learning repo. Numbers come
+ * from the build-time snapshot (`pnpm data:learning`); the full plan lives on the learning page.
+ */
+import SectionHeader from '@/components/sections/SectionHeader.astro';
+import Badge from '@/components/ui/Badge.astro';
+import Button from '@/components/ui/Button.astro';
+import { learningRepoUrl, learningTracks } from '@/config/learning';
+import learning from '@/data/learning.json';
+import type { Lang } from '@/i18n/ui';
+import { localePath, useTranslations } from '@/i18n/utils';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const fetchedAt = new Date(learning.fetchedAt).toLocaleDateString(
+  lang === 'id' ? 'id-ID' : 'en-GB',
+  { dateStyle: 'long' },
+);
+
+const tracks = learningTracks.map((track) => {
+  const progress = learning.tracks.find((row) => row.key === track.key);
+  if (!progress) throw new Error(`No progress for track "${track.key}"; run pnpm data:learning`);
+  return { ...track, ...progress };
+});
+---
+
+<section id="belajar" class="container section" aria-labelledby="belajar-title">
+  <SectionHeader
+    titleId="belajar-title"
+    num={t('section.learning.num')}
+    label={t('section.learning.label')}
+    title={t('section.learning.title')}
+    sub={t('section.learning.sub', { date: fetchedAt })}
+  />
+
+  <ul class="tracks" data-reveal="group">
+    {tracks.map((track, index) => (
+      <li class:list={['track', 'reveal-item', `track--${track.status}`]} style={`--i: ${index}`}>
+        <div class="track__head">
+          <h3 class="track__name">{track.name}</h3>
+          <Badge lamp={track.status === 'active'}>{t(`learning.status.${track.status}`)}</Badge>
+        </div>
+        <div class="track__progress">
+          <span class="track__percent">{track.percent}%</span>
+          <span
+            class="track__bar"
+            role="img"
+            aria-label={t('learning.progressLabel', { name: track.name, percent: track.percent })}
+          >
+            <span class="track__fill" style={`--ratio: ${track.percent / 100}`}></span>
+          </span>
+        </div>
+        <p class="track__count">{t('learning.count', { done: track.done, total: track.total })}</p>
+        {track.status === 'active' && (
+          <p class="track__focus">
+            <span class="track__label">{t('learning.focus.active')}</span>
+            {track.focus[lang]}
+          </p>
+        )}
+      </li>
+    ))}
+  </ul>
+
+  <div class="actions">
+    <Button
+      href={localePath(lang, 'belajar')}
+      arrow
+      data-event="learning_click"
+      data-event-label="home"
+    >
+      {t('github.learning')}
+    </Button>
+    <Button
+      href={learningRepoUrl}
+      variant="secondary"
+      data-event="repo_click"
+      data-event-label="learning"
+    >
+      {t('learning.repo')}
+    </Button>
+  </div>
+</section>
+
+<style>
+  .tracks {
+    display: grid;
+    gap: var(--space-4);
+    margin-top: var(--space-6);
+    padding: 0;
+    list-style: none;
+  }
+
+  .track {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    padding: var(--space-5);
+    border: var(--hairline-width) solid var(--hairline);
+    border-radius: var(--radius-lg);
+    background: var(--surface-raised);
+  }
+
+  .track--next {
+    background: var(--surface-sunken);
+  }
+
+  .track__head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+  }
+
+  .track__name {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    font-weight: 500;
+    line-height: 1.2;
+  }
+
+  .track__progress {
+    display: grid;
+    grid-template-columns: 4rem minmax(0, 1fr);
+    align-items: center;
+    gap: var(--space-3);
+  }
+
+  .track__percent {
+    color: var(--ink);
+    font-family: var(--font-mono);
+    font-size: 1.25rem;
+    font-weight: 500;
+  }
+
+  .track__bar {
+    display: block;
+    height: 12px;
+    border-radius: 0 4px 4px 0;
+    background: var(--surface-sunken);
+  }
+
+  .track--next .track__bar {
+    background: var(--surface-raised);
+  }
+
+  .track__fill {
+    display: block;
+    width: calc(var(--ratio) * 100%);
+    min-width: 2px;
+    height: 100%;
+    border-radius: 0 4px 4px 0;
+    background: var(--accent);
+  }
+
+  .track__count {
+    color: var(--ink-muted);
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+  }
+
+  .track__focus {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+    color: var(--ink);
+    font-size: 0.9375rem;
+    line-height: 1.55;
+  }
+
+  .track__label {
+    color: var(--ink-muted);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 500;
+  }
+
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    margin-top: var(--space-6);
+  }
+
+  @media (min-width: 721px) {
+    .tracks {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+</style>

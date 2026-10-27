@@ -2,7 +2,7 @@ import type { UIKey } from '@/i18n/ui';
 
 export interface StackTier {
   labelKey: UIKey;
-  variant: 'daily' | 'used' | 'learning';
+  variant: 'daily' | 'used';
   items: readonly string[];
 }
 
@@ -11,14 +11,13 @@ export const stackTiers: readonly StackTier[] = [
   {
     labelKey: 'stack.daily',
     variant: 'daily',
-    items: ['C++', 'Qt', 'TypeScript', 'Angular', 'React'],
+    items: ['C++', 'Qt', 'TypeScript', 'Angular', 'Svelte', 'Next.js'],
   },
   {
     labelKey: 'stack.used',
     variant: 'used',
     items: [
-      'Next.js',
-      'Svelte',
+      'React',
       'Node.js',
       'NestJS',
       'Express',
@@ -32,5 +31,4 @@ export const stackTiers: readonly StackTier[] = [
       'Linux',
     ],
   },
-  { labelKey: 'stack.learning', variant: 'learning', items: ['Three.js'] },
 ];
