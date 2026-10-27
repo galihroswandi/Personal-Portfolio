@@ -11,7 +11,7 @@ export const projectSchema = z.object({
   problem: z.string(),
   myRole: z.string(),
   result: z.string(),
-  illustration: z.enum(['bars', 'gauge', 'grid', 'finance', 'maritime', 'hmi']),
+  illustration: z.enum(['bars', 'gauge', 'grid', 'finance', 'storefront', 'maritime', 'hmi']),
   featured: z.boolean(),
   order: z.number().int(),
   reviewed: z.boolean(),

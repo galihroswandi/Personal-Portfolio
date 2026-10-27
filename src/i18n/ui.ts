@@ -142,6 +142,8 @@ const id = {
   'illustration.grid': 'Ilustrasi generik: kisi titik',
   'illustration.finance':
     'Sketsa dasbor Flowvest: kartu ringkasan, grafik net worth, dan transaksi terbaru',
+  'illustration.storefront':
+    'Tampilan aplikasi Baywira di ponsel: dasbor penjual, etalase produk, dan daftar pesanan, dengan data contoh',
   'illustration.maritime': 'Ilustrasi generik: peta laut dengan jejak kapal dan daftar status',
   'illustration.hmi':
     'Ilustrasi generik: panel operator dengan indikator, level tangki, dan tombol',
@@ -336,6 +338,8 @@ const en: Record<UIKey, string> = {
   'illustration.grid': 'Generic illustration: dot grid',
   'illustration.finance':
     'Sketch of the Flowvest dashboard: summary cards, net worth chart and recent transactions',
+  'illustration.storefront':
+    'The Baywira app on phones: seller dashboard, product storefront and order list, with sample data',
   'illustration.maritime': 'Generic illustration: sea chart with vessel tracks and a status list',
   'illustration.hmi': 'Generic illustration: operator panel with gauges, tank levels and buttons',
 

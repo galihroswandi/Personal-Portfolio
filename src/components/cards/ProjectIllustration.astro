@@ -1,8 +1,11 @@
 ---
 /**
  * 16:10 project illustration. Employer work gets a generic one, never a screenshot or a real system
- * layout; the owner's own apps may show a simplified sketch of their real screen (decision 040).
+ * layout; the owner's own apps may show a simplified sketch of their real screen (decision 040), or
+ * a composed screenshot of the real app (`storefront`: Baywira, sample data).
  */
+import { Image } from 'astro:assets';
+import baywiraCover from '@/assets/projects/baywira/baywira-cover.webp';
 import Bars from '@/assets/illustrations/bars.svg';
 import Finance from '@/assets/illustrations/finance.svg';
 import Gauge from '@/assets/illustrations/gauge.svg';
@@ -28,16 +31,32 @@ const illustrations = {
   maritime: Maritime,
   hmi: Hmi,
 } as const;
-const Illustration = illustrations[kind];
+const Illustration = kind === 'storefront' ? undefined : illustrations[kind];
 ---
 
 <div class="illustration" role="img" aria-label={t(`illustration.${kind}`)}>
-  <Illustration width="100%" height="100%" />
+  {Illustration ? (
+    <Illustration width="100%" height="100%" />
+  ) : (
+    <Image
+      src={baywiraCover}
+      alt=""
+      widths={[480, 720, 960]}
+      sizes="(min-width: 960px) 33vw, 100vw"
+    />
+  )}
 </div>
 
 <style>
   .illustration {
     aspect-ratio: 16 / 10;
     background: var(--surface-sunken);
+  }
+
+  .illustration :global(img) {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
   }
 </style>

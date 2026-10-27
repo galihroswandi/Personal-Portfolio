@@ -1,0 +1,43 @@
+---
+# TODO(review): English translation, owner to review, then set reviewed: true.
+slug: baywira
+title: 'Baywira: online shop and digital checkout for small businesses'
+role: Fullstack developer
+company: Personal project
+stack: [Next.js, React, TypeScript, NestJS, MySQL, Redis, Socket.IO, PWA]
+problem: Small vendors want to take orders and digital payments without building their own online shop or asking customers to install an app.
+myRole: Building on my own the seller app (a PWA), the order page for customers, and the API behind them, including the payment flow.
+result: Customers scan the shop QR code and order without an account, and sellers manage products and orders in one app that keeps working when the signal drops.
+illustration: storefront
+featured: true
+order: 4
+reviewed: false
+seoTitle: 'Baywira: online shop for small businesses'
+seoDescription: Case study of Baywira, an ordering and payment platform for small businesses built as a Next.js PWA with NestJS, from account-free QR ordering to offline mode.
+---
+
+Baywira is a platform for Indonesian micro and small vendors. A seller opens a shop, adds products, then shares a link or QR code. Customers scan it, pick products, and order without creating an account. Orders can be tracked by transaction ID, and the seller manages them from a dashboard.
+
+I built it on my own across two repositories: a Next.js client (about 80 commits) and a NestJS API (about 260 commits since July 2024). The app itself is in Indonesian.
+
+## What was built
+
+![Three Baywira phone screens: the customer product storefront, order tracking, and the seller's order list. Sample data.](../../../assets/projects/baywira/baywira-mobile.webp)
+
+The customer side: a product storefront, cart and order form, digital payment, and a tracking page that follows the order from creation to completion. A "Contact seller" button opens WhatsApp.
+
+![The Baywira seller dashboard on desktop: revenue summary, quick actions, and incoming orders. Sample data.](../../../assets/projects/baywira/baywira-dashboard.webp)
+
+The seller side: today's summary, orders grouped by status, products with several price options, payment method settings, and the shop QR code.
+
+Every image on this page uses sample data from a local environment, not a real seller's data.
+
+## Technical decisions
+
+The app is a PWA used on phones. Write requests that fail while offline go into a queue in IndexedDB and are replayed when the connection returns. Requests that carry a file are not queued, because they cannot be stored in IndexedDB, so the user is told instead.
+
+Stock is reduced when an order is created and restored if the order is cancelled. Unpaid orders expire through an hourly cron job that checks the payment token in Redis, so stock is not held by abandoned orders.
+
+Ordering without an account is guarded by hCaptcha and a rate limiter. A seller's payment keys are stored encrypted (AES-256), and payment status and cart updates are pushed over WebSocket.
+
+For sellers busy serving customers, there are voice commands to move between pages, voice input for the product form (for example "nasi goreng spesial, twenty thousand, stock fifty" in Indonesian), and swiping an order card to change its status.
