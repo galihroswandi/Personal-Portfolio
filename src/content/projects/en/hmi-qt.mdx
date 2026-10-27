@@ -2,16 +2,42 @@
 # TODO(review): English translation, owner to review, then set reviewed: true.
 slug: hmi-qt
 title: Desktop HMI application with Qt
+seoTitle: Desktop HMI application with C++ and Qt
 role: Fullstack developer
 company: Solusi 247
-stack: [C++, Qt, HMI]
-problem: The newest system needed a desktop interface for operators instead of a web one.
-myRole: Moving from web to C++ and Qt, then building the operator interface until it ran.
-result: '[isi hasil nyata yang boleh dipublikasikan]'
+stack: [C++, Qt, CMake, Linux]
+problem: The newest system needs a desktop interface for operators, not a web one anymore.
+myRole: Moving from web to C++ and Qt, then building the operator interface until it runs.
+result: A desktop operator interface that runs on Linux and ships as a .deb installer.
 illustration: hmi
 featured: true
 order: 3
-reviewed: false
+reviewed: true
+seoDescription: 'Case study of a desktop HMI application for operators in C++ and Qt 6: moving from web, a layered codebase, a UI lag monitor, and an installer.'
 ---
 
-[isi studi kasus lengkap]
+The newest system at Solusi 247 needs a desktop interface for operators, not a web one anymore. I moved from web to C++ and Qt, then built the interface until it ran.
+
+Because this is office work, this page deliberately shows no screenshots, system names, or data of any kind. I only describe the technical approach.
+
+## What was built
+
+A desktop application for operators in C++17, Qt 6 (Widgets), and CMake. Screens, widgets, and styling are kept apart from the core logic so a new page can be added without touching other parts.
+
+## Challenges
+
+C++ and Qt were new to me. Since a lot of the code was AI-assisted, the biggest challenge was not producing code but understanding what was generated and making sure the result is exactly what I intended. I tried my best to understand every part before using it.
+
+That is why all the work goes through issues and pull requests. I write the issue, ask the AI to work on it, and the AI opens a pull request at the end. I review the generated code myself before it is merged.
+
+## Technical decisions
+
+The code is layered: the application core, the interface (pages, widgets, top bar, styling), and a platform layer. The interface does not handle communication and data, so changing how things look does not change how data is processed.
+
+A UI lag monitor in the platform layer means a screen that feels heavy can be measured instead of guessed at.
+
+Logic is tested with Qt Test, and the application ships as a `.deb` installer for Linux.
+
+## Learning on the job
+
+I learned C++ and Qt in about two months with help from AI, following maintainable-code rules and best practices. How I learn is covered in the learning journey section.

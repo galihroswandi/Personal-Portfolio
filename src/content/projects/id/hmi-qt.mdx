@@ -1,16 +1,43 @@
 ---
+# TODO(review): ditulis dari repo kantor dengan sengaja minim. Pemilik memastikan tidak ada data yang tidak boleh dipublikasikan, lalu ubah reviewed menjadi true.
 slug: hmi-qt
 title: Aplikasi desktop HMI dengan Qt
+seoTitle: Aplikasi desktop HMI dengan C++ dan Qt
 role: Fullstack developer
 company: Solusi 247
-stack: [C++, Qt, HMI]
+stack: [C++, Qt, CMake, Linux]
 problem: Sistem terbaru membutuhkan antarmuka desktop untuk operator, bukan lagi web.
 myRole: Beralih dari web ke C++ dan Qt, lalu membangun antarmuka operator sampai berjalan.
-result: '[isi hasil nyata yang boleh dipublikasikan]'
+result: Antarmuka operator desktop yang berjalan di Linux dan dipaketkan sebagai installer .deb.
 illustration: hmi
 featured: true
 order: 3
 reviewed: true
+seoDescription: 'Studi kasus aplikasi desktop HMI untuk operator dengan C++ dan Qt 6: beralih dari web, struktur kode berlapis, pemantau kelambatan antarmuka, dan installer.'
 ---
 
-[isi studi kasus lengkap]
+Sistem terbaru di Solusi 247 membutuhkan antarmuka desktop untuk operator, bukan lagi web. Saya beralih dari web ke C++ dan Qt, lalu membangun antarmukanya sampai berjalan.
+
+Karena ini pekerjaan kantor, halaman ini sengaja tidak menampilkan tangkapan layar, nama sistem, ataupun data apa pun. Yang saya tulis hanya pendekatan teknisnya.
+
+## Apa yang dibangun
+
+Aplikasi desktop untuk operator dengan C++17, Qt 6 (Widgets), dan CMake. Layar, widget, dan gaya tampilan dipisah dari logika inti supaya halaman baru bisa ditambah tanpa menyentuh bagian lain.
+
+## Tantangan
+
+C++ dan Qt adalah teknologi baru bagi saya. Karena banyak kodenya dibantu AI, tantangan terbesarnya bukan menghasilkan kode, tapi memahami apa yang dihasilkan dan memastikan hasilnya benar-benar sesuai dengan yang saya inginkan. Saya berusaha semaksimal mungkin mengerti setiap bagian sebelum memakainya.
+
+Karena itu setiap pekerjaan berjalan lewat issue dan pull request. Saya menulis issue, meminta AI mengerjakannya, dan di akhir AI membuatkan pull request. Saya sendiri yang mereview kode yang dihasilkan sebelum digabungkan.
+
+## Keputusan teknis
+
+Kodenya berlapis: inti aplikasi, antarmuka (halaman, widget, bilah atas, gaya), dan lapisan platform. Antarmuka tidak mengurus komunikasi dan data, jadi mengubah tampilan tidak mengubah cara data diproses.
+
+Ada pemantau kelambatan antarmuka di lapisan platform, supaya layar yang terasa berat bisa diukur dan bukan sekadar ditebak.
+
+Logika diuji dengan Qt Test, dan aplikasi dipaketkan sebagai installer `.deb` untuk Linux.
+
+## Belajar sambil bekerja
+
+Saya belajar C++ dan Qt dalam sekitar dua bulan dengan bantuan AI, dengan aturan kode yang mudah dirawat dan praktik terbaik. Cara belajarnya ada di bagian perjalanan belajar.
