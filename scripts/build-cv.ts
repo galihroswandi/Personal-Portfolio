@@ -64,22 +64,22 @@ function html(lang: Lang): string {
 @font-face{font-family:JetBrainsMono;src:url(${font('jetbrains-mono-latin-500-normal.woff')});font-weight:500}
 @page{size:A4;margin:0}
 *{box-sizing:border-box;margin:0}
-body{width:210mm;min-height:297mm;padding:15mm 17mm 14mm 20mm;color:#11161c;font:9.4pt/1.45 "Helvetica Neue",Arial,sans-serif;position:relative}
+body{width:210mm;min-height:297mm;padding:10mm 16mm 6mm 19mm;color:#11161c;font:9pt/1.38 "Helvetica Neue",Arial,sans-serif;position:relative}
 body::before{content:"";position:absolute;left:0;top:0;bottom:0;width:5mm;background:#b25e00}
 h1{font:500 28pt/1.05 Fraunces,Georgia,serif}
 .role{margin:2mm 0 2mm;color:#9a5200;font:500 10pt JetBrainsMono,monospace}
 .contact{margin-top:1.2mm;color:#3a4552;font:500 8pt JetBrainsMono,monospace}
 header{padding-bottom:4.5mm;border-bottom:.5mm solid #b25e00}
-section{margin-top:5mm}
+section{margin-top:3.6mm}
 h2{margin-bottom:2mm;padding-bottom:1mm;border-bottom:.25mm solid #d5dce4;color:#9a5200;font:500 12pt Fraunces,Georgia,serif}
-h3{margin-top:3mm;font:500 11.2pt/1.25 Fraunces,Georgia,serif}
+h3{margin-top:2.4mm;font:500 11.2pt/1.25 Fraunces,Georgia,serif}
 h3:first-of-type{margin-top:0}
 .meta{margin:.6mm 0 1mm;color:#4a5663;font:500 7.8pt JetBrainsMono,monospace}
 p+p{margin-top:1mm}
 ul{margin:1mm 0 0 4.5mm;padding:0}
 li{margin-top:.8mm;padding-left:.5mm}
 li::marker{color:#b25e00}
-.avail{margin-top:5mm;padding:2.5mm 4mm;border-left:1.2mm solid #b25e00;background:#fbe7c7;font:500 8.6pt JetBrainsMono,monospace}
+.avail{margin-top:3mm;padding:2mm 4mm;border-left:1.2mm solid #b25e00;background:#fbe7c7;font:500 8.6pt JetBrainsMono,monospace}
 </style></head><body>
 <header><h1>${escape(site.name)}</h1><p class="role">${escape(copy.role)}</p>${contactLines
     .map((line) => `<p class="contact">${line.map(escape).join(' | ')}</p>`)
