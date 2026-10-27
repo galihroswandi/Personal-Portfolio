@@ -5,13 +5,13 @@ title: 'Flowvest: aplikasi keuangan pribadi'
 role: Fullstack developer
 company: Proyek pribadi
 stack: [Next.js, React, TypeScript, Supabase, PostgreSQL, Tailwind CSS]
-problem: Pencatatan keuangan pribadi biasanya tersebar di catatan, spreadsheet, dan aplikasi bank yang tidak saling terhubung.
+problem: Untuk mencapai kebebasan finansial, saya perlu menentukan tujuan hidup lebih dulu, lalu menyusun langkah-langkah mengelola keuangan menuju ke sana.
 myRole: Merancang dan membangun sendiri seluruh aplikasi, dari skema database dan keamanannya sampai antarmuka web.
 result: Sebelas area fitur berjalan di atas data asli dalam sekitar dua bulan (130 commit, 57 pull request), dengan Row Level Security di setiap tabel data pengguna.
 illustration: finance
 featured: true
 order: 1
-reviewed: false
+reviewed: true
 promo:
   name: Flowvest
   headline: Kelola keuangan Anda di satu tempat, gratis.
@@ -33,7 +33,13 @@ Flowvest adalah aplikasi keuangan pribadi berbahasa Indonesia untuk banyak pengg
 
 Aplikasi ini punya sebelas area: beranda dengan ringkasan saldo dan kesehatan finansial, transaksi, statistik arus kas, rekening dan aset, pantauan saham Indonesia dengan watchlist, net worth, budget bulanan per kategori, target tabungan, utang dan piutang dengan bukti pembayaran, kategori, dan life roadmap.
 
+![Halaman Budget Bulanan Flowvest di desktop: total pengeluaran, batas budget, dan status per kategori. Data contoh.](../../../assets/projects/flowvest/flowvest-desktop.webp)
+
 Pengguna masuk dengan email atau akun Google. Angka sensitif bisa disamarkan dengan privacy mode, ada mode gelap, dan tata letaknya berubah dari sidebar di desktop menjadi navigasi bawah di ponsel.
+
+![Tiga layar ponsel Flowvest: net worth, goal dan tabungan, serta statistik arus kas. Data contoh.](../../../assets/projects/flowvest/flowvest-mobile.webp)
+
+Semua gambar di halaman ini memakai data contoh di lingkungan lokal, bukan data keuangan sebenarnya.
 
 ## Keputusan teknis
 
@@ -46,3 +52,7 @@ Data pasar saham diambil dari sumber publik tanpa jaminan layanan, jadi hasilnya
 ## Sedang dikerjakan
 
 Bot Telegram untuk mencatat transaksi lewat chat biasa, misalnya "kopi 18rb". Pesan diurai dulu oleh parser lokal; model AI hanya dipakai sebagai lapisan tambahan, dengan output yang divalidasi dan perlindungan terhadap instruksi yang disisipkan di pesan. Fitur ini belum dirilis.
+
+## Coba sendiri
+
+Flowvest gratis dan bisa langsung dipakai: [daftar dengan email atau akun Google](https://flowvest.vercel.app/register). Masukan sangat membantu, kirim lewat bagian kontak di bawah.

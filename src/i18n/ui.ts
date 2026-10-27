@@ -17,7 +17,7 @@ export const defaultLang: Lang = 'id';
  * Has the owner reviewed this dictionary? Unreviewed languages stay `noindex`, out of the sitemap,
  * and fail the production content gate (`pnpm check:content`).
  */
-export const reviewedLangs: Record<Lang, boolean> = { id: true, en: false };
+export const reviewedLangs: Record<Lang, boolean> = { id: true, en: true };
 
 /** BCP 47 tags used for date formatting. (`hreflang` and `og:locale` live in `src/lib/seo.ts`.) */
 export const langTags: Record<Lang, string> = {
@@ -182,7 +182,9 @@ const id = {
   'illustration.gauge': 'Ilustrasi generik: indikator setengah lingkaran',
   'illustration.grid': 'Ilustrasi generik: kisi titik',
   'illustration.finance':
-    'Sketsa dasbor Flowvest: kartu ringkasan, grafik net worth, dan transaksi terbaru',
+    'Tampilan aplikasi Flowvest di desktop dan ponsel: net worth, goal tabungan, dan statistik, dengan data contoh',
+  'illustration.storefront':
+    'Tampilan aplikasi Baywira di ponsel: dasbor penjual, etalase produk, dan daftar pesanan, dengan data contoh',
   'illustration.maritime': 'Ilustrasi generik: peta laut dengan jejak kapal dan daftar status',
   'illustration.hmi':
     'Ilustrasi generik: panel operator dengan indikator, level tangki, dan tombol',
@@ -417,7 +419,9 @@ const en: Record<UIKey, string> = {
   'illustration.gauge': 'Generic illustration: half-circle gauge',
   'illustration.grid': 'Generic illustration: dot grid',
   'illustration.finance':
-    'Sketch of the Flowvest dashboard: summary cards, net worth chart and recent transactions',
+    'The Flowvest app on desktop and phone: net worth, savings goals and statistics, with sample data',
+  'illustration.storefront':
+    'The Baywira app on phones: seller dashboard, product storefront and order list, with sample data',
   'illustration.maritime': 'Generic illustration: sea chart with vessel tracks and a status list',
   'illustration.hmi': 'Generic illustration: operator panel with gauges, tank levels and buttons',
 

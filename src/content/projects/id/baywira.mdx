@@ -1,0 +1,43 @@
+---
+# TODO(review): ditulis dari repo Baywira, pemilik meninjau lalu ubah reviewed menjadi true.
+slug: baywira
+title: 'Baywira: toko online dan kasir digital untuk UMKM'
+role: Fullstack developer
+company: Proyek pribadi
+stack: [Next.js, React, TypeScript, NestJS, MySQL, Redis, Socket.IO, PWA]
+problem: Pedagang kecil ingin menerima pesanan dan pembayaran digital tanpa membuat toko online sendiri atau memasang aplikasi tambahan.
+myRole: Membangun sendiri aplikasi penjual (PWA), halaman pesan untuk pelanggan, dan API di belakangnya, termasuk alur pembayaran.
+result: Pelanggan cukup scan QR toko lalu memesan tanpa akun, dan penjual mengelola produk dan pesanan dari satu aplikasi yang tetap bisa dipakai saat sinyal putus.
+illustration: storefront
+featured: true
+order: 4
+reviewed: true
+seoTitle: 'Baywira: toko online digital untuk UMKM'
+seoDescription: Studi kasus Baywira, platform pesan dan bayar untuk UMKM dengan Next.js PWA dan NestJS, dari QR toko tanpa akun sampai pembayaran digital dan mode offline.
+---
+
+Baywira adalah platform untuk pedagang UMKM Indonesia. Penjual membuka toko, mengisi produk, lalu membagikan link atau QR code. Pelanggan memindai QR itu, memilih produk, dan memesan tanpa membuat akun. Pesanan bisa dilacak lewat ID transaksi, dan penjual mengelolanya dari dasbor.
+
+Saya mengerjakannya sendiri dalam dua repo: klien Next.js (sekitar 80 commit) dan API NestJS (sekitar 260 commit sejak Juli 2024).
+
+## Apa yang dibangun
+
+![Tiga layar ponsel Baywira: etalase produk untuk pelanggan, pelacakan pesanan, dan daftar pesanan penjual. Data contoh.](../../../assets/projects/baywira/baywira-mobile.webp)
+
+Sisi pelanggan: etalase produk, keranjang dan formulir pesanan, pembayaran digital, lalu halaman pelacakan status dari pesanan dibuat sampai selesai. Tombol "Hubungi penjual" membuka WhatsApp.
+
+![Dasbor penjual Baywira di desktop: ringkasan pendapatan, aksi cepat, dan pesanan masuk. Data contoh.](../../../assets/projects/baywira/baywira-dashboard.webp)
+
+Sisi penjual: ringkasan hari ini, daftar pesanan per status, produk dengan beberapa pilihan harga, pengaturan metode pembayaran, dan QR toko.
+
+Semua gambar di halaman ini memakai data contoh di lingkungan lokal, bukan data penjual sebenarnya.
+
+## Keputusan teknis
+
+Aplikasinya PWA yang dipakai di ponsel. Permintaan tulis yang gagal karena offline masuk ke antrean di IndexedDB lalu dikirim ulang saat koneksi kembali. Permintaan berisi file tidak diantrekan karena tidak bisa disimpan di IndexedDB, jadi pengguna diberi tahu.
+
+Stok dikurangi saat pesanan dibuat dan dikembalikan kalau pesanan dibatalkan. Pesanan yang belum dibayar kedaluwarsa lewat cron job per jam yang memeriksa token pembayaran di Redis, sehingga stok tidak tertahan oleh pesanan yang ditinggalkan.
+
+Pemesanan tanpa akun dijaga dengan hCaptcha dan rate limiter. Kunci pembayaran penjual disimpan terenkripsi (AES-256), dan status pembayaran serta keranjang diperbarui lewat WebSocket.
+
+Untuk penjual yang sedang sibuk berjualan, ada perintah suara untuk berpindah halaman, pengisian formulir produk dengan ucapan (misalnya "nasi goreng spesial dua puluh ribu stok lima puluh"), dan geser kartu pesanan untuk mengubah statusnya.

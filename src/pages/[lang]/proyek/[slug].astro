@@ -7,6 +7,7 @@ import ProjectPromo from '@/components/cards/ProjectPromo.astro';
 import Breadcrumb from '@/components/layout/Breadcrumb.astro';
 import Button from '@/components/ui/Button.astro';
 import Chip from '@/components/ui/Chip.astro';
+import { techIcon } from '@/config/tech-icons';
 import type { Lang } from '@/i18n/ui';
 import { localePath, useTranslations } from '@/i18n/utils';
 import Base from '@/layouts/Base.astro';
@@ -63,7 +64,7 @@ const rows = [
     <ul class="case__chips" aria-label={t('project.stack')}>
       {data.stack.map((item) => (
         <li>
-          <Chip>{item}</Chip>
+          <Chip icon={techIcon(item)}>{item}</Chip>
         </li>
       ))}
     </ul>
@@ -161,6 +162,13 @@ const rows = [
     display: flex;
     flex-wrap: wrap;
     gap: var(--space-3);
+  }
+
+  .case__body :global(img) {
+    width: 100%;
+    height: auto;
+    border: var(--hairline-width) solid var(--hairline);
+    border-radius: var(--radius-lg);
   }
 
   .case__body :global(h2) {

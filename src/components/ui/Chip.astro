@@ -1,19 +1,30 @@
 ---
-/** Mono technology chip. Use inside a list; the variant shows how well the tech is known. */
+/**
+ * Mono technology chip. Use inside a list; the variant shows how well the tech is known. `icon` is
+ * an optional single-colour logo (SVG path, 24x24); the name stays as text, the logo is decoration.
+ */
 interface Props {
   variant?: 'daily' | 'used' | 'learning';
+  icon?: string;
 }
 
-const { variant = 'used' } = Astro.props;
+const { variant = 'used', icon } = Astro.props;
 ---
 
 <span class:list={['chip', `chip--${variant}`]}>
+  {icon && (
+    <svg class="chip__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <path d={icon} fill="currentColor" />
+    </svg>
+  )}
   <slot />
 </span>
 
 <style>
   .chip {
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4em;
     padding: var(--chip-pad-y) var(--chip-pad-x);
     border: var(--hairline-width) solid transparent;
     border-radius: var(--radius-sm);
@@ -22,6 +33,13 @@ const { variant = 'used' } = Astro.props;
     font-size: 0.8125rem;
     font-weight: 500;
     line-height: 1.2;
+  }
+
+  .chip__icon {
+    flex: none;
+    width: 1em;
+    height: 1em;
+    opacity: 0.8;
   }
 
   .chip--daily {

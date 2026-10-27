@@ -5,13 +5,13 @@ title: 'Flowvest: a personal finance app'
 role: Fullstack developer
 company: Personal project
 stack: [Next.js, React, TypeScript, Supabase, PostgreSQL, Tailwind CSS]
-problem: Personal finances usually end up spread across notes, spreadsheets, and banking apps that do not talk to each other.
+problem: To reach financial freedom, I first need to decide what I want from life, then work out the steps for managing my money toward it.
 myRole: Designing and building the whole app on my own, from the database schema and its security to the web interface.
 result: Eleven feature areas running on real data in about two months (130 commits, 57 pull requests), with Row Level Security on every user data table.
 illustration: finance
 featured: true
 order: 1
-reviewed: false
+reviewed: true
 promo:
   name: Flowvest
   headline: Manage your money in one place, for free.
@@ -33,7 +33,13 @@ Flowvest is an Indonesian-language personal finance app for many users. One plac
 
 The app has eleven areas: a home view with balances and financial health, transactions, cash-flow statistics, accounts and assets, Indonesian stock tracking with a watchlist, net worth, monthly budgets per category, savings goals, debts and receivables with payment proofs, categories, and a life roadmap.
 
+![The Flowvest Monthly Budget page on desktop: total spending, budget limit and status per category. Sample data.](../../../assets/projects/flowvest/flowvest-desktop.webp)
+
 Users sign in with email or a Google account. Sensitive numbers can be blurred with privacy mode, there is a dark mode, and the layout moves from a sidebar on desktop to bottom navigation on phones.
+
+![Three Flowvest phone screens: net worth, savings goals and cash-flow statistics. Sample data.](../../../assets/projects/flowvest/flowvest-mobile.webp)
+
+Every image on this page uses sample data from a local environment, not real financial data.
 
 ## Technical decisions
 
@@ -46,3 +52,7 @@ Stock market data comes from a public source with no service guarantee, so resul
 ## In progress
 
 A Telegram bot for recording transactions in plain chat, such as "kopi 18rb" (coffee, 18k rupiah). Messages are parsed by a local parser first; an AI model is only an extra layer, with validated output and protection against instructions slipped into a message. This feature is not released yet.
+
+## Try it
+
+Flowvest is free and ready to use: [sign up with email or a Google account](https://flowvest.vercel.app/register). The app is in Indonesian. Feedback is very welcome, send it through the contact section below.

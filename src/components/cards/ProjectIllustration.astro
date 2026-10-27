@@ -1,10 +1,13 @@
 ---
 /**
  * 16:10 project illustration. Employer work gets a generic one, never a screenshot or a real system
- * layout; the owner's own apps may show a simplified sketch of their real screen (decision 040).
+ * layout; the owner's own apps may show a simplified sketch of their real screen (decision 040), or
+ * a composed screenshot of the real app (`finance`: Flowvest, `storefront`: Baywira; sample data).
  */
+import { Image } from 'astro:assets';
+import baywiraCover from '@/assets/projects/baywira/baywira-cover.webp';
+import flowvestCover from '@/assets/projects/flowvest/flowvest-cover.webp';
 import Bars from '@/assets/illustrations/bars.svg';
-import Finance from '@/assets/illustrations/finance.svg';
 import Gauge from '@/assets/illustrations/gauge.svg';
 import Grid from '@/assets/illustrations/grid.svg';
 import Hmi from '@/assets/illustrations/hmi.svg';
@@ -24,20 +27,38 @@ const illustrations = {
   bars: Bars,
   gauge: Gauge,
   grid: Grid,
-  finance: Finance,
   maritime: Maritime,
   hmi: Hmi,
 } as const;
-const Illustration = illustrations[kind];
+const covers = { finance: flowvestCover, storefront: baywiraCover } as const;
+const cover = kind === 'finance' || kind === 'storefront' ? covers[kind] : undefined;
+const Illustration = cover ? undefined : illustrations[kind as keyof typeof illustrations];
 ---
 
 <div class="illustration" role="img" aria-label={t(`illustration.${kind}`)}>
-  <Illustration width="100%" height="100%" />
+  {cover ? (
+    <Image
+      src={cover}
+      alt=""
+      quality="high"
+      widths={[480, 720, 960, 1440]}
+      sizes="(min-width: 960px) 33vw, 100vw"
+    />
+  ) : (
+    Illustration && <Illustration width="100%" height="100%" />
+  )}
 </div>
 
 <style>
   .illustration {
     aspect-ratio: 16 / 10;
     background: var(--surface-sunken);
+  }
+
+  .illustration :global(img) {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
   }
 </style>

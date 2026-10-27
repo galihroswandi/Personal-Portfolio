@@ -2,6 +2,7 @@
 /** 04 · Tech stack in three tiers (daily, have used, learning). Rendered inside Experience. */
 import SectionHeader from '@/components/sections/SectionHeader.astro';
 import Chip from '@/components/ui/Chip.astro';
+import { techIcon } from '@/config/tech-icons';
 import { stackTiers } from '@/config/stack';
 import type { Lang } from '@/i18n/ui';
 import { useTranslations } from '@/i18n/utils';
@@ -30,7 +31,9 @@ const t = useTranslations(lang);
       <ul class="tier__chips" aria-labelledby={`stack-${tier.variant}`} data-reveal="group">
         {tier.items.map((item, index) => (
           <li class="reveal-pop" style={revealStyle(index, CHIP_MAX_STEPS)}>
-            <Chip variant={tier.variant}>{item}</Chip>
+            <Chip icon={techIcon(item)} variant={tier.variant}>
+              {item}
+            </Chip>
           </li>
         ))}
       </ul>
