@@ -1,6 +1,7 @@
 import {
   siAngular,
   siApacheecharts,
+  siCmake,
   siCplusplus,
   siDocker,
   siExpress,
@@ -28,6 +29,7 @@ const icons = [
   ['ECharts', siApacheecharts],
   ['Leaflet', siLeaflet],
   ['C++', siCplusplus],
+  ['CMake', siCmake],
   ['Docker', siDocker],
   ['Express', siExpress],
   ['Laravel', siLaravel],
