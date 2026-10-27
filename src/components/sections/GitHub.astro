@@ -9,6 +9,7 @@ import BentoTile from '@/components/cards/BentoTile.astro';
 import SectionHeader from '@/components/sections/SectionHeader.astro';
 import Button from '@/components/ui/Button.astro';
 import Chip from '@/components/ui/Chip.astro';
+import { techIcon } from '@/config/tech-icons';
 import { GITHUB_TOP_LANGUAGES, featuredRepos } from '@/config/github';
 import { site } from '@/config/site';
 import github from '@/data/github.json';
@@ -150,7 +151,7 @@ const repos = featuredRepos.flatMap((repo) => {
         <ul class="repo__chips" aria-label={t('project.stack')}>
           {repo.stack.map((item) => (
             <li>
-              <Chip>{item}</Chip>
+              <Chip icon={techIcon(item)}>{item}</Chip>
             </li>
           ))}
         </ul>

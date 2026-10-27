@@ -2,6 +2,7 @@
 /** Case-study card: illustration, meta, title, Problem / My role / Result, chips, links. */
 import ProjectIllustration from '@/components/cards/ProjectIllustration.astro';
 import Chip from '@/components/ui/Chip.astro';
+import { techIcon } from '@/config/tech-icons';
 import type { Lang } from '@/i18n/ui';
 import { localePath, useTranslations } from '@/i18n/utils';
 import { isRealUrl } from '@/lib/placeholders';
@@ -45,7 +46,7 @@ const appUrl = project.promo && isRealUrl(project.promo.url) ? project.promo.url
     <ul class="card__chips" aria-label={t('project.stack')}>
       {project.stack.map((item) => (
         <li>
-          <Chip>{item}</Chip>
+          <Chip icon={techIcon(item)}>{item}</Chip>
         </li>
       ))}
     </ul>
