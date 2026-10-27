@@ -212,7 +212,7 @@ const id = {
   'timeline.job.title': 'Developer aplikasi command center dan HMI',
   'timeline.job.place': 'Solusi 247, Yogyakarta',
   'timeline.job.text':
-    'Menampilkan data sistem di aplikasi web dan desktop (Qt), memastikan data sesuai dan antarmuka mudah dipahami operator.',
+    'Awalnya membuat website untuk kebutuhan internal kantor. Sejak 2025 menampilkan data sistem di aplikasi web dan desktop (Qt) untuk operator, memastikan data sesuai dan antarmuka mudah dipahami.',
   'timeline.learn.period': 'Sekitar dua bulan',
   'timeline.learn.title': 'Belajar C++ dan Qt sampai membuat proyek',
   'timeline.learn.place': 'Perjalanan belajar',
@@ -448,7 +448,7 @@ const en: Record<UIKey, string> = {
   'timeline.job.title': 'Developer, command center apps and HMI',
   'timeline.job.place': 'Solusi 247, Yogyakarta',
   'timeline.job.text':
-    'Displaying system data in web and desktop (Qt) apps, making sure the data is correct and the interface is easy for operators to understand.',
+    "Started with websites for the company's internal needs. Since 2025, displaying system data in web and desktop (Qt) apps for operators, making sure the data is correct and the interface is easy to understand.",
   'timeline.learn.period': 'About two months',
   'timeline.learn.title': 'Learning C++ and Qt through to a working project',
   'timeline.learn.place': 'Learning journey',

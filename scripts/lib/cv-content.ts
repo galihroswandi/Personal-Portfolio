@@ -41,7 +41,8 @@ export const cvCopy: Record<Lang, CvCopy> = {
     available: 'Tersedia mulai',
     jobPeriod: 'Agustus 2023 – Sekarang',
     jobBullets: [
-      'Menampilkan data sistem di aplikasi web dan desktop (Qt), memastikan data sesuai dan antarmuka mudah dipahami operator.',
+      'Membuat website untuk kebutuhan internal kantor.',
+      'Sejak 2025 menampilkan data sistem di aplikasi web dan desktop (Qt) untuk operator, memastikan data sesuai dan antarmuka mudah dipahami.',
       'Beralih dari web ke C++ dan Qt dalam sekitar dua bulan sampai membangun antarmuka operator yang berjalan, dibantu AI dengan aturan kode yang mudah dirawat dan praktik terbaik.',
     ],
     education: {
@@ -57,8 +58,8 @@ export const cvCopy: Record<Lang, CvCopy> = {
       },
       {
         title: 'Aplikasi command center untuk industri maritim',
-        meta: 'Solusi 247 · Web app, dasbor, HMI',
-        text: 'Antarmuka web agar operator melihat banyak data sekaligus dan menemukan informasi penting dengan cepat. Memastikan sistem berjalan sesuai perintah dan data sesuai sumbernya.',
+        meta: 'Solusi 247 · Angular, TypeScript, Socket.IO, ECharts, Leaflet',
+        text: 'Antarmuka web agar operator melihat banyak data sekaligus, menemukan informasi penting dengan cepat, dan mengemudikan kapalnya dari layar yang sama. Memastikan sistem berjalan sesuai perintah dan data sesuai sumbernya.',
       },
       {
         title: 'Aplikasi desktop HMI dengan Qt',
@@ -79,7 +80,8 @@ export const cvCopy: Record<Lang, CvCopy> = {
     available: 'Available from',
     jobPeriod: 'August 2023 – Present',
     jobBullets: [
-      'Displaying system data in web and desktop (Qt) apps, making sure the data is correct and the interface is easy for operators to understand.',
+      "Built websites for the company's internal needs.",
+      'Since 2025, displaying system data in web and desktop (Qt) apps for operators, making sure the data is correct and the interface is easy to understand.',
       'Moved from web to C++ and Qt in about two months and built a working operator interface, with AI assistance and maintainable-code rules and best practices.',
     ],
     education: {
@@ -95,8 +97,8 @@ export const cvCopy: Record<Lang, CvCopy> = {
       },
       {
         title: 'Command center application for the maritime industry',
-        meta: 'Solusi 247 · Web app, dashboard, HMI',
-        text: 'A web interface that lets operators see a lot of data at once and find what matters quickly. Making sure the system does what it is told and the data matches its source.',
+        meta: 'Solusi 247 · Angular, TypeScript, Socket.IO, ECharts, Leaflet',
+        text: 'A web interface that lets operators see a lot of data at once, find what matters quickly, and steer the ship from the same screen. Making sure the system does what it is told and the data matches its source.',
       },
       {
         title: 'Desktop HMI application with Qt',
