@@ -141,7 +141,7 @@ const id = {
   'illustration.gauge': 'Ilustrasi generik: indikator setengah lingkaran',
   'illustration.grid': 'Ilustrasi generik: kisi titik',
   'illustration.finance':
-    'Sketsa dasbor Flowvest: kartu ringkasan, grafik net worth, dan transaksi terbaru',
+    'Tampilan aplikasi Flowvest di desktop dan ponsel: net worth, goal tabungan, dan statistik, dengan data contoh',
   'illustration.storefront':
     'Tampilan aplikasi Baywira di ponsel: dasbor penjual, etalase produk, dan daftar pesanan, dengan data contoh',
   'illustration.maritime': 'Ilustrasi generik: peta laut dengan jejak kapal dan daftar status',
@@ -337,7 +337,7 @@ const en: Record<UIKey, string> = {
   'illustration.gauge': 'Generic illustration: half-circle gauge',
   'illustration.grid': 'Generic illustration: dot grid',
   'illustration.finance':
-    'Sketch of the Flowvest dashboard: summary cards, net worth chart and recent transactions',
+    'The Flowvest app on desktop and phone: net worth, savings goals and statistics, with sample data',
   'illustration.storefront':
     'The Baywira app on phones: seller dashboard, product storefront and order list, with sample data',
   'illustration.maritime': 'Generic illustration: sea chart with vessel tracks and a status list',
