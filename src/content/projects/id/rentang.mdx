@@ -1,0 +1,51 @@
+---
+# TODO(review): ditulis dari repo Rentang dan dokumennya, pemilik meninjau lalu ubah reviewed menjadi true.
+slug: rentang
+title: 'Rentang: pemantau task dan jadwal proyek'
+seoTitle: 'Rentang: pemantau task dan jadwal proyek'
+role: Fullstack developer
+company: Proyek pribadi
+stack: [Svelte, TypeScript, Vite, Tailwind CSS, Vitest]
+problem: Saya perlu memantau task dan memperkirakan kapan milestone tercapai, tapi aplikasi Gantt yang simpel tidak bisa menulis dokumen, dan aplikasi menulis yang nyaman tidak sesimpel itu untuk Gantt.
+myRole: Merancang dan membangun sendiri aplikasi yang menggabungkan Gantt yang simpel dengan tulisan seperti berkas Markdown, sesuai kebutuhan pekerjaan saya.
+result: Aplikasi yang berjalan di browser tanpa akun dan tanpa server, membuka berkas Gantt berformat `.gan` dan menampilkan Gantt dengan jalur kritis menuju milestone. Versi pertamanya selesai dalam sekitar sembilan hari (41 commit).
+illustration: gantt
+featured: true
+order: 5
+reviewed: true
+seoDescription: 'Studi kasus Rentang, aplikasi Gantt tanpa server dengan Svelte 5 dan TypeScript: memantau task, jalur kritis, dan perkiraan tercapainya milestone.'
+---
+
+Rentang adalah aplikasi web satu halaman untuk memantau task dan jadwal proyek. Saya membuatnya untuk membantu mengelola pekerjaan sehari-hari di kantor: melihat task apa yang sedang berjalan, task apa yang menunggu task lain, dan kira-kira kapan milestone akan tercapai.
+
+Alasannya sederhana. Aplikasi Gantt yang saya pakai sebelumnya simpel, dan itu kelebihannya, tapi tidak bisa menulis dokumen. Aplikasi menulis yang saya suka karena bisa menulis seperti berkas `.md` tidak sesimpel itu untuk Gantt. Jadi saya berencana menggabungkan keduanya di satu tempat, sesuai kebutuhan pekerjaan saya, dengan Gantt sebagai inti dan kesederhanaan sebagai patokan.
+
+Data pekerjaan kantor tidak ada di halaman ini. Semua gambar memakai proyek demo fiktif ("Peluncuran Kedai Kopi").
+
+## Apa yang dibangun
+
+![Tampilan Gantt Rentang dengan jalur kritis menyala: tugas bertingkat, batang jadwal, panah dependensi, dan milestone. Proyek demo fiktif.](../../../assets/projects/rentang/rentang-gantt.webp)
+
+Rentang membuka berkas Gantt berformat `.gan` atau berkas `.rentang`, lalu menampilkan laporan impor yang menjelaskan apa yang berhasil, diubah, atau dilewati. Tugas ditampilkan bertingkat dalam tabel dan Gantt, lengkap dengan milestone dan panah dependensi. Batang Gantt bisa diseret untuk memindah jadwal atau mengubah durasi, setiap suntingan bisa diurungkan, dan skala waktunya punya enam tingkat dari harian sampai tahunan.
+
+Jalur kritis bisa dinyalakan untuk melihat task mana yang langsung menggeser milestone kalau terlambat. Hari kerja dan hari libur diatur lewat kalender, jadi durasi dihitung dalam hari kerja.
+
+![Daftar proyek dengan progres dan milestone berikutnya, dan tampilan Resource dengan orang, role, dan tugas yang ditugaskan. Proyek demo fiktif.](../../../assets/projects/rentang/rentang-views.webp)
+
+Beberapa proyek bisa dibuka sekaligus dalam tab. Daftar proyek menunjukkan progres dan milestone berikutnya tiap proyek, dan tampilan Resource mengelola orang, role, serta tugas yang ditugaskan.
+
+## Keputusan teknis
+
+Kodenya dibagi tiga lapisan dengan ketergantungan satu arah: antarmuka, aplikasi, lalu inti. Aturan itu dijaga lint, jadi build gagal kalau dilanggar. Inti berisi TypeScript murni tanpa Svelte atau DOM, sehingga logika jadwal bisa diuji di Node dengan batas coverage 90%.
+
+Tanggal disimpan sebagai teks `YYYY-MM-DD` dan tidak pernah sebagai objek `Date`, sehingga bug zona waktu tidak mungkin terjadi. Tanggal selesai dan jalur kritis dihitung dari jadwal lewat fungsi murni, tidak disimpan, jadi tidak bisa tidak sinkron dengan datanya. Undo dan redo dibangun dari patch Immer.
+
+Aplikasi ini sepenuhnya berjalan di browser dan menyimpan proyek di browser, tanpa server dan tanpa akun. Selain tes unit dengan Vitest, ada tes alur utama dengan Playwright, pemeriksaan aksesibilitas otomatis dengan axe, dan tes waktu tampil untuk 200 tugas.
+
+## Yang belum ada
+
+Dua bagian yang belum dikerjakan adalah menyunting dependensi antartugas dan dokumen proyek, yaitu tulisan seperti berkas Markdown di samping Gantt. Dokumen itu bagian yang menggabungkan kedua kebutuhan tadi. Setelah tahap itu, pengembangan oleh saya sendiri berhenti, tapi proyeknya tetap terbuka untuk kontribusi.
+
+## Terbuka untuk kontribusi
+
+Rentang adalah proyek open source berlisensi MIT, dan kodenya ada di GitHub: [galihroswandi/Rentang](https://github.com/galihroswandi/Rentang). Kalau kamu ingin berkontribusi, silakan buka issue untuk usul atau laporan masalah, atau kirim pull request. Sebagai pemilik, saya terbuka untuk kontribusi dan akan meninjau setiap pull request yang masuk.

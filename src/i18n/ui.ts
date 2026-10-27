@@ -185,6 +185,8 @@ const id = {
     'Tampilan aplikasi Flowvest di desktop dan ponsel: net worth, goal tabungan, dan statistik, dengan data contoh',
   'illustration.storefront':
     'Tampilan aplikasi Baywira di ponsel: dasbor penjual, etalase produk, dan daftar pesanan, dengan data contoh',
+  'illustration.gantt':
+    'Tampilan aplikasi Rentang: bagan Gantt dengan jalur kritis dan daftar orang, dengan data contoh',
   'illustration.maritime': 'Ilustrasi generik: peta laut dengan jejak kapal dan daftar status',
   'illustration.hmi':
     'Ilustrasi generik: panel operator dengan indikator, level tangki, dan tombol',
@@ -422,6 +424,8 @@ const en: Record<UIKey, string> = {
     'The Flowvest app on desktop and phone: net worth, savings goals and statistics, with sample data',
   'illustration.storefront':
     'The Baywira app on phones: seller dashboard, product storefront and order list, with sample data',
+  'illustration.gantt':
+    'The Rentang app: a Gantt chart with the critical path and the people list, with sample data',
   'illustration.maritime': 'Generic illustration: sea chart with vessel tracks and a status list',
   'illustration.hmi': 'Generic illustration: operator panel with gauges, tank levels and buttons',
 
