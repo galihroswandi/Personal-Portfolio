@@ -18,10 +18,13 @@ import {
   siReact,
   siRedis,
   siSocketdotio,
+  siSvelte,
   siSupabase,
   siTailwindcss,
   siThreedotjs,
   siTypescript,
+  siVite,
+  siVitest,
 } from 'simple-icons';
 
 const icons = [
@@ -45,9 +48,12 @@ const icons = [
   ['Redis', siRedis],
   ['Socket.IO', siSocketdotio],
   ['Supabase', siSupabase],
+  ['Svelte', siSvelte],
   ['Tailwind CSS', siTailwindcss],
   ['Three.js', siThreedotjs],
   ['TypeScript', siTypescript],
+  ['Vite', siVite],
+  ['Vitest', siVitest],
 ] as const;
 
 const byName = new Map<string, string>(icons.map(([name, icon]) => [name, icon.path]));

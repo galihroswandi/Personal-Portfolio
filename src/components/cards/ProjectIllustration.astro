@@ -2,10 +2,11 @@
 /**
  * 16:10 project illustration. Employer work gets a generic one, never a screenshot or a real system
  * layout; the owner's own apps may show a simplified sketch of their real screen (decision 040), or
- * a composed screenshot of the real app (`finance`: Flowvest, `storefront`: Baywira; sample data).
+ * a composed screenshot of the real app (`finance`: Flowvest, `storefront`: Baywira, `gantt`: Rentang; sample data).
  */
 import { Image } from 'astro:assets';
 import baywiraCover from '@/assets/projects/baywira/baywira-cover.webp';
+import rentangCover from '@/assets/projects/rentang/rentang-cover.webp';
 import flowvestCover from '@/assets/projects/flowvest/flowvest-cover.webp';
 import Bars from '@/assets/illustrations/bars.svg';
 import Gauge from '@/assets/illustrations/gauge.svg';
@@ -30,8 +31,9 @@ const illustrations = {
   maritime: Maritime,
   hmi: Hmi,
 } as const;
-const covers = { finance: flowvestCover, storefront: baywiraCover } as const;
-const cover = kind === 'finance' || kind === 'storefront' ? covers[kind] : undefined;
+const covers = { finance: flowvestCover, storefront: baywiraCover, gantt: rentangCover } as const;
+const cover =
+  kind === 'finance' || kind === 'storefront' || kind === 'gantt' ? covers[kind] : undefined;
 const Illustration = cover ? undefined : illustrations[kind as keyof typeof illustrations];
 ---
 
