@@ -66,6 +66,16 @@ export const cvCopy: Record<Lang, CvCopy> = {
         meta: 'Solusi 247 · C++, Qt, HMI',
         text: 'Antarmuka desktop untuk operator pada sistem terbaru, setelah beralih dari web ke C++ dan Qt.',
       },
+      {
+        title: 'Baywira: toko online dan kasir digital untuk UMKM',
+        meta: 'Proyek pribadi · Next.js, NestJS, MySQL, Redis',
+        text: 'Platform pesan dan bayar untuk UMKM: pelanggan memesan lewat QR toko tanpa akun, penjual mengelola produk dan pesanan dari PWA yang tetap berjalan saat offline.',
+      },
+      {
+        title: 'Rentang: pemantau task dan jadwal proyek',
+        meta: 'Proyek pribadi, open source · Svelte, TypeScript',
+        text: 'Aplikasi Gantt tanpa server untuk memantau task dan jalur kritis menuju milestone. Inti logikanya TypeScript murni dengan coverage 90%.',
+      },
     ],
   },
   en: {
@@ -104,6 +114,16 @@ export const cvCopy: Record<Lang, CvCopy> = {
         title: 'Desktop HMI application with Qt',
         meta: 'Solusi 247 · C++, Qt, HMI',
         text: 'A desktop interface for operators on the newest system, after moving from web to C++ and Qt.',
+      },
+      {
+        title: 'Baywira: online shop and digital checkout for small businesses',
+        meta: 'Personal project · Next.js, NestJS, MySQL, Redis',
+        text: 'An ordering and payment platform for small businesses: customers order through the shop QR code without an account, and sellers manage products and orders in a PWA that keeps working offline.',
+      },
+      {
+        title: 'Rentang: a task and project schedule tracker',
+        meta: 'Personal project, open source · Svelte, TypeScript',
+        text: 'A serverless Gantt app for tracking tasks and the critical path to each milestone. The core logic is plain TypeScript with 90% coverage.',
       },
     ],
   },
