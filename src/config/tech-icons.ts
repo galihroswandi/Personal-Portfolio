@@ -1,8 +1,11 @@
 import {
+  siAngular,
+  siApacheecharts,
   siCplusplus,
   siDocker,
   siExpress,
   siLaravel,
+  siLeaflet,
   siLinux,
   siMysql,
   siNestjs,
@@ -21,6 +24,9 @@ import {
 } from 'simple-icons';
 
 const icons = [
+  ['Angular', siAngular],
+  ['ECharts', siApacheecharts],
+  ['Leaflet', siLeaflet],
   ['C++', siCplusplus],
   ['Docker', siDocker],
   ['Express', siExpress],

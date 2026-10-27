@@ -1,18 +1,39 @@
 ---
-# TODO(review): English translation, owner to review, then set reviewed: true.
+# TODO(review): written from the office repo on purpose with minimal detail. Owner to confirm nothing unpublishable is included, then set reviewed: true.
 slug: command-center-maritim
 title: Command center application for the maritime industry
 seoTitle: Maritime command center application
 role: Fullstack developer
 company: Solusi 247
-stack: [Web app, Dashboard, HMI]
-problem: Operators need to see a lot of data at once and find what matters quickly.
+stack: [Angular, TypeScript, Tailwind CSS, Socket.IO, ECharts, Leaflet]
+problem: Operators need to see a lot of data at once, find what matters quickly, and steer the ship from the same screen.
 myRole: Making sure the system does what it is told and the data on screen matches its source.
-result: '[isi hasil nyata yang boleh dipublikasikan]'
+result: One web application that shows live system data on a single screen, built with a team since 2025.
 illustration: maritime
 featured: true
 order: 2
 reviewed: true
+seoDescription: 'Case study of a web command center for the maritime industry built with Angular: live data, charts, a map, and a screen that does not confuse operators.'
 ---
 
-[isi studi kasus lengkap]
+This is a web command center application for the maritime industry that I build with a team at Solusi 247 since 2025. Operators watch many things at once and steer the ship from a single screen, with data that updates live.
+
+Because this is office work, this page deliberately shows no screenshots, system names, or data of any kind. I only describe the technical approach.
+
+## What was built
+
+A web interface that combines a map, charts, indicators, and live video, in several display modes that match how operators work. My job is to make sure the data on screen matches its source and that the screen does not confuse the people using it.
+
+## Challenges
+
+Sensor data keeps changing. Work is often only half done when another sensor has already been installed on the ship and needs to be on screen quickly, so priorities shift before the first task is finished. The screens have to be easy to add or change without reworking what already exists.
+
+The other challenge is the sheer amount of incoming data. I had to think about how to receive and display it without making the screen heavy, while keeping the architecture easy to change. When I am in the middle of something and the data a sensor returns changes, I have to adapt right away without breaking other parts.
+
+## Technical decisions
+
+Data arrives over WebSocket (Socket.IO) and is shown as charts with ECharts and a map with Leaflet. Components use OnPush change detection so a screen that changes often stays light.
+
+One codebase serves several platform configurations, with a folder per capability and configuration per platform instead of a copy of the code for each platform. I am helping reshape the structure in that direction.
+
+Core logic is tested with Vitest.

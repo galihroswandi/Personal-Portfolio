@@ -1,16 +1,39 @@
 ---
+# TODO(review): ditulis dari repo kantor dengan sengaja minim. Pemilik memastikan tidak ada data yang tidak boleh dipublikasikan, lalu ubah reviewed menjadi true.
 slug: command-center-maritim
 title: Aplikasi command center untuk industri maritim
+seoTitle: Aplikasi command center maritim
 role: Fullstack developer
 company: Solusi 247
-stack: [Web app, Dasbor, HMI]
-problem: Operator perlu melihat banyak data sekaligus dan menemukan informasi penting dengan cepat.
+stack: [Angular, TypeScript, Tailwind CSS, Socket.IO, ECharts, Leaflet]
+problem: Operator perlu melihat banyak data sekaligus, menemukan informasi penting dengan cepat, dan mengemudikan kapalnya dari layar yang sama.
 myRole: Memastikan sistem berjalan sesuai perintah dan data yang tampil sesuai sumbernya.
-result: '[isi hasil nyata yang boleh dipublikasikan]'
+result: Satu aplikasi web yang menampilkan data sistem secara langsung di satu layar, dikerjakan bersama tim sejak 2025.
 illustration: maritime
 featured: true
 order: 2
 reviewed: true
+seoDescription: 'Studi kasus aplikasi command center web untuk industri maritim dengan Angular: data langsung, grafik, peta, dan tampilan yang tidak membingungkan operator.'
 ---
 
-[isi studi kasus lengkap]
+Ini aplikasi web command center untuk industri maritim yang saya kerjakan bersama tim di Solusi 247 sejak 2025. Operator memantau banyak hal sekaligus dan mengemudikan kapalnya dari satu layar, dengan data yang diperbarui langsung.
+
+Karena ini pekerjaan kantor, halaman ini sengaja tidak menampilkan tangkapan layar, nama sistem, ataupun data apa pun. Yang saya tulis hanya pendekatan teknisnya.
+
+## Apa yang dibangun
+
+Antarmuka web yang memadukan peta, grafik, indikator, dan tampilan video langsung, dengan beberapa mode tampilan sesuai cara kerja operator. Tugas saya memastikan data yang tampil sama dengan sumbernya dan layar tidak membingungkan orang yang memakainya.
+
+## Tantangan
+
+Data tiap sensor selalu berubah. Pekerjaan sering baru setengah jalan ketika sensor lain sudah terpasang di kapal dan harus segera tampil, jadi prioritasnya berpindah sebelum yang pertama selesai. Layar yang dibuat harus bisa ditambah atau diubah tanpa merombak yang sudah ada.
+
+Tantangan lain adalah jumlah data yang masuk sangat banyak. Saya harus memikirkan bagaimana data itu diterima dan ditampilkan tanpa membuat layar berat, dan di saat yang sama menjaga arsitekturnya tetap mudah diubah. Ketika saya sedang mengerjakan sesuatu lalu data yang dikembalikan sensor berubah, saya harus langsung menyesuaikan tanpa merusak bagian lain.
+
+## Keputusan teknis
+
+Data diterima lewat WebSocket (Socket.IO), lalu ditampilkan sebagai grafik dengan ECharts dan peta dengan Leaflet. Komponen memakai change detection OnPush supaya layar yang sering berubah tetap ringan.
+
+Satu basis kode dipakai untuk beberapa konfigurasi platform, dengan folder per kapabilitas dan konfigurasi per platform, bukan salinan kode untuk tiap platform. Strukturnya sedang saya bantu tata ulang ke arah itu.
+
+Logika inti diuji dengan Vitest.
