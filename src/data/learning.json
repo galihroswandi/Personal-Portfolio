@@ -8,22 +8,6 @@
       "doing": 1,
       "todo": 21,
       "total": 52
-    },
-    {
-      "key": "python",
-      "percent": 2,
-      "done": 1,
-      "doing": 0,
-      "todo": 41,
-      "total": 42
-    },
-    {
-      "key": "rust",
-      "percent": 0,
-      "done": 0,
-      "doing": 0,
-      "todo": 37,
-      "total": 37
     }
   ]
 }

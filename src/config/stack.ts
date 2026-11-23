@@ -11,7 +11,7 @@ export const stackTiers: readonly StackTier[] = [
   {
     labelKey: 'stack.daily',
     variant: 'daily',
-    items: ['C++', 'Qt', 'TypeScript', 'Angular', 'Svelte', 'Next.js'],
+    items: ['C++', 'Qt', 'TypeScript', 'Angular', 'Svelte', 'Next.js', 'Linux', 'Supabase'],
   },
   {
     labelKey: 'stack.used',
@@ -25,10 +25,8 @@ export const stackTiers: readonly StackTier[] = [
       'Tailwind CSS',
       'MySQL',
       'PostgreSQL',
-      'Supabase',
       'Redis',
       'Docker',
-      'Linux',
     ],
   },
 ];
